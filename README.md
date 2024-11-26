@@ -2,9 +2,11 @@
 
 ## Overview
 
+We are a team of 4, all of us currently studying Computer Science at KEA on the 3rd semester.
+
 **Guessr** is an interactive web game platform that challenges players to guess countries based on flags from around the world. Players are shown a flag and asked to choose the correct country from multiple-choice options. The game is designed to be fun and educational, helping players learn about different countries and their flags.
 
-The game includes a simple yet engaging design with a variety of game modes, with the current focus on the **Flags** game mode.
+The games includes a simple yet engaging design with a variety of game modes, with the current focus on the **Flags** game mode.
 
 ## Features
 
@@ -37,7 +39,7 @@ To run this project locally, follow these steps:
    
 2. **Navigate to the Project Directory:**
    ```bash
-   cd guessr
+   cd world-guessr
 
 3. **Open the index.html file:**
    ```bash
@@ -47,19 +49,7 @@ To run this project locally, follow these steps:
 **Start Playing!**
 The game should be up and running, and you can start playing.
 
-##File Structure
-
-The project contains the following structure:
-
-/world-guessr
-├── /images/            # Folder for flag images and icons
-├── /css/               # Folder for styles (styles.css)
-├── /js/                # Folder for JavaScript files (game.js, script.js)
-├── index.html          # Main homepage with game modes
-├── game.html           # Flag guessing game page
-├── README.md           # Project overview and instructions
-
-##Contributing
+## Contributing
 
 Contributions to World Guessr are welcome! If you'd like to contribute, follow these steps:
 
@@ -69,6 +59,6 @@ Make your changes and commit them.
 Push your changes to your forked repository.
 Submit a pull request with a description of what you've done.
 
-##License
+## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.

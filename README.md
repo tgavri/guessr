@@ -34,11 +34,14 @@ To run this project locally, follow these steps:
 
    ```bash
    git clone https://github.com/yourusername/world-guessr.git
+   
 2. **Navigate to the Project Directory:**
-cd world-guessr
+   ```bash
+   cd guessr
 
 3. **Open the index.html file:**
-Simply open index.html in your preferred web browser.
+   ```bash
+   Simply open index.html in your preferred web browser.
 
 
 **Start Playing!**

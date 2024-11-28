@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oversigt</title>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <style>
+        .ContainerGames {
+            margin-top: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            width: 100%;
+            max-width: 1400px;
+            height: 800px;
+        }
+
+        .Background-containerGames {
+            width: 100vw;
+            height: 120vh;
+            position: relative;
+            background-image: url('');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .Games {
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+<div id="header-placeholder"></div>
+<div class="Background-containerGames">
+    <div class="ContainerGames">
+        <div class="Games">
+
+        </div>
+    </div>
+</div>
+<button id="logout-button">Log ud</button>
+<div id="footer-placeholder"></div>
+
+<script>
+   /* document.getElementById("logout-button").addEventListener("click", function () {
+        if (confirm("Er du sikker på, at du vil logge ud?")) {
+            sessionStorage.clear();
+            localStorage.clear();
+            window.location.href = "/login"; // Erstat med forside
+        }
+    });
+
+    document.getElementById("logout-button").addEventListener("click", function () {
+        if (confirm("Er du sikker på, at du vil logge ud?")) {
+
+            fetch("/api/logout", { method: "POST", credentials: "include" })
+                .then(response => {
+                    if (response.ok) {
+                        sessionStorage.clear();
+                        window.location.href = "/login";
+                    } else {
+                        alert("Noget gik galt under log-ud. Prøv igen.");
+                    }
+                })
+                .catch(error => console.error("Fejl under log-ud:", error));
+        }
+    });
+*/
+</script>

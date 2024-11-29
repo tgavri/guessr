@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guessr - En verden af spil</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .hero {
+            /*gammelt link: https://www.thewestportclub.com.au/wp-content/uploads/2023/12/MicrosoftTeams-image.jpg */
+            background: url('https://wallpapercave.com/wp/wp6415208.jpg') no-repeat center center/cover;
+            color: white;
+            text-align: center;
+            padding: 80px 20px;
+        }
+
+        .section-title {
+            margin-bottom: 40px;
+            color: #343a40;
+            font-weight: 600;
+            text-transform: uppercase;
+            display: block;
+            text-align: center;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 2px;
+            background: #ffc107;
+            margin: 10px auto;
+        }
+        .btn-warning {
+            animation: fadeIn 2s ease-in;
+            animation: slideUp 2s ease-in-out;
+
+        }
+        .hero h1 {
+            font-size: 50px;
+            font-weight: 600;
+            animation: fadeIn 2s ease-in;
+
+        }
+        .hero p {
+            font-size: 18px;
+            margin: 20px 0;
+            animation: slideUp 2s ease-in-out;
+
+        }
+        .hero .btn {
+            font-size: 18px;
+            padding: 10px 30px;
+            border-radius: 30px;
+        }
+        .game-mode-card {
+            transition: transform 0.3s ease;
+        }
+        .game-mode-card:hover {
+            transform: translateY(-10px);
+        }
+        .index-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 0 auto;
+            max-width: 800px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<div id="header-placeholder"></div>
+
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <h1>En verden af spil</h1>
+        <p>Guessr samler de bedste trivia, quiz og gættespil.<br>Test din viden om flag, pokemons og mere. Spil nu og udfordr dig selv eller dine venner!</p>
+        <a href="#game-modes" class="btn btn-warning btn-lg">Opret en konto</a>
+    </div>
+</section>
+
+
+<!-- Velkommen Section -->
+<section class="py-5">
+    <div class="container text-center">
+        <h2 class="section-title">De bedste spil samlet et sted!</h2>
+        <div class="index-container">
+        <p>Velkommen til Guessr! <br>Vi er et team af dedikerede studerende, der brænder for at skabe en immersiv spilleoplevelse. Vores mission er at bringe sjove og lærerige udfordringer til spillere i Danmark.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Game Section -->
+<section id="game-modes" class="py-5">
+    <div class="container text-center">
+        <h2 class="section-title">Månedens udvalgte</h2>
+        <div class="index-container"> <!-- KAN FJERNES HVIS BOKSEN IKKE ØNSKES!!! -->
+            <div class="row g-4">
+            <!-- Card 1 -->
+            <div class="col-lg-3 col-md-6">
+                <div class="card game-mode-card shadow-sm">
+                    <img src="https://avatars.mds.yandex.net/get-games/6238841/2a0000018f6978f088ad63976b29b52ced8f/orig" class="card-img-top" alt="Flags Mode">
+                    <div class="card-body">
+                        <h5 class="card-title">Flags Guessr</h5>
+                        <p class="card-text">Guess the country based on its flag. Can you identify them all?</p>
+                        <a href="../../../../../../VSCode/testy-guessr/game.html?mode=flags" class="btn btn-primary">Play Now</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Card 2 -->
+            <div class="col-lg-3 col-md-6">
+                <div class="card game-mode-card shadow-sm">
+                    <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/db781c2f-75f5-4db4-8e6a-75c2c542f51a/dah6qdl-32014297-e5c7-453c-9b8e-9df9c7b5f7ff.png/v1/fill/w_1024,h_607,q_80,strp/pokemon_gen_1_wallpaper_by_themightybattlesquid_dah6qdl-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NjA3IiwicGF0aCI6IlwvZlwvZGI3ODFjMmYtNzVmNS00ZGI0LThlNmEtNzVjMmM1NDJmNTFhXC9kYWg2cWRsLTMyMDE0Mjk3LWU1YzctNDUzYy05YjhlLTlkZjljN2I1ZjdmZi5wbmciLCJ3aWR0aCI6Ijw9MTAyNCJ9XV0sImF1ZCI6WyJ1cm46c2VydmljZTppbWFnZS5vcGVyYXRpb25zIl19.BXansCHupA_lJ6EriX1AaDoetnzLbQmRYpcYAP5Yh_k" class="card-img-top" alt="Landmarks Mode">
+                    <div class="card-body">
+                        <h5 class="card-title">Pokemon spillet</h5>
+                        <p class="card-text">Udfordr din viden om pokemon.<br></p>
+                        <a href="../../../../../../VSCode/testy-guessr/game.html?mode=landmarks" class="btn btn-primary">Spil nu</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Card 3 -->
+            <div class="col-lg-3 col-md-6">
+                <div class="card game-mode-card shadow-sm">
+                    <img src="https://via.placeholder.com/400x250" class="card-img-top" alt="Mystery Mode">
+                    <div class="card-body">
+                        <h5 class="card-title">Mystery Mode</h5>
+                        <p class="card-text">A mix of challenges including flags, landmarks, and trivia. Test all your skills!</p>
+                        <a href="../../../../../../VSCode/testy-guessr/game.html?mode=mystery" class="btn btn-primary">Play Now</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Card 4 -->
+            <div class="col-lg-3 col-md-6">
+                <div class="card game-mode-card shadow-sm">
+                    <img src="https://via.placeholder.com/400x250" class="card-img-top" alt="Trivia Mode">
+                    <div class="card-body">
+                        <h5 class="card-title">Trivia Guessr</h5>
+                        <p class="card-text">Answer trivia questions about world culture, geography, and history.</p>
+                        <a href="../../../../../../VSCode/testy-guessr/game.html?mode=trivia" class="btn btn-primary">Play Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<div id="footer-placeholder"></div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+
+        $('#header-placeholder').load('/fragments/navbar');
+
+        $('#footer-placeholder').load('/fragments/footer');
+
+    });
+</script></body>
+</html>

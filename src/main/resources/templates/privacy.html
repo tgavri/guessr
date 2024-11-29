@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privatlivspolitik - Guessr</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f8f9fa;
+            overflow-x: hidden;
+        }
+        
+        .hero {
+            background: url('https://www.nureva.com/hubfs/images/pages/01063-corporate/01063-legal/01063-legal-1900x600.jpg') no-repeat center center/cover;
+            color: white;
+            text-align: center;
+            padding: 80px 20px;
+            margin-bottom: 40px;
+            border-radius: 0 0 20px 20px;
+        }
+        .hero h1 {
+            font-size: 50px;
+            font-weight: 600;
+            animation: fadeIn 2s ease-in;
+        }
+        .hero p {
+            font-size: 18px;
+            margin: 20px 0;
+            animation: slideUp 2s ease-in-out;
+        }
+        .section-title {
+            margin-bottom: 40px;
+            color: #343a40;
+            font-weight: 600;
+            text-transform: uppercase;
+            display: block;
+            text-align: center;
+        }
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 2px;
+            background: #ffc107;
+            margin: 10px auto;
+        }
+        .privacy-content {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 0 auto;
+            max-width: 800px;
+        }
+
+        footer {
+            background-color: #343a40;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+        footer a {
+            color: #ffc107;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        .social-icon img {
+            width: 30px;
+            margin: 0 5px;
+            transition: transform 0.3s ease-in-out;
+        }
+        .social-icon img:hover {
+            transform: scale(1.1);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<div id="header-placeholder"></div>
+
+
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <h1>Privatlivspolitik</h1>
+        <p>Beskyttelse af dine personoplysninger er vigtigt for os. Læs vores politik her.</p>
+    </div>
+</section>
+
+<!-- Privacy Policy Content -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="section-title">Vores Privatlivspolitik</h2>
+        <div class="privacy-content">
+            <p>Vi hos Guessr tager din privatliv alvorligt og ønsker at sikre, at du har fuld tillid til, hvordan dine personlige oplysninger behandles. Denne politik forklarer, hvilke data vi indsamler, hvordan vi bruger dem, og hvordan vi beskytter dem.</p>
+
+            <h3>1. Hvilke data indsamler vi?</h3>
+            <p>Vi indsamler oplysninger, som du giver os, når du bruger vores platform, såsom navn, e-mailadresse og beskeder sendt gennem kontaktformularen. Vi kan også indsamle oplysninger om din brug af vores tjenester gennem cookies og lignende teknologi.</p>
+
+            <h3>2. Hvordan bruger vi dine oplysninger?</h3>
+            <p>Dine oplysninger bruges til at forbedre vores tjenester, sende dig opdateringer om vores platform og svare på dine henvendelser. Vi anvender også data til at tilpasse din oplevelse og analysere brugeradfærden for at optimere vores spil og platform.</p>
+
+            <h3>3. Hvordan beskytter vi dine data?</h3>
+            <p>Vi tager passende tekniske og organisatoriske forholdsregler for at beskytte dine personlige oplysninger. Adgangen til dine data er begrænset til autoriserede personer, som har brug for adgang for at udføre deres arbejdsopgaver.</p>
+
+            <h3>4. Dine rettigheder</h3>
+            <p>Du har ret til at anmode om adgang til dine data, anmode om berigtigelse eller sletning af dine oplysninger, og du kan trække dit samtykke tilbage til enhver tid. For at udnytte disse rettigheder, bedes du kontakte os via e-mail.</p>
+
+            <h3>5. Ændringer i privatlivspolitikken</h3>
+            <p>Vi kan opdatere denne politik fra tid til anden. Eventuelle ændringer vil blive offentliggjort på denne side, og vi vil angive datoen for den nyeste opdatering øverst på politikken.</p>
+
+            <p>Hvis du har spørgsmål til denne privatlivspolitik, kan du kontakte os via <a href="/about">Kontaktformularen</a>.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<div id="footer-placeholder"></div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#header-placeholder').load('/fragments/navbar');
+        $('#footer-placeholder').load('/fragments/footer');
+    });
+</script>
+</body>
+</html>

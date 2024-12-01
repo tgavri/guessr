@@ -6,7 +6,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
-
+/*
 @Component
 public class InitData implements CommandLineRunner {
 
@@ -22,4 +22,4 @@ public class InitData implements CommandLineRunner {
         userService.createUser(new User("Jane Smith", "janesmith@example.com", "Inactive", LocalDateTime.now()));
         userService.createUser(new User("Bob Johnson", "bobjohnson@example.com", "Active", LocalDateTime.now()));
     }
-}
+}*/

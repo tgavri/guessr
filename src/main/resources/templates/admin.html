@@ -9,6 +9,8 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <!-- Custom CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+
     <style>
         body {
             font-family: 'Montserrat', sans-serif;
@@ -48,6 +50,12 @@
         .card {
             margin-bottom: 20px;
         }
+        .hidden {
+            display: none;
+        }
+        #editStatus {
+            width: 120px;
+        }
     </style>
 </head>
 <body>
@@ -56,85 +64,105 @@
 <div class="d-flex">
     <div class="admin-sidebar">
         <h4>Admin Menu</h4>
-        <a href="/admin/dashboard">Dashboard</a>
-        <a href="/admin/users">User Management</a>
-        <a href="/admin/content">Content Management</a>
-        <a href="/admin/analytics">Analytics</a>
-        <a href="/admin/settings">Settings</a>
-        <a href="/admin/support">Support Center</a>
-        <a href="/admin/notifications">Notifications</a>
-        <a href="/admin/security">Security</a>
+        <a href="javascript:void(0)" onclick="showContent('dashboard')">Dashboard</a>
+        <a href="javascript:void(0)" onclick="showContent('user-management')">User Management</a>
+        <a href="javascript:void(0)" onclick="showContent('content-management')">Content Management</a>
+        <a href="javascript:void(0)" onclick="showContent('analytics')">Analytics</a>
+        <a href="javascript:void(0)" onclick="showContent('settings')">Settings</a>
+        <a href="javascript:void(0)" onclick="showContent('support')">Support Center</a>
+        <a href="javascript:void(0)" onclick="showContent('notifications')">Notifications</a>
+        <a href="javascript:void(0)" onclick="showContent('security')">Security</a>
     </div>
 
     <!-- Main Content -->
     <div class="admin-content">
         <div class="admin-header">
             <h1>Admin Dashboard</h1>
-            <button class="btn btn-dark">Logout</button>
+            <a href="/logout" class="btn btn-dark">Logout</a>
         </div>
 
         <!-- Overview Section -->
-        <div class="row">
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Total Users</h5>
-                        <p class="card-text">5000+ users registered</p>
+        <!-- Dashboard Section -->
+        <div id="dashboard" class="content-section text-center">
+            <br><h4>Dashboard Overview</h4>
+            <div class="row">
+                <!-- Total Users Card -->
+                <div class="col-md-4">
+                    <div class="dashboard-card bg-primary text-center text-white">
+                        <h5>Total Users</h5>
+                        <p id="totalUsers" class="display-4">Loading...</p>
+                    </div>
+                </div>
+                <!-- New Sign-Ups Card -->
+                <div class="col-md-4">
+                    <div class="dashboard-card bg-success text-center text-white">
+                        <h5>New Sign-Ups This Week</h5>
+                        <p id="newSignUps" class="display-4">Loading...</p>
+                    </div>
+                </div>
+                <!-- Active Users Card -->
+                <div class="col-md-4">
+                    <div class="dashboard-card bg-info text-center text-white">
+                        <h5>Active Users</h5>
+                        <p id="activeUsers" class="display-4">Loading...</p>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">New Sign-Ups</h5>
-                        <p class="card-text">150 this week</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Active Games</h5>
-                        <p class="card-text">120 games currently active</p>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <!-- User Management Table -->
-        <div class="mt-4">
-            <h4>User Management</h4>
+            <!-- Recent User Activity
+            <h5 class="mt-4">Recent User Activity</h5>
+            <ul id="recentActivityList" class="list-group mb-4">
+            </ul>-->
+
+            <!-- User Growth Chart -->
+            <h5>User Growth Over Time</h5>
+            <div class="chart-container">
+                <canvas id="userGrowthChart"></canvas>
+            </div>
+
+            <!-- User Status Distribution -->
+            <h5 class="mt-4">User Status Distribution</h5>
+            <div class="chart-container">
+                <canvas id="userStatusChart"></canvas>
+            </div>
+
+            <!-- Most Popular Content (KOMMER)
+            <h5 class="mt-4">Most Popular Content</h5>
             <table class="table table-bordered">
                 <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
+                <tr>
+                    <th>Content Title</th>
+                    <th>Views</th>
+                </tr>
+                </thead>
+                <tbody id="popularContentTable">
+                </tbody>
+            </table>-->
+
+        </div>
+        <!-- User Management Section -->
+        <div id="user-management" class="content-section text-center hidden">
+            <br><h4>User Management</h4>
+            <table class="table table-bordered" id="userTable">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
                 </thead>
                 <tbody>
-                    <!-- Sample Data Row -->
-                    <tr>
-                        <td>1</td>
-                        <td>John Doe</td>
-                        <td>johndoe@example.com</td>
-                        <td>Active</td>
-                        <td>
-                            <button class="btn btn-warning btn-sm">Edit</button>
-                            <button class="btn btn-danger btn-sm">Delete</button>
-                        </td>
-                    </tr>
-                    <!-- More rows can be added here -->
+                <!-- JavaScript injection -->
                 </tbody>
             </table>
         </div>
 
-        <!-- Content Management -->
-        <div class="mt-4">
-            <h4>Content Management</h4>
-            <button class="btn btn-primary mb-3">Add New Content</button>
+        <!-- Other Sections -->
+        <div id="content-management" class="content-section text-center hidden">
+            <br><h4>Content Management</h4>
+            <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addContentModal">Add New Content</button>
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Manage Existing Content</h5>
@@ -142,11 +170,144 @@
                 </div>
             </div>
         </div>
-
-        <!-- Analytics Section -->
-        <div class="mt-4">
-            <h4>Analytics Overview</h4>
+        <div id="analytics" class="content-section text-center hidden">
+            <br><h4>Analytics Overview</h4>
             <p>Visualize user activity trends, most played games, etc.</p>
+        </div>
+
+
+
+        <div id="settings" class="content-section text-center hidden">
+            <br><h4>Settings</h4>
+
+            <!-- General Settings -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">General Settings</h5>
+                    <form id="generalSettingsForm">
+                        <div class="mb-3">
+                            <label for="siteName" class="form-label">Site Name</label>
+                            <input type="text" class="form-control" id="siteName" name="siteName">
+                        </div>
+                        <div class="mb-3">
+                            <label for="siteDescription" class="form-label">Site Description</label>
+                            <textarea class="form-control" id="siteDescription" name="siteDescription" rows="3"></textarea>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="maintenanceMode" name="maintenanceMode">
+                            <label class="form-check-label" for="maintenanceMode">Maintenance Mode</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save General Settings</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Email Settings -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Email Settings</h5>
+                    <form id="emailSettingsForm">
+                        <div class="mb-3">
+                            <label for="smtpServer" class="form-label">SMTP Server</label>
+                            <input type="text" class="form-control" id="smtpServer" name="smtpServer">
+                        </div>
+                        <div class="mb-3">
+                            <label for="smtpPort" class="form-label">SMTP Port</label>
+                            <input type="number" class="form-control" id="smtpPort" name="smtpPort">
+                        </div>
+                        <div class="mb-3">
+                            <label for="smtpUsername" class="form-label">SMTP Username</label>
+                            <input type="text" class="form-control" id="smtpUsername" name="smtpUsername">
+                        </div>
+                        <div class="mb-3">
+                            <label for="smtpPassword" class="form-label">SMTP Password</label>
+                            <input type="password" class="form-control" id="smtpPassword" name="smtpPassword">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save Email Settings</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Security Settings -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Security Settings</h5>
+                    <form id="securitySettingsForm">
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="enableTwoFactor" name="enableTwoFactor">
+                            <label class="form-check-label" for="enableTwoFactor">Enable Two-Factor Authentication</label>
+                        </div>
+                        <div class="mb-3">
+                            <label for="sessionTimeout" class="form-label">Session Timeout (minutes)</label>
+                            <input type="number" class="form-control" id="sessionTimeout" name="sessionTimeout">
+                        </div>
+                        <div class="mb-3">
+                            <label for="passwordPolicy" class="form-label">Password Policy</label>
+                            <select class="form-select" id="passwordPolicy" name="passwordPolicy">
+                                <option value="low">Low - At least 6 characters</option>
+                                <option value="medium">Medium - At least 8 characters, 1 uppercase, 1 number</option>
+                                <option value="high">High - At least 10 characters, 1 uppercase, 1 number, 1 special character</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save Security Settings</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Backup and Restore -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Backup and Restore</h5>
+                    <button id="backupButton" class="btn btn-secondary mb-2">Create Backup</button>
+                    <div class="mb-3">
+                        <label for="restoreFile" class="form-label">Restore from Backup</label>
+                        <input class="form-control" type="file" id="restoreFile">
+                    </div>
+                    <button id="restoreButton" class="btn btn-warning">Restore</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="support" class="content-section text-center hidden">
+            <br><h4>Support Center</h4>
+            <h4>Obs vi mangler fuld version af formspree for api adgang</h4>
+
+            <!-- Email Statistics -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Submission Statistics</h5>
+                    <canvas id="submissionStatsChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Recent Submissions -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Recent Submissions</h5>
+                    <div id="recentSubmissions">
+                        <!-- JS injections -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submission Metrics -->
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Submission Metrics</h5>
+                    <p>Total Submissions: <span id="totalSubmissions">Loading...</span></p>
+                    <p>Submissions This Month: <span id="submissionsThisMonth">Loading...</span></p>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="notifications" class="content-section text-center hidden">
+            <br><h4>Notifications</h4>
+            <p>Manage notifications and alerts.</p>
+        </div>
+        <div id="security" class="content-section text-center hidden">
+            <br><h4>Security</h4>
+            <p>Review and manage security settings.</p>
         </div>
     </div>
 </div>
@@ -154,6 +315,390 @@
 <!-- Scripts -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    function fetchDashboardData() {
+        fetch('/admin/dashboard-data')
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(err => { throw err; });
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log("Received data:", data); // Log the received data
+
+                document.getElementById('totalUsers').innerText = data.totalUsers || 'N/A';
+                document.getElementById('newSignUps').innerText = data.newSignUps || 'N/A';
+                document.getElementById('activeUsers').innerText = data.activeUsers || 'N/A';
+
+                if (data.userGrowth && data.userGrowth.labels && data.userGrowth.data) {
+                    const ctxUserGrowth = document.getElementById('userGrowthChart').getContext('2d');
+                    new Chart(ctxUserGrowth, {
+                        type: 'line',
+                        data: {
+                            labels: data.userGrowth.labels,
+                            datasets: [{
+                                label: 'User Growth',
+                                data: data.userGrowth.data,
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                borderWidth: 2,
+                                fill: false
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                x: { beginAtZero: true },
+                                y: { beginAtZero: true }
+                            }
+                        }
+                    });
+                } else {
+                    console.error("User growth data is missing or incomplete");
+                }
+
+                if (data.userStatusDistribution && data.userStatusDistribution.labels && data.userStatusDistribution.data) {
+                    const ctxUserStatus = document.getElementById('userStatusChart').getContext('2d');
+                    new Chart(ctxUserStatus, {
+                        type: 'pie',
+                        data: {
+                            labels: data.userStatusDistribution.labels,
+                            datasets: [{
+                                data: data.userStatusDistribution.data,
+                                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: { position: 'top' },
+                                tooltip: {
+                                    callbacks: {
+                                        label: function(tooltipItem) {
+                                            return `${tooltipItem.label}: ${tooltipItem.raw} users`;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                } else {
+                    console.error("User status distribution data is missing or incomplete");
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching dashboard data:', error);
+                if (error.error && error.stackTrace) {
+                    console.error('Server error:', error.error);
+                    console.error('Stack trace:', error.stackTrace);
+                }
+                document.getElementById('totalUsers').innerText = 'Error';
+                document.getElementById('newSignUps').innerText = 'Error';
+            });
+    }
+
+
+    // Fetch data when the page loads
+    document.addEventListener('DOMContentLoaded', fetchDashboardData);
+    function showContent(sectionId) {
+        $('.content-section').addClass('hidden');
+        $('#' + sectionId).removeClass('hidden');
+
+        if (sectionId === 'user-management') {
+            fetchUserData();
+        } else if (sectionId === 'support') {
+            updateSupportCenter();
+        }else if (sectionId === 'settings') {
+        loadSettings();
+        }
+    }
+
+    function fetchUserData() {
+        fetch('/admin/users-data')
+            .then(response => response.json())
+            .then(users => {
+                const userTableBody = document.querySelector('#userTable tbody');
+                userTableBody.innerHTML = ''; // Clear existing table content
+
+                users.forEach(user => {
+                    const row = document.createElement('tr');
+                    row.setAttribute('data-user-id', user.id);
+
+                    row.innerHTML = `
+                        <td>${user.id}</td>
+                        <td>${user.name}</td>
+                        <td>${user.email}</td>
+                        <td>${user.status}</td>
+                        <td>
+                            <button class="btn btn-warning btn-sm" onclick="editUser(${user.id})">Edit</button>
+                            <button class="btn btn-danger btn-sm" onclick="deleteUser(${user.id})">Delete</button>
+                        </td>
+                    `;
+
+                    userTableBody.appendChild(row);
+                });
+            })
+            .catch(error => console.error('Error fetching user data:', error));
+    }
+
+    function editUser(userId) {
+        console.log('Editing user with ID:', userId); // Debug log
+        const row = document.querySelector(`#userTable tbody tr[data-user-id='${userId}']`);
+
+        if (!row) {
+            console.error('Row not found for user ID:', userId);
+            return;
+        }
+
+        const cells = row.querySelectorAll('td');
+
+        cells[1].innerHTML = `<input type="text" class="form-control" value="${cells[1].innerText.trim()}" id="editName-${userId}">`;
+        cells[2].innerHTML = `<input type="email" class="form-control" value="${cells[2].innerText.trim()}" id="editEmail-${userId}">`;
+
+        // dropdown
+        const currentStatus = cells[3].innerText.trim(); // Get current status
+        cells[3].innerHTML = `
+        <select class="form-control" id="editStatus-${userId}">
+            <option value="Active" ${currentStatus === 'Active' ? 'selected' : ''}>Active</option>
+            <option value="Inactive" ${currentStatus === 'Inactive' ? 'selected' : ''}>Inactive</option>
+        </select>
+    `;
+
+        // Replace the 'Edit' button with a 'Save' button
+        cells[4].innerHTML = `<button class="btn btn-success btn-sm" onclick="saveUser(${userId})">Save</button>`;
+    }
+
+
+    function saveUser(userId) {
+        const name = document.getElementById(`editName-${userId}`).value;
+        const email = document.getElementById(`editEmail-${userId}`).value;
+        const status = document.getElementById(`editStatus-${userId}`).value;
+
+        console.log(`Sending updated data for user ID ${userId}:`, {
+            id: userId,
+            name: name,
+            email: email,
+            status: status
+        });
+
+        fetch(`/admin/user/${userId}/edit`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                id: userId,
+                name: name,
+                email: email,
+                status: status
+            })
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Server returned status ${response.status}`);
+                }
+                return response.text(); // Read the response as text for debugging
+            })
+            .then(responseText => {
+                console.log('Server response:', responseText);
+                alert('User updated successfully');
+                fetchUserData(); // Refresh the table to show the updated data
+            })
+            .catch(error => {
+                console.error('Error updating user:', error);
+                alert('Error updating user');
+            });
+    }
+
+
+    function deleteUser(userId) {
+        if (confirm(`Are you sure you want to delete user with ID: ${userId}?`)) {
+            fetch(`/admin/user/${userId}/delete`, {
+                method: 'GET'
+            })
+                .then(() => {
+                    alert('User deleted successfully');
+                    fetchUserData(); // Refresh the table after deletion
+                })
+                .catch(error => console.error('Error deleting user:', error));
+        }
+    }
+
+    // Formspree API - vi mangler fuld version for at teste dette.
+    const FORMSPREE_API = 'https://api.formspree.com';
+    const FORM_ID = 'xldepyeb';  // Replace with your actual form ID
+    const API_KEY = 'YOUR_FORMSPREE_API_KEY';  // Replace with your actual API key
+
+    async function fetchFormspreeData() {
+        try {
+            const response = await fetch(`${FORMSPREE_API}/api/v1/forms/${FORM_ID}/submissions`, {
+                headers: {
+                    'Authorization': `Bearer ${API_KEY}`
+                }
+            });
+            if (!response.ok) {
+                throw new Error('Failed to fetch data from Formspree');
+            }
+            return await response.json();
+        } catch (error) {
+            console.error('Error fetching Formspree data:', error);
+            return null;
+        }
+    }
+
+    function updateSubmissionStats(data) {
+        const ctx = document.getElementById('submissionStatsChart').getContext('2d');
+        const submissionCounts = data.reduce((acc, submission) => {
+            const date = new Date(submission.created_at).toLocaleDateString();
+            acc[date] = (acc[date] || 0) + 1;
+            return acc;
+        }, {});
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: Object.keys(submissionCounts),
+                datasets: [{
+                    label: 'Submissions',
+                    data: Object.values(submissionCounts),
+                    borderColor: 'rgb(75, 192, 192)',
+                    tension: 0.1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+
+    function updateRecentSubmissions(data) {
+        const recentSubmissionsDiv = document.getElementById('recentSubmissions');
+        recentSubmissionsDiv.innerHTML = '';
+        data.slice(0, 5).forEach(submission => {
+            const submissionDiv = document.createElement('div');
+            submissionDiv.className = 'mb-3 p-3 border rounded';
+            submissionDiv.innerHTML = `
+            <p><strong>Name:</strong> ${submission.data.name}</p>
+            <p><strong>Email:</strong> ${submission.data.email}</p>
+            <p><strong>Message:</strong> ${submission.data.message}</p>
+            <small class="text-muted">Submitted on: ${new Date(submission.created_at).toLocaleString()}</small>
+        `;
+            recentSubmissionsDiv.appendChild(submissionDiv);
+        });
+    }
+
+    function updateSubmissionMetrics(data) {
+        const totalSubmissions = data.length;
+        const now = new Date();
+        const submissionsThisMonth = data.filter(submission => {
+            const submissionDate = new Date(submission.created_at);
+            return submissionDate.getMonth() === now.getMonth() && submissionDate.getFullYear() === now.getFullYear();
+        }).length;
+
+        document.getElementById('totalSubmissions').textContent = totalSubmissions;
+        document.getElementById('submissionsThisMonth').textContent = submissionsThisMonth;
+    }
+
+    async function updateSupportCenter() {
+        const data = await fetchFormspreeData();
+        if (data) {
+            updateSubmissionStats(data);
+            updateRecentSubmissions(data);
+            updateSubmissionMetrics(data);
+        }
+    }
+
+    function loadSettings() {
+        // In a real application, you would fetch these settings from your backend
+        const settings = {
+            siteName: 'Guessr',
+            siteDescription: 'An interactive guessing game platform',
+            maintenanceMode: false,
+            smtpServer: 'smtp.example.com',
+            smtpPort: 587,
+            smtpUsername: 'user@example.com',
+            enableTwoFactor: true,
+            sessionTimeout: 30,
+            passwordPolicy: 'medium'
+        };
+
+        // Populate the form fields with the fetched settings
+        document.getElementById('siteName').value = settings.siteName;
+        document.getElementById('siteDescription').value = settings.siteDescription;
+        document.getElementById('maintenanceMode').checked = settings.maintenanceMode;
+        document.getElementById('smtpServer').value = settings.smtpServer;
+        document.getElementById('smtpPort').value = settings.smtpPort;
+        document.getElementById('smtpUsername').value = settings.smtpUsername;
+        document.getElementById('enableTwoFactor').checked = settings.enableTwoFactor;
+        document.getElementById('sessionTimeout').value = settings.sessionTimeout;
+        document.getElementById('passwordPolicy').value = settings.passwordPolicy;
+    }
+
+    function saveGeneralSettings(event) {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        const settings = Object.fromEntries(formData.entries());
+        console.log('Saving general settings:', settings);
+        // In a real application, you would send these settings to your backend
+        alert('General settings saved successfully!');
+    }
+
+    function saveEmailSettings(event) {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        const settings = Object.fromEntries(formData.entries());
+        console.log('Saving email settings:', settings);
+        // In a real application, you would send these settings to your backend
+        alert('Email settings saved successfully!');
+    }
+
+    function saveSecuritySettings(event) {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        const settings = Object.fromEntries(formData.entries());
+        console.log('Saving security settings:', settings);
+        // In a real application, you would send these settings to your backend
+        alert('Security settings saved successfully!');
+    }
+
+    function createBackup() {
+        console.log('Creating backup...');
+        // In a real application, you would trigger a backup process on your backend
+        alert('Backup created successfully!');
+    }
+
+    function restoreFromBackup() {
+        const file = document.getElementById('restoreFile').files[0];
+        if (file) {
+            console.log('Restoring from backup file:', file.name);
+            // In a real application, you would send this file to your backend for processing
+            alert('Restore process initiated. Please wait for confirmation.');
+        } else {
+            alert('Please select a backup file to restore from.');
+        }
+    }
+
+    // Event listeners
+    document.addEventListener('DOMContentLoaded', () => {
+        loadSettings();
+        document.getElementById('generalSettingsForm').addEventListener('submit', saveGeneralSettings);
+        document.getElementById('emailSettingsForm').addEventListener('submit', saveEmailSettings);
+        document.getElementById('securitySettingsForm').addEventListener('submit', saveSecuritySettings);
+        document.getElementById('backupButton').addEventListener('click', createBackup);
+        document.getElementById('restoreButton').addEventListener('click', restoreFromBackup);
+    });
+
+
+
+
+
+</script>
 
 </body>
 </html>

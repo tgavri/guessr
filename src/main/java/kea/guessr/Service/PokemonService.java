@@ -3,6 +3,7 @@ package kea.guessr.Service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import kea.guessr.Model.Pokemon;
+import kea.guessr.Model.PokemonDTO;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
@@ -17,6 +18,29 @@ import java.util.Map;
 public class PokemonService {
 
     private final ObjectMapper objectMapper;
+    private List<Map<String, Object>> answersList = new ArrayList<>();
+    private int savedCount = 0; // Track saved Pokémon count
+    private List<Integer> pokemonScores = new ArrayList<>();
+
+    public int getSavedCount() {
+        return savedCount;
+    }
+
+    public List<Integer> getPokemonScores() {
+        return pokemonScores; // Expose Pokémon scores
+    }
+
+    public void clearAnswersList() {
+        answersList.clear();
+    }
+
+    public void clearPokemonScores () {
+        pokemonScores.clear();
+    }
+
+    public void resetSavedCount() {
+        savedCount = 0;
+    }
 
     public PokemonService(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
@@ -100,6 +124,47 @@ public class PokemonService {
         }
     }
 
+    public void savePokemonAnswers(PokemonDTO currentAnswers) {
+        // Save the answers as before
+        Map<String, Object> answersMap = new HashMap<>();
+        answersMap.put("pokemonId", currentAnswers.getPokemonId());
+        answersMap.put("name", currentAnswers.getName());
+        answersMap.put("id", currentAnswers.getId());
+        answersMap.put("type1", currentAnswers.getType1());
+        answersMap.put("type2", currentAnswers.getType2());
+        answersMap.put("ability1", currentAnswers.getAbility1());
+        answersMap.put("ability2", currentAnswers.getAbility2());
+        answersMap.put("ability3", currentAnswers.getAbility3());
+        answersMap.put("height", currentAnswers.getHeight());
+        answersMap.put("weight", currentAnswers.getWeight());
+        answersMap.put("habitat", currentAnswers.getHabitat());
+        answersMap.put("growth_rate", currentAnswers.getGrowth_rate());
+        answersMap.put("debutGeneration", currentAnswers.getDebutGeneration());
+        answersMap.put("spriteUrl", currentAnswers.getSprite());
+
+        int score = 0;
+        for (Map.Entry<String, Object> entry : answersMap.entrySet()) {
+            if (entry.getValue() instanceof Boolean && (Boolean) entry.getValue()) {
+                score += 100;
+            }
+        }
+
+        pokemonScores.add(score);
+        answersList.add(answersMap);
+
+        savedCount++;
+    }
+
+    public int calculateTotalScore() {
+        return pokemonScores.stream().mapToInt(Integer::intValue).sum();
+    }
+
+    public void resetGameData() {
+        answersList.clear();
+        pokemonScores.clear();
+        savedCount = 0;
+    }
+
     private Map<String, String> fetchGrowthRateAndHabitat(int dexNumber) {
         try {
             URL speciesUrl = new URL("https://pokeapi.co/api/v2/pokemon-species/" + dexNumber);
@@ -124,6 +189,16 @@ public class PokemonService {
         } catch (Exception e) {
             throw new RuntimeException("Failed to fetch Pokémon species data", e);
         }
+    }
+
+    public List<String> getSavedSprites() {
+        List<String> sprites = new ArrayList<>();
+        for (Map<String, Object> answers : answersList) {
+            if (answers.containsKey("spriteUrl")) {
+                sprites.add((String) answers.get("spriteUrl"));
+            }
+        }
+        return sprites;
     }
 
     public List<String> fetchPokemonTypes() {

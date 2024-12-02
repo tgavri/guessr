@@ -23,17 +23,19 @@
         .wrapper {
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
             width: 90%;
             max-width: 800px;
-            height: auto;
+            min-height: 90vh;
             background: rgba(255, 255, 255, 0.7);
             border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
             padding: 20px;
             text-align: center;
-            margin-top: 7%;
+            margin-top: 25vh;
+            margin-bottom: 20vh;
+            overflow: hidden;
         }
 
         .container {
@@ -46,8 +48,89 @@
 
         .row {
             display: flex;
-            justify-content: space-between;
-            gap: 10px;
+            justify-content: center;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 20px;
+            width: 100%;
+        }
+
+        .top-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            width: 100%;
+        }
+
+        #timerContainer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin-bottom: 20px;
+            width: 120px;
+            height: 120px;
+        }
+
+        #circularTimer {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            stroke-width: 10;
+        }
+
+        #timerText {
+            position: absolute;
+            top: -30px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #000;
+            text-align: center;
+            z-index: 2;
+        }
+
+        #circularTimer svg {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+            z-index: 1;
+        }
+
+        #circularTimer circle:first-child {
+            fill: none;
+            stroke-width: 10;
+            stroke: #ddd;
+        }
+
+        #timerCircle {
+            stroke: #4caf50;
+            stroke-dasharray: 283;
+            stroke-dashoffset: 283;
+            transition: stroke-dashoffset 1s linear;
+            stroke-width: 10;
+        }
+
+        .sprite-container {
+            text-align: center;
+            padding: 10px;
+            border: 1px solid black;
+            display: inline-block;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:disabled {
+            background-color: lightgray;
+            color: darkgray;
         }
 
         .field {
@@ -78,14 +161,6 @@
             color: gray;
         }
 
-        .sprite-container {
-            text-align: center;
-            margin-bottom: 20px;
-            padding: 10px;
-            border: 1px solid black;
-            display: inline-block;
-        }
-
         img {
             max-width: 260px;
             height: auto;
@@ -99,21 +174,24 @@
         .correct {
             background-color: lightgreen;
             color: black;
+            border: 2px solid green; /* Optional: to show a green border */
         }
 
         .incorrect {
             background-color: lightcoral;
-            color: white;
-        }
-
-        .neutral {
-            background-color: white;
             color: black;
+            border: 2px solid red; /* Optional: to show a red border */
         }
 
         .disabled {
             background-color: lightgray;
             color: darkgray;
+            border: 1px solid #ccc;
+        }
+
+        .neutral {
+            background-color: white;
+            color: black;
         }
 
         input[type="range"] {
@@ -166,60 +244,88 @@
         let correctAbility1 = "";
         let correctAbility2 = "";
         let correctAbility3 = "";
-        let correctDebutGeneration = 0;
-        let habitat = "";
-        let growth_rate = "";
         let correctWeight = 0;
         let correctHeight = 0;
+        const spriteUrl = "[[${spriteUrl}]]";
+        let answersLog = {};
+        let pokemonCount = 0;
 
         function validateInput(input, correctValue, messageElementId) {
             const inputValue = input.value.trim();
-            const isNumeric = !isNaN(correctValue);
-
             const messageElement = document.getElementById(messageElementId);
 
-            if (inputValue === "") {
-                input.className = "neutral";
-                messageElement.textContent = "";
-            } else if (isNumeric ? Number(inputValue) === Number(correctValue) : normalizeText(inputValue) === normalizeText(correctValue)) {
-                input.value = isNumeric ? inputValue.trim() : capitalizeFirstChar(inputValue.trim());
-                input.className = "correct";
-                input.disabled = true;
-                messageElement.style.color = "green";
+            const key = input.id; // Use input's id as the key in answersLog
+
+            if (input.type === 'number') {
+                const inputNumericValue = Number(inputValue);
+                const isCorrect = inputNumericValue === Number(correctValue);
+
+                answersLog[key] = { correct: isCorrect, userAnswer: inputNumericValue || null };
+
+                if (inputValue === "") {
+                    input.className = "neutral";
+                    messageElement.textContent = "";
+                } else if (isCorrect) {
+                    input.className = "correct";
+                    input.disabled = true;
+                    messageElement.style.color = "green";
+                } else {
+                    input.className = "incorrect";
+                    messageElement.style.color = "red";
+                }
             } else {
-                input.className = "incorrect";
-                messageElement.style.color = "red";
+                const isTextCorrect = normalizeText(inputValue) === normalizeText(correctValue);
+
+                answersLog[key] = { correct: isTextCorrect, userAnswer: inputValue || null };
+
+                if (inputValue === "") {
+                    input.className = "neutral";
+                    messageElement.textContent = "";
+                } else if (isTextCorrect) {
+                    input.className = "correct";
+                    input.disabled = true;
+                    messageElement.style.color = "green";
+                } else {
+                    input.className = "incorrect";
+                    messageElement.style.color = "red";
+                }
             }
         }
 
         function validateAndLock(inputId, correctValue, messageElementId) {
             const input = document.getElementById(inputId);
             const inputValue = input.value.trim();
-            const button = input.nextElementSibling;
             const messageElement = document.getElementById(messageElementId);
 
-            if (inputValue === "") return;
+            let isCorrect = false;
+            if (input.type === 'number') {
+                isCorrect = Number(inputValue) === Number(correctValue);
+            } else {
+                isCorrect = normalizeText(inputValue) === normalizeText(correctValue);
+            }
 
-            if (!isNaN(correctValue) ? Number(inputValue) === Number(correctValue) : normalizeText(inputValue) === normalizeText(correctValue)) {
+            // Update answersLog with the result
+            answersLog[inputId] = {
+                correct: isCorrect,
+                userAnswer: inputValue || null
+            };
+
+            if (isCorrect) {
                 input.className = "correct";
+                messageElement.textContent = "Correct!";
                 messageElement.style.color = "green";
             } else {
                 input.className = "incorrect";
+                messageElement.textContent = "Incorrect!";
                 messageElement.style.color = "red";
             }
 
             input.disabled = true;
-            if (button) button.disabled = true;
         }
 
         function normalizeText(text) {
             if (!text) return "";
             return text.trim().toLowerCase().replace(/\s+/g, " ");
-        }
-
-        function capitalizeFirstChar(text) {
-            if (!text || text.length === 0) return text;
-            return text.charAt(0).toUpperCase() + text.slice(1);
         }
 
         function disableFieldsIfEmpty() {
@@ -243,62 +349,53 @@
             });
         }
 
-        function updateSliderValue(sliderId, displayId) {
-            const slider = document.getElementById(sliderId);
-            const display = document.getElementById(displayId);
-            display.textContent = slider.value;
-        }
-
         function validateAndLockSlider(inputId, correctValue, messageElementId, tolerance = 0) {
             const input = document.getElementById(inputId);
-            const inputValue = Number(input.value);
-            const button = input.nextElementSibling;
+            const value = parseInt(input.dataset[inputId.includes("Weight") ? "weight" : "height"], 10);
             const messageElement = document.getElementById(messageElementId);
 
-            if (Math.abs(inputValue - correctValue) <= tolerance) {
-                input.className = "correct-slider";
+            if (Math.abs(value - correctValue) <= tolerance) {
+                input.className = inputId.includes("Weight") ? "correct-slider" : "correct-slider";
                 messageElement.style.color = "green";
             } else {
-                input.className = "incorrect-slider";
+                input.className = inputId.includes("Weight") ? "incorrect-slider" : "incorrect-slider";
                 messageElement.style.color = "red";
             }
 
             input.disabled = true;
+            const button = input.nextElementSibling;
             if (button) button.disabled = true;
         }
 
-        let cachedTypes = null; // Variable to cache the types
+        let cachedTypes = null;
 
         async function fetchPokemonTypes() {
             try {
-                // If types are already fetched, use the cached data
+
                 if (cachedTypes) {
                     populateDropdown('guessType1', cachedTypes);
                     populateDropdown('guessType2', cachedTypes);
 
-                    // Enable or disable Type2 based on the presence of a second type
+
                     handleType2State();
                     return;
                 }
 
-                // Fetch types from the API
+
                 const response = await fetch('/api/types');
                 if (!response.ok) throw new Error('Failed to fetch types');
                 const types = await response.json();
-                cachedTypes = types; // Cache the fetched types
+                cachedTypes = types;
 
-                // Populate both dropdowns
                 populateDropdown('guessType1', types);
                 populateDropdown('guessType2', types);
 
-                // Enable or disable Type2 based on the presence of a second type
                 handleType2State();
             } catch (error) {
                 console.error('Error fetching Pokémon types:', error);
             }
         }
 
-        // Handle the state of Type2 dropdown and button
         function handleType2State() {
             const type2Dropdown = document.getElementById('guessType2');
             const type2Button = document.getElementById('lockType2Button');
@@ -313,14 +410,13 @@
             }
         }
 
-        // Populate a dropdown with options
         function populateDropdown(elementId, options) {
             const dropdown = document.getElementById(elementId);
-            dropdown.innerHTML = ""; // Clear existing options
+            dropdown.innerHTML = "";
 
             options.forEach(type => {
                 const option = document.createElement('option');
-                option.value = type;
+                option.value = normalizeText(type);
                 option.textContent = type;
                 dropdown.appendChild(option);
             });
@@ -345,15 +441,7 @@
 
         function adjustHeightSlider(slider) {
             const sliderValue = parseInt(slider.value, 10);
-            let height;
-
-            if (sliderValue === 0) {
-                height = 10;
-            } else if (sliderValue <= 150) {
-                height = Math.round(sliderValue * (500 / 150) / 10) * 10;
-            } else {
-                height = 500 + Math.round((sliderValue - 150) * (1500 / 50) / 25) * 25;
-            }
+            const height = sliderValue * 10;
 
             const display = document.getElementById("heightValue");
             display.textContent = height;
@@ -372,6 +460,71 @@
             }
         }
 
+        function fetchNextPokemon() {
+            const currentAnswers = {
+                pokemonId: correctId,
+                name: answersLog['guessName']?.correct || false,
+                id: answersLog['guessId']?.correct || false,
+                type1: answersLog['guessType1']?.correct || false,
+                type2: answersLog['guessType2']?.correct || false,
+                ability1: answersLog['guessAbility1']?.correct || false,
+                ability2: answersLog['guessAbility2']?.correct || false,
+                ability3: answersLog['guessAbility3']?.correct || false,
+                height: answersLog['guessHeight']?.correct || false,
+                weight: answersLog['guessWeight']?.correct || false,
+                habitat: answersLog['guessHabitatDropdown']?.correct || false,
+                growth_rate: answersLog['guessGrowthRateDropdown']?.correct || false,
+                debutGeneration: answersLog['guessDebutGeneration']?.correct || false,
+                sprite: spriteUrl
+            };
+
+            fetch('/savePokemonAnswers', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(currentAnswers)
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to save Pokémon answers');
+                    }
+                    return response.json(); // Parse the JSON response
+                })
+                .then(data => {
+                    if (data.success) {
+                        if (data.shouldRedirect) {
+                            // Redirect to the final page after 5 Pokémon
+                            window.location.href = '/pokemonScore';
+                        } else {
+                            // Redirect to the next Pokémon
+                            window.location.href = '/pokemonGame';
+                        }
+                    } else {
+                        alert("An error occurred while saving your answers.");
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred while saving your answers.');
+                });
+        }
+
+
+        correctName = "[[${name}]]";
+        correctId = [[${id}]];
+        correctType1 = "[[${type1}]]";
+        correctType2 = "[[${type2}]]";
+        correctAbility1 = "[[${ability1}]]".replace(/-/g, " ");
+        correctAbility2 = "[[${ability2}]]".replace(/-/g, " ");
+        correctAbility3 = "[[${ability3}]]".replace(/-/g, " ");
+        correctDebutGeneration = [[${debutGeneration}]];
+        correctHabitat = "[[${habitat}]]".replace(/-/g, " ");
+        correctGrowthRate = "[[${growth_rate}]]".replace(/-/g, " ");
+        correctWeight = [[${weight}]] / 10;
+        correctHeight = [[${height}]] * 10;
+
+
         async function fetchGrowthRates() {
             try {
                 const response = await fetch('/api/growth-rates');
@@ -384,34 +537,39 @@
             }
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            window.scrollTo(0, 0);
-            disableFieldsIfEmpty();
-            fetchPokemonTypes();
-            fetchPokemonHabitats();
-            fetchGrowthRates();
-        });
-
     </script>
 </head>
 <body onload="disableFieldsIfEmpty()">
 <div class="wrapper">
-<h1>Pokémon Guessing Game</h1>
-
-<div class="sprite-container">
-    <img th:src="${spriteUrl}" alt="Pokémon Image">
-</div>
+    <h1>Pokémon Guessing Game</h1>
+    <div class="top-row">
+        <div id="timerContainer">
+            <div id="circularTimer">
+                <div id="timerText" class="above-circle">60</div>
+                <svg>
+                    <circle cx="50" cy="50" r="45" fill = "none"></circle>
+                    <circle id="timerCircle" cx="50" cy="50" r="45" fill = "none"></circle>
+                </svg>
+            </div>
+        </div>
+        <div class="sprite-container">
+            <img th:src="${spriteUrl}" alt="Pokémon Image">
+        </div>
+        <div>
+            <button onclick="fetchNextPokemon()">Next Pokémon</button>
+        </div>
+    </div>
 
 <div class="container">
     <!-- Row 1: Name and ID -->
     <div class="row">
         <div class="field">
-            <label for="guessName">Pokémon Name:</label>
+            <label id="nameLabel" for="guessName">Pokémon Name:</label>
             <input type="text" id="guessName" class="neutral" placeholder="Pokémon Name" oninput="validateInput(this, correctName, 'nameMessage')">
             <p id="nameMessage"></p>
         </div>
         <div class="field">
-            <label for="guessId">PokéDex Number:</label>
+            <label id="idLabel" for="guessId">PokéDex Number:</label>
             <input type="number" id="guessId" class="neutral" placeholder="PokéDex Number">
             <button onclick="validateAndLock('guessId', correctId, 'idMessage')">Lock Answer</button>
             <p id="idMessage"></p>
@@ -421,13 +579,13 @@
     <!-- Row 2: Type1 and Type2 -->
     <div class="row">
         <div class="field">
-            <label for="guessType1">Pokémon First Type:</label>
+            <label id="type1Label" for="guessType1">Pokémon First Type:</label>
             <select id="guessType1" class="neutral"></select>
             <button onclick="validateAndLock('guessType1', correctType1, 'type1Message')">Lock Answer</button>
             <p id="type1Message"></p>
         </div>
         <div class="field">
-            <label for="guessType2">Pokémon Second Type:</label>
+            <label id="type2Label" for="guessType2">Pokémon Second Type:</label>
             <select id="guessType2" class="neutral" disabled></select>
             <button id="lockType2Button" onclick="validateAndLock('guessType2', correctType2, 'type2Message')" disabled>Lock Answer</button>
             <p id="type2Message"></p>
@@ -437,19 +595,19 @@
     <!-- Row 3: Ability1 and Ability2 and Ability3 -->
     <div class="row">
         <div class="field">
-            <label for="guessAbility1">Pokémon First Ability:</label>
+            <label id="ability1Label" for="guessAbility1">Pokémon First Ability:</label>
             <input type="text" id="guessAbility1" class="neutral" placeholder="Guess First Ability">
             <button id="lockAbility1Button" onclick="validateAndLock('guessAbility1', correctAbility1, 'ability1Message')">Lock Answer</button>
             <p id="ability1Message"></p>
         </div>
         <div class="field">
-            <label for="guessAbility2">Pokémon Second Ability:</label>
+            <label id="ability2Label" for="guessAbility2">Pokémon Second Ability:</label>
             <input type="text" id="guessAbility2" class="neutral" placeholder="Guess Second Ability">
             <button id="lockAbility2Button" onclick="validateAndLock('guessAbility2', correctAbility2, 'ability2Message')">Lock Answer</button>
             <p id="ability2Message"></p>
         </div>
         <div class="field">
-            <label for="guessAbility3">Pokémon Hidden Ability:</label>
+            <label id="ability3Label" for="guessAbility3">Pokémon Hidden Ability:</label>
             <input type="text" id="guessAbility3" class="neutral" placeholder="Guess Hidden Ability">
             <button id="lockAbility3Button" onclick="validateAndLock('guessAbility3', correctAbility3, 'ability3Message')">Lock Answer</button>
             <p id="ability3Message"></p>
@@ -459,7 +617,7 @@
     <!-- Row 4: Debut Generation -->
     <div class="row">
         <div class="field">
-            <label for="guessDebutGeneration">Pokémon Debut Generation:</label>
+            <label id="debutGenerationLabel" for="guessDebutGeneration">Pokémon Debut Generation:</label>
             <input type="number" id="guessDebutGeneration" class="neutral" placeholder="Guess Pokémon Debut Generation">
             <button onclick="validateAndLock('guessDebutGeneration', correctDebutGeneration, 'debutGenerationMessage')">Lock Answer</button>
             <p id="debutGenerationMessage"></p>
@@ -469,22 +627,22 @@
     <!-- Row 5: Habitat and Growth Rate -->
     <div class="row">
         <div class="field">
-            <label for="guessHabitatDropdown">Pokémon Habitat:</label>
+            <label id="habitatLabel" for="guessHabitatDropdown">Pokémon Habitat:</label>
             <select id="guessHabitatDropdown" class="neutral"></select>
             <button onclick="validateAndLock('guessHabitatDropdown', correctHabitat, 'habitatDropdownMessage')">Lock Answer</button>
             <p id="habitatDropdownMessage"></p>
         </div>
         <div class="field">
-            <label for="guessGrowthRateDropdown">Pokémon Growth Rate:</label>
+            <label id="growthRateLabel" for="guessGrowthRateDropdown">Pokémon Growth Rate:</label>
             <select id="guessGrowthRateDropdown" class="neutral"></select>
             <button onclick="validateAndLock('guessGrowthRateDropdown', correctGrowthRate, 'growthRateDropdownMessage')">Lock Answer</button>
             <p id="growthRateDropdownMessage"></p>
         </div>
     </div>
 
-    <!-- Row 6: Weight-->
+    <!-- Row 6: Weight -->
     <div class="field">
-        <label for="guessWeight">Pokémon Weight (kg):</label>
+        <label id="weightLabel" for="guessWeight">Pokémon Weight (kg):</label>
         <input
                 type="range"
                 id="guessWeight"
@@ -496,13 +654,13 @@
                 data-weight="1"
         >
         <span id="weightValue">1</span> kg
-        <button onclick="validateAndLockSlider('guessWeight', correctWeight, 'weightMessage', 5)">Lock Answer</button>
+        <button onclick="validateAndLockSlider('guessWeight', correctWeight, 'weightMessage', 25)">Lock Answer</button>
         <p id="weightMessage"></p>
     </div>
 
     <!-- Row 7: Height -->
     <div class="field">
-        <label for="guessHeight">Pokémon Height (cm):</label>
+        <label id="heightLabel" for="guessHeight">Pokémon Height (cm):</label>
         <input
                 type="range"
                 id="guessHeight"
@@ -514,27 +672,99 @@
                 data-height="10"
         >
         <span id="heightValue">10</span> cm
-        <button onclick="validateAndLockSlider('guessHeight', correctHeight, 'heightMessage', 10)">Lock Answer</button>
+        <button onclick="validateAndLockSlider('guessHeight', correctHeight, 'heightMessage', 20)">Lock Answer</button>
         <p id="heightMessage"></p>
     </div>
     </div>
-
 </div>
-</div>
-
 <script>
-    correctName = "[[${name}]]";
-    correctId = [[${id}]];
-    correctType1 = "[[${type1}]]";
-    correctType2 = "[[${type2}]]";
-    correctAbility1 = "[[${ability1}]]".replace(/-/g, " ");
-    correctAbility2 = "[[${ability2}]]".replace(/-/g, " ");
-    correctAbility3 = "[[${ability3}]]".replace(/-/g, " ");
-    correctDebutGeneration = [[${debutGeneration}]];
-    correctHabitat = "[[${habitat}]]".replace(/-/g, " ");
-    correctGrowthRate = "[[${growth_rate}]]".replace(/-/g, " ");
-    correctWeight = [[${weight}]] / 10;
-    correctHeight = [[${height}]] * 10;
+
+    document.addEventListener("DOMContentLoaded", () => {
+
+        window.scrollTo(0, 0);
+        fetchPokemonTypes();
+        fetchPokemonHabitats();
+        fetchGrowthRates();
+
+        let countdown = 60; // Timer starts at 60 seconds
+        const timerText = document.getElementById("timerText");
+        const timerCircle = document.getElementById("timerCircle");
+
+        // Total circumference of the circle (2πr)
+        const totalLength = 2 * Math.PI * 45; // Radius is 45
+        timerCircle.style.strokeDasharray = totalLength;
+
+        function startCircularCountdown() {
+            const interval = setInterval(() => {
+                if (countdown > 0) {
+                    countdown -= 1;
+                    timerText.textContent = countdown;
+
+                    const progressPercent = countdown / 60;
+                    const offset = totalLength * (1 - progressPercent);
+                    timerCircle.style.strokeDashoffset = offset;
+
+                    if (progressPercent <= 0.5 && progressPercent > 0.25) {
+                        timerCircle.style.stroke = "#ff9800";
+                    } else if (progressPercent <= 0.25) {
+                        timerCircle.style.stroke = "#f44336";
+                    }
+                } else {
+                    clearInterval(interval);
+                    lockAllInputs();
+                    updateLabelsWithCorrectAnswers();
+                }
+            }, 1000);
+        }
+
+        function lockAllInputs() {
+            const inputs = document.querySelectorAll("input, select, button");
+
+            inputs.forEach(input => {
+
+                if (input.textContent !== "Next Pokémon" && !input.classList.contains("correct") && !input.classList.contains("incorrect")) {
+                    input.disabled = true; // Lock input
+                    input.classList.add("disabled");
+                }
+
+                if (input.classList.contains("correct")) {
+                    input.disabled = true;
+                    input.classList.remove("disabled");
+                }
+
+                if (input.classList.contains("incorrect")) {
+                    input.disabled = true;
+                    input.classList.remove("disabled");
+                }
+            });
+
+            const nextPokemonButton = document.querySelector("button[onclick='fetchNextPokemon()']");
+            if (nextPokemonButton) {
+                nextPokemonButton.disabled = false;
+                nextPokemonButton.classList.remove("disabled");
+            }
+        }
+
+        function updateLabelsWithCorrectAnswers() {
+            document.getElementById("nameLabel").textContent = `Pokémon Name: ${correctName}`;
+            document.getElementById("idLabel").textContent = `PokéDex Number: ${correctId}`;
+            document.getElementById("type1Label").textContent = `Pokémon First Type: ${correctType1}`;
+            document.getElementById("type2Label").textContent = `Pokémon Second Type: ${correctType2}`;
+            document.getElementById("ability1Label").textContent = `Pokémon First Ability: ${correctAbility1}`;
+            document.getElementById("ability2Label").textContent = `Pokémon Second Ability: ${correctAbility2}`;
+            document.getElementById("ability3Label").textContent = `Pokémon Hidden Ability: ${correctAbility3}`;
+            document.getElementById("debutGenerationLabel").textContent = `Pokémon Debut Generation: ${correctDebutGeneration}`;
+            document.getElementById("habitatLabel").textContent = `Pokémon Habitat: ${correctHabitat}`;
+            document.getElementById("growthRateLabel").textContent = `Pokémon Growth Rate: ${correctGrowthRate}`;
+            document.getElementById("weightLabel").textContent = `Pokémon Weight (kg): ${correctWeight}`;
+            document.getElementById("heightLabel").textContent = `Pokémon Height (cm): ${correctHeight}`;
+        }
+
+        startCircularCountdown();
+    });
+
+
 </script>
+
 </body>
 </html>

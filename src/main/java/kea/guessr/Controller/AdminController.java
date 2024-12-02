@@ -1,8 +1,7 @@
 package kea.guessr.Controller;
 
-import kea.guessr.Model.Game;
 import kea.guessr.Model.User;
-import kea.guessr.Service.GameService;
+
 import kea.guessr.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,8 +17,6 @@ import java.util.*;
 @RequestMapping("/admin")
 public class AdminController {
 
-    @Autowired
-    private GameService gameService;
 
     @Autowired
     private UserService userService;
@@ -28,7 +25,7 @@ public class AdminController {
     @GetMapping("/admin")
     public String dashboard(Model model) {
         model.addAttribute("totalUsers", userService.getAllUsers().size());
-        model.addAttribute("totalGames", gameService.getAllGames().size());
+        //model.addAttribute("totalGames", gameService.getAllGames().size());
         return "admin/dashboard"; // Return a dashboard view
     }
 
@@ -103,33 +100,33 @@ public class AdminController {
     // Game management routes
     @GetMapping("/content")
     public String gameManagement(Model model) {
-        model.addAttribute("games", gameService.getAllGames());
+        //model.addAttribute("games", gameService.getAllGames());
         return "admin/content";
     }
 
-    @PostMapping("/create-game")
-    public String createGame(@ModelAttribute Game game) {
-        gameService.createGame(game);
-        return "redirect:/admin/content";
-    }
+    //@PostMapping("/create-game")
+    //public String createGame(@ModelAttribute Game game) {
+     //   gameService.createGame(game);
+    //    return "redirect:/admin/content";
+    //}
 
     @GetMapping("/game/{id}/edit")
     public String editGame(@PathVariable Long id, Model model) {
-        Game game = gameService.getGameById(id);
-        model.addAttribute("game", game);
+    //    Game game = gameService.getGameById(id);
+     //   model.addAttribute("game", game);
         return "admin/edit-game";
     }
 
-    @PostMapping("/game/{id}/edit")
-    public String updateGame(@PathVariable Long id, @ModelAttribute Game game) {
-        gameService.updateGame(id, game);
-        return "redirect:/admin/content";
-    }
+   //@PostMapping("/game/{id}/edit")
+   // public String updateGame(@PathVariable Long id, @ModelAttribute Game game) {
+    //    gameService.updateGame(id, game);
+   //     return "redirect:/admin/content";
+   // }
 
-    @GetMapping("/game/{id}/delete")
-    public String deleteGame(@PathVariable Long id) {
-        gameService.deleteGame(id);
-        return "redirect:/admin/content";
-    }
+   // @GetMapping("/game/{id}/delete")
+    //public String deleteGame(@PathVariable Long id) {
+    //    gameService.deleteGame(id);
+    //    return "redirect:/admin/content";
+    //}
 
 }

@@ -1,7 +1,5 @@
 package kea.guessr.Service;
 
-import kea.guessr.Model.Game;
-import kea.guessr.Repository.GameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +7,7 @@ import java.util.List;
 
 
 // Ej færdig. blot et udkast.
-
+/*
 @Service
 public class GameService {
 
@@ -51,3 +49,4 @@ public class GameService {
         gameRepository.deleteById(id);
     }
 }
+*/

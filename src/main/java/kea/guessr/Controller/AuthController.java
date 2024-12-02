@@ -11,9 +11,9 @@ import java.sql.ResultSet;
 @RequestMapping("/api")
 public class AuthController {
 
-    private final String DB_URL = "jdbc:mysql://mysql:3306/guessr";
-    private final String USER = "root";
-    private final String PASSWORD = "mysqlpass";
+    private final String DB_URL = "jdbc:h2:mem:testdk";
+    private final String USER = "sa";
+    private final String PASSWORD = "";
 
     @PostMapping("/login")
     public String login(@RequestParam String username, @RequestParam String password) {

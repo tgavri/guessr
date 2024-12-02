@@ -5,17 +5,26 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Table (name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
+    private String username;
+    private String password;
     private String name;
     private String email;
     private String status;
-    private String role;
-    private String username;
-    private String password;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+    public enum Role {
+        ADMIN,
+        USER,
+    }
+
 
     @Column(name = "registration_date")
     private LocalDateTime registrationDate;
@@ -24,6 +33,17 @@ public class User {
     // Constructors
     public User() {}
 
+    public User(int id, String username, String password, String name, String email, String status, Role role, LocalDateTime registrationDate) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.status = status;
+        this.role = role;
+        this.username = username;
+        this.password = password;
+        this.registrationDate = registrationDate;
+    }
+
     public User(String name, String email, String status, LocalDateTime registrationDate) {
         this.name = name;
         this.email = email;
@@ -31,11 +51,11 @@ public class User {
         this.registrationDate = registrationDate;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -69,5 +89,29 @@ public class User {
     public void setRegistrationDate(LocalDateTime registrationDate) {
         this.registrationDate = registrationDate;
     }
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
 }
 

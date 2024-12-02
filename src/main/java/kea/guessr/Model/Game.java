@@ -2,7 +2,7 @@ package kea.guessr.Model;
 
 import jakarta.persistence.*;
 import java.util.List;
-
+/*
 @Entity
 public class Game {
     @Id
@@ -101,3 +101,4 @@ public class Game {
         YEAR_SLIDER,
     }
 }
+*/

@@ -110,7 +110,7 @@
                 <li class="nav-item"><a class="nav-link" href="/about">Om os</a></li>
                 <li class="nav-item"><a id="login-link" class="btn btn-success" href="#">Log ind</a></li>
                 <li class="nav-item" style="display: none;"><a id="admin-link" class="nav-link" href="/adminpanel">Admin Panel</a></li>
-                <li class="nav-item" style="display: none;"><a id="logout-link" class="nav-link" href="#">Log ud</a></li>
+                <li class="nav-item" style="display: none;"><a id="logout-link" class="btn btn-danger" href="#">Log ud</a></li>
             </ul>
         </div>
     </div>
@@ -168,44 +168,72 @@
                 return;
             }
 
-            // Perform login request
-            $.post('/api/login', { username, password })
-                .done(function (response) {
-                    alert(response);
+            // Perform login request to backend API
+            $.ajax({
+                url: '/api/login',
+                type: 'POST',
+                data: { username, password },
+                success: function (response) {
+                    console.log(response);  // Debugging log for response
+                    alert(response);  // Display server response
                     $('#loginModal').css('display', 'none'); // Close modal
-                    sessionStorage.setItem('isLoggedIn', 'true'); // Store login status
-                    updateLoginStatus(); // Update UI
-                    window.location.href = '/admin'; // Redirect on success
-                })
-                .fail(function () {
-                    alert('Login failed. Please try again.');
-                });
+
+                    // Store the role in sessionStorage
+                    sessionStorage.setItem('role', response); // Store role (either 'user' or 'admin')
+                    sessionStorage.setItem('isLoggedIn', 'true');  // Store login status
+                    updateLoginStatus(); // Update UI based on login status and role
+                    redirectBasedOnRole(response);  // Redirect based on user role
+                },
+                error: function (xhr) {
+                    console.log('Login failed', xhr.responseText);  // Debugging log for error
+                    alert('Login failed: ' + xhr.responseText);
+                }
+            });
         });
 
-        // Update login/logout UI
+        // Update the UI based on login status
         function updateLoginStatus() {
             const isLoggedIn = sessionStorage.getItem('isLoggedIn');
-            if (isLoggedIn) {
-                $('#login-link').hide();
-                $('#admin-link').show();
-                $('#logout-link').show();
+            const role = sessionStorage.getItem('role');
+
+            if (isLoggedIn === 'true') {
+                $('#login-link').hide(); // Hide login button
+                $('#logout-link').show(); // Show logout button
+                if (role === 'ADMIN') {
+                    $('#admin-link').show(); // Show admin panel link
+                } else {
+                    $('#admin-link').hide(); // Hide admin panel link for users
+                }
             } else {
-                $('#admin-link').hide();
-                $('#logout-link').hide();
-                $('#login-link').show();
+                $('#login-link').show(); // Show login button
+                $('#logout-link').hide(); // Hide logout button
+                $('#admin-link').hide(); // Hide admin panel link
             }
         }
+
+        // Redirect user based on their role
+        function redirectBasedOnRole(role) {
+            if (role === 'ADMIN') {
+                window.location.href = '/admin'; // Redirect admin to admin page
+            } else if (role === 'USER') {
+                window.location.href = '/'; // Redirect user to homepage
+            }
+        }
+
 
         // Handle logout
         $('#logout-link').on('click', function (e) {
             e.preventDefault();
-            sessionStorage.removeItem('isLoggedIn');
-            updateLoginStatus();
-            alert('Du er hermed logget ud.');
-            window.location.href = '/';
+            sessionStorage.removeItem('isLoggedIn'); // Remove login status from sessionStorage
+            sessionStorage.removeItem('role'); // Remove role from sessionStorage
+            updateLoginStatus(); // Update UI after logout
+            alert('Du er hermed logget ud.'); // Alert the user
+            window.location.href = '/'; // Redirect to homepage after logout
         });
 
-        // Initial status check
+        // Initial status check on page load
         updateLoginStatus();
     });
 </script>
+
+

@@ -78,7 +78,7 @@
     <div class="admin-content">
         <div class="admin-header">
             <h1>Admin Dashboard</h1>
-            <a href="/logout" class="btn btn-dark">Logout</a>
+            <button class="logout-button">Logout</button>
         </div>
 
         <!-- Overview Section -->
@@ -683,6 +683,14 @@
             alert('Please select a backup file to restore from.');
         }
     }
+
+    document.getElementById("logout-button").addEventListener("click", function () {
+        if (confirm("Er du sikker på, at du vil logge ud?")) {
+            sessionStorage.clear();
+            localStorage.clear();
+            window.location.href = "/"; // Erstat med forside
+        }
+    });
 
     // Event listeners
     document.addEventListener('DOMContentLoaded', () => {

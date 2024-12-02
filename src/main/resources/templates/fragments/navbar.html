@@ -8,7 +8,93 @@
         height: 60px; /* Adjust this value as needed */
         width: auto;  /* Keep the aspect ratio */
     }
+         /* Modal Styling */
+     #loginModal {
+         display: none; /* Hidden by default */
+         position: fixed;
+         z-index: 1050;
+         left: 0;
+         top: 0;
+         width: 100%;
+         height: 100%;
+         overflow: auto;
+         background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
+     }
+    .modal-content {
+        background: linear-gradient(135deg, #bc9aff, #c4d1fa, #c2f6fb); /* Colorful gradient */
+        margin: 10% auto;
+        padding: 20px;
+        border-radius: 20px;
+        width: 400px;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        animation: popIn 0.3s ease-out;
+    }
+    .modal-content h2 {
+        margin-bottom: 20px;
+        color: #343a40;
+        font-size: 2em;
+        font-weight: bold;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+    .modal-content label {
+        display: block;
+        margin-bottom: 5px;
+        font-size: 1em;
+        color: #fff;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        text-align: left;
+    }
+    .modal-content input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: none;
+        border-radius: 8px;
+        font-size: 1em;
+        box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+    .modal-content button {
+        background: linear-gradient(45deg, #42e695, #3bb2b8); /* Gradient button */
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 25px;
+        font-size: 1em;
+        font-weight: bold;
+        cursor: pointer;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .modal-content button:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+    .close {
+        color: #fff;
+        float: right;
+        font-size: 24px;
+        font-weight: bold;
+        cursor: pointer;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+    .close:hover,
+    .close:focus {
+        color: #ff6f61;
+        text-decoration: none;
+    }
+    @keyframes popIn {
+        from {
+            transform: scale(0.8);
+            opacity: 0;
+        }
+        to {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
 </style>
+
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
         <a class="navbar-brand" href="/">
@@ -22,7 +108,104 @@
                 <li class="nav-item"><a class="nav-link" href="/">Hjem</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Leaderboard</a></li>
                 <li class="nav-item"><a class="nav-link" href="/about">Om os</a></li>
+                <li class="nav-item"><a id="login-link" class="btn btn-success" href="#">Log ind</a></li>
+                <li class="nav-item" style="display: none;"><a id="admin-link" class="nav-link" href="/adminpanel">Admin Panel</a></li>
+                <li class="nav-item" style="display: none;"><a id="logout-link" class="nav-link" href="#">Log ud</a></li>
             </ul>
         </div>
     </div>
 </nav>
+
+<!-- Login Modal -->
+<div id="loginModal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Log ind</h2>
+        <form id="loginForm">
+            <div>
+                <label for="username">Brugernavn:</label><br>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div>
+                <label for="password">Adgangskode:</label><br>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div style="margin-top: 15px;">
+                <button type="submit">Log ind</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        // Show login modal when login button is clicked
+        $('#login-link').on('click', function (e) {
+            e.preventDefault();
+            $('#loginModal').css('display', 'block');
+        });
+
+        // Close modal when 'x' is clicked
+        $('.close').on('click', function () {
+            $('#loginModal').css('display', 'none');
+        });
+
+        // Close modal when clicking outside the modal
+        $(window).on('click', function (event) {
+            if ($(event.target).is('#loginModal')) {
+                $('#loginModal').css('display', 'none');
+            }
+        });
+
+        // Handle login form submission
+        $('#loginForm').on('submit', function (e) {
+            e.preventDefault();
+            const username = $('#username').val();
+            const password = $('#password').val();
+
+            if (username === '' || password === '') {
+                alert('Please enter both username and password.');
+                return;
+            }
+
+            // Perform login request
+            $.post('/api/login', { username, password })
+                .done(function (response) {
+                    alert(response);
+                    $('#loginModal').css('display', 'none'); // Close modal
+                    sessionStorage.setItem('isLoggedIn', 'true'); // Store login status
+                    updateLoginStatus(); // Update UI
+                    window.location.href = '/adminpanel'; // Redirect on success
+                })
+                .fail(function () {
+                    alert('Login failed. Please try again.');
+                });
+        });
+
+        // Update login/logout UI
+        function updateLoginStatus() {
+            const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+            if (isLoggedIn) {
+                $('#login-link').hide();
+                $('#admin-link').show();
+                $('#logout-link').show();
+            } else {
+                $('#admin-link').hide();
+                $('#logout-link').hide();
+                $('#login-link').show();
+            }
+        }
+
+        // Handle logout
+        $('#logout-link').on('click', function (e) {
+            e.preventDefault();
+            sessionStorage.removeItem('isLoggedIn');
+            updateLoginStatus();
+            alert('Du er hermed logget ud.');
+            window.location.href = '/';
+        });
+
+        // Initial status check
+        updateLoginStatus();
+    });
+</script>

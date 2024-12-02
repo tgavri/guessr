@@ -175,7 +175,7 @@
                     $('#loginModal').css('display', 'none'); // Close modal
                     sessionStorage.setItem('isLoggedIn', 'true'); // Store login status
                     updateLoginStatus(); // Update UI
-                    window.location.href = '/adminpanel'; // Redirect on success
+                    window.location.href = '/admin'; // Redirect on success
                 })
                 .fail(function () {
                     alert('Login failed. Please try again.');

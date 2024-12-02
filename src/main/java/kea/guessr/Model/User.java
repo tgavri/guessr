@@ -13,6 +13,10 @@ public class User {
     private String name;
     private String email;
     private String status;
+    private String role;
+    private String username;
+    private String password;
+
     @Column(name = "registration_date")
     private LocalDateTime registrationDate;
 

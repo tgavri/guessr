@@ -109,9 +109,10 @@
                 <li class="nav-item"><a class="nav-link" href="#">Leaderboard</a></li>
                 <li class="nav-item"><a class="nav-link" href="/about">Om os</a></li>
                 <li class="nav-item"><a id="login-link" class="btn btn-success" href="#">Log ind</a></li>
-                <li class="nav-item" style="display: none;"><a id="admin-link" class="nav-link" href="/adminpanel">Admin Panel</a></li>
-                <li class="nav-item" style="display: none;"><a id="logout-link" class="btn btn-danger" href="#">Log ud</a></li>
+                <li class="nav-item"><a id="admin-link" class="btn btn-success" href="/adminpanel" style="display: none;">Admin Panel</a></li>
+                <li class="nav-item"><a id="logout-link" class="btn btn-danger" href="#" style="display: none;">Log ud</a></li>
             </ul>
+
         </div>
     </div>
 </nav>
@@ -139,99 +140,78 @@
 
 <script>
     $(document).ready(function () {
-        // Show login modal when login button is clicked
+        function updateLoginStatus() {
+            const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+            const role = sessionStorage.getItem('role');
+
+            if (isLoggedIn === 'true') {
+                $('#login-link').hide();
+                $('#logout-link').show();
+                if (role === 'ADMIN') {
+                    $('#admin-link').show();
+                } else {
+                    $('#admin-link').hide();
+                }
+            } else {
+                $('#login-link').show();
+                $('#logout-link').hide();
+                $('#admin-link').hide();
+            }
+        }
+
         $('#login-link').on('click', function (e) {
             e.preventDefault();
             $('#loginModal').css('display', 'block');
         });
 
-        // Close modal when 'x' is clicked
         $('.close').on('click', function () {
             $('#loginModal').css('display', 'none');
         });
 
-        // Close modal when clicking outside the modal
         $(window).on('click', function (event) {
             if ($(event.target).is('#loginModal')) {
                 $('#loginModal').css('display', 'none');
             }
         });
 
-        // Handle login form submission
         $('#loginForm').on('submit', function (e) {
             e.preventDefault();
             const username = $('#username').val();
             const password = $('#password').val();
 
-            if (username === '' || password === '') {
-                alert('Please enter both username and password.');
-                return;
-            }
-
-            // Perform login request to backend API
             $.ajax({
                 url: '/api/login',
                 type: 'POST',
                 data: { username, password },
                 success: function (response) {
-                    console.log(response);  // Debugging log for response
-                    alert(response);  // Display server response
-                    $('#loginModal').css('display', 'none'); // Close modal
-
-                    // Store the role in sessionStorage
-                    sessionStorage.setItem('role', response); // Store role (either 'user' or 'admin')
-                    sessionStorage.setItem('isLoggedIn', 'true');  // Store login status
-                    updateLoginStatus(); // Update UI based on login status and role
-                    redirectBasedOnRole(response);  // Redirect based on user role
+                    $('#loginModal').css('display', 'none');
+                    sessionStorage.setItem('role', response);
+                    sessionStorage.setItem('isLoggedIn', 'true');
+                    updateLoginStatus();
+                    if (response === 'ADMIN') {
+                        window.location.href = '/admin';
+                    } else {
+                        window.location.href = '/';
+                    }
+                    setTimeout(function() {
+                        alert("Du er hermed logget ind!");
+                    }, 10);
                 },
                 error: function (xhr) {
-                    console.log('Login failed', xhr.responseText);  // Debugging log for error
                     alert('Login failed: ' + xhr.responseText);
                 }
             });
         });
 
-        // Update the UI based on login status
-        function updateLoginStatus() {
-            const isLoggedIn = sessionStorage.getItem('isLoggedIn');
-            const role = sessionStorage.getItem('role');
-
-            if (isLoggedIn === 'true') {
-                $('#login-link').hide(); // Hide login button
-                $('#logout-link').show(); // Show logout button
-                if (role === 'ADMIN') {
-                    $('#admin-link').show(); // Show admin panel link
-                } else {
-                    $('#admin-link').hide(); // Hide admin panel link for users
-                }
-            } else {
-                $('#login-link').show(); // Show login button
-                $('#logout-link').hide(); // Hide logout button
-                $('#admin-link').hide(); // Hide admin panel link
-            }
-        }
-
-        // Redirect user based on their role
-        function redirectBasedOnRole(role) {
-            if (role === 'ADMIN') {
-                window.location.href = '/admin'; // Redirect admin to admin page
-            } else if (role === 'USER') {
-                window.location.href = '/'; // Redirect user to homepage
-            }
-        }
-
-
-        // Handle logout
         $('#logout-link').on('click', function (e) {
             e.preventDefault();
-            sessionStorage.removeItem('isLoggedIn'); // Remove login status from sessionStorage
-            sessionStorage.removeItem('role'); // Remove role from sessionStorage
-            updateLoginStatus(); // Update UI after logout
-            alert('Du er hermed logget ud.'); // Alert the user
-            window.location.href = '/'; // Redirect to homepage after logout
+            sessionStorage.removeItem('isLoggedIn');
+            sessionStorage.removeItem('role');
+            updateLoginStatus();
+            alert('Du er hermed logget ud.');
+            window.location.href = '/';
         });
 
-        // Initial status check on page load
         updateLoginStatus();
     });
 </script>

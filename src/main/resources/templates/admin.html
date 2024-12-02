@@ -78,7 +78,7 @@
     <div class="admin-content">
         <div class="admin-header">
             <h1>Admin Dashboard</h1>
-            <button class="logout-button">Logout</button>
+            <button class="btn btn-danger" id="logout-button">Logout</button>
         </div>
 
         <!-- Overview Section -->
@@ -702,6 +702,16 @@
         document.getElementById('restoreButton').addEventListener('click', restoreFromBackup);
     });
 
+
+    $('#logout-button').on('click', function (e) {
+        e.preventDefault();
+        sessionStorage.removeItem('isLoggedIn');
+        sessionStorage.removeItem('role');
+        window.location.href = '/';
+        setTimeout(function() {
+            alert("Du er hermed logget ind!");
+        }, 10);
+    });
 
 
 

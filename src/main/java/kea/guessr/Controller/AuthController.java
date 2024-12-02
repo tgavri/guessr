@@ -32,17 +32,15 @@ public class AuthController {
             if (resultSet.next()) {
                 String storedPassword = resultSet.getString("password");
                 if (password.equals(storedPassword)) {
-                    String role = resultSet.getString("role"); // Fetch the role
-                    return ResponseEntity.ok(role); // Return ADMIN or USER
-                } else {
-                    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password.");
+                    String role = resultSet.getString("role");
+                    return ResponseEntity.ok(role);
                 }
-            } else {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password.");
             }
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password.");
         } catch (SQLException e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Database error.");
         }
     }
+
 }

@@ -19,7 +19,7 @@ public class UserService {
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
-    public User getUserById(Long id) {
+    public User getUserById(int id) {
         Optional<User> user = userRepository.findById(id);
         return user.orElse(null);
     }
@@ -28,7 +28,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User updateUser(Long id, User user) {
+    public User updateUser(int id, User user) {
         System.out.println("Updating user with ID: " + id);
         System.out.println("User data before update: " + user);
 
@@ -109,7 +109,7 @@ public class UserService {
     }
 
 
-    public void deleteUser(Long id) {
+    public void deleteUser(int id) {
         userRepository.deleteById(id);
     }
 }

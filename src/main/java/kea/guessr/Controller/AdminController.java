@@ -42,14 +42,14 @@ public class AdminController {
     }
 
     @GetMapping("/user/{id}/edit")
-    public String editUser(@PathVariable Long id, Model model) {
+    public String editUser(@PathVariable int id, Model model) {
         User user = userService.getUserById(id);
         model.addAttribute("user", user);
         return "admin/edit-user";
     }
 
     @PostMapping("/user/{id}/edit")
-    public ResponseEntity<String> updateUser(@PathVariable Long id, @RequestBody User user) {
+    public ResponseEntity<String> updateUser(@PathVariable int id, @RequestBody User user) {
         System.out.println("Received user data for update: " + user);
 
         User updatedUser = userService.updateUser(id, user);
@@ -64,7 +64,7 @@ public class AdminController {
 
 
     @GetMapping("/user/{id}/delete")
-    public String deleteUser(@PathVariable Long id) {
+    public String deleteUser(@PathVariable int id) {
         userService.deleteUser(id);
         return "redirect:/admin/users";
     }

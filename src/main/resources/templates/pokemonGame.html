@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokémon Guessing Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-image: url('https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/eb6d7e02-84f3-4e3a-a5b5-7c1489afc0f2/d7hjsj7-6f135f19-37f9-418b-8062-f3a6498858b1.png/v1/fit/w_718,h_404,q_70,strp/pokemon__ash_capture_pokemon__wallpaper__by_kill3rcombo_d7hjsj7-375w-2x.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NDA0IiwicGF0aCI6IlwvZlwvZWI2ZDdlMDItODRmMy00ZTNhLWE1YjUtN2MxNDg5YWZjMGYyXC9kN2hqc2o3LTZmMTM1ZjE5LTM3ZjktNDE4Yi04MDYyLWYzYTY0OTg4NThiMS5wbmciLCJ3aWR0aCI6Ijw9NzE4In1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.lqkd3me3AY1ys2elwscvfNH_g-efMGfW3EKY4WrEupw');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: black;
+        }
+
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 90%;
+            max-width: 800px;
+            height: auto;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            text-align: center;
+            margin-top: 7%;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .field input,
+        .field select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        .field button {
+            margin-top: 5px;
+            padding: 5px 10px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .field p {
+            margin: 5px 0 0;
+            font-size: 12px;
+            color: gray;
+        }
+
+        .sprite-container {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid black;
+            display: inline-block;
+        }
+
+        img {
+            max-width: 260px;
+            height: auto;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: black;
+        }
+
+        .correct {
+            background-color: lightgreen;
+            color: black;
+        }
+
+        .incorrect {
+            background-color: lightcoral;
+            color: white;
+        }
+
+        .neutral {
+            background-color: white;
+            color: black;
+        }
+
+        .disabled {
+            background-color: lightgray;
+            color: darkgray;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            appearance: none;
+            height: 8px;
+            background: #ddd;
+            outline: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #007bff;
+            cursor: pointer;
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #007bff;
+            cursor: pointer;
+        }
+
+        .correct-slider {
+            background: lightgreen !important;
+        }
+
+        .incorrect-slider {
+            background: lightcoral !important;
+        }
+
+        button:disabled {
+            background-color: lightgray;
+            color: darkgray;
+            border: 1px solid #ccc;
+        }
+    </style>
+
+    <script>
+        let correctName = "";
+        let correctId = 0;
+        let correctType1 = "";
+        let correctType2 = "";
+        let correctAbility1 = "";
+        let correctAbility2 = "";
+        let correctAbility3 = "";
+        let correctDebutGeneration = 0;
+        let habitat = "";
+        let growth_rate = "";
+        let correctWeight = 0;
+        let correctHeight = 0;
+
+        function validateInput(input, correctValue, messageElementId) {
+            const inputValue = input.value.trim();
+            const isNumeric = !isNaN(correctValue);
+
+            const messageElement = document.getElementById(messageElementId);
+
+            if (inputValue === "") {
+                input.className = "neutral";
+                messageElement.textContent = "";
+            } else if (isNumeric ? Number(inputValue) === Number(correctValue) : normalizeText(inputValue) === normalizeText(correctValue)) {
+                input.value = isNumeric ? inputValue.trim() : capitalizeFirstChar(inputValue.trim());
+                input.className = "correct";
+                input.disabled = true;
+                messageElement.style.color = "green";
+            } else {
+                input.className = "incorrect";
+                messageElement.style.color = "red";
+            }
+        }
+
+        function validateAndLock(inputId, correctValue, messageElementId) {
+            const input = document.getElementById(inputId);
+            const inputValue = input.value.trim();
+            const button = input.nextElementSibling;
+            const messageElement = document.getElementById(messageElementId);
+
+            if (inputValue === "") return;
+
+            if (!isNaN(correctValue) ? Number(inputValue) === Number(correctValue) : normalizeText(inputValue) === normalizeText(correctValue)) {
+                input.className = "correct";
+                messageElement.style.color = "green";
+            } else {
+                input.className = "incorrect";
+                messageElement.style.color = "red";
+            }
+
+            input.disabled = true;
+            if (button) button.disabled = true;
+        }
+
+        function normalizeText(text) {
+            if (!text) return "";
+            return text.trim().toLowerCase().replace(/\s+/g, " ");
+        }
+
+        function capitalizeFirstChar(text) {
+            if (!text || text.length === 0) return text;
+            return text.charAt(0).toUpperCase() + text.slice(1);
+        }
+
+        function disableFieldsIfEmpty() {
+            const fields = [
+                { id: "guessType2", correctValue: correctType2, buttonId: "lockType2Button" },
+                { id: "guessAbility1", correctValue: correctAbility1, buttonId: "lockAbility1Button" },
+                { id: "guessAbility2", correctValue: correctAbility2, buttonId: "lockAbility2Button" },
+                { id: "guessAbility3", correctValue: correctAbility3, buttonId: "lockAbility3Button" }
+            ];
+
+            fields.forEach(field => {
+                const inputField = document.getElementById(field.id);
+                const lockButton = document.getElementById(field.buttonId);
+
+                if (!field.correctValue || field.correctValue.trim() === "") {
+                    inputField.className = "disabled";
+                    inputField.disabled = true;
+                    inputField.placeholder = "None";
+                    if (lockButton) lockButton.disabled = true;
+                }
+            });
+        }
+
+        function updateSliderValue(sliderId, displayId) {
+            const slider = document.getElementById(sliderId);
+            const display = document.getElementById(displayId);
+            display.textContent = slider.value;
+        }
+
+        function validateAndLockSlider(inputId, correctValue, messageElementId, tolerance = 0) {
+            const input = document.getElementById(inputId);
+            const inputValue = Number(input.value);
+            const button = input.nextElementSibling;
+            const messageElement = document.getElementById(messageElementId);
+
+            if (Math.abs(inputValue - correctValue) <= tolerance) {
+                input.className = "correct-slider";
+                messageElement.style.color = "green";
+            } else {
+                input.className = "incorrect-slider";
+                messageElement.style.color = "red";
+            }
+
+            input.disabled = true;
+            if (button) button.disabled = true;
+        }
+
+        let cachedTypes = null; // Variable to cache the types
+
+        async function fetchPokemonTypes() {
+            try {
+                // If types are already fetched, use the cached data
+                if (cachedTypes) {
+                    populateDropdown('guessType1', cachedTypes);
+                    populateDropdown('guessType2', cachedTypes);
+
+                    // Enable or disable Type2 based on the presence of a second type
+                    handleType2State();
+                    return;
+                }
+
+                // Fetch types from the API
+                const response = await fetch('/api/types');
+                if (!response.ok) throw new Error('Failed to fetch types');
+                const types = await response.json();
+                cachedTypes = types; // Cache the fetched types
+
+                // Populate both dropdowns
+                populateDropdown('guessType1', types);
+                populateDropdown('guessType2', types);
+
+                // Enable or disable Type2 based on the presence of a second type
+                handleType2State();
+            } catch (error) {
+                console.error('Error fetching Pokémon types:', error);
+            }
+        }
+
+        // Handle the state of Type2 dropdown and button
+        function handleType2State() {
+            const type2Dropdown = document.getElementById('guessType2');
+            const type2Button = document.getElementById('lockType2Button');
+
+            if (!correctType2 || correctType2.trim() === "") {
+                type2Dropdown.disabled = true;
+                type2Dropdown.innerHTML = `<option value="">N/A</option>`;
+                type2Button.disabled = true;
+            } else {
+                type2Dropdown.disabled = false;
+                type2Button.disabled = false;
+            }
+        }
+
+        // Populate a dropdown with options
+        function populateDropdown(elementId, options) {
+            const dropdown = document.getElementById(elementId);
+            dropdown.innerHTML = ""; // Clear existing options
+
+            options.forEach(type => {
+                const option = document.createElement('option');
+                option.value = type;
+                option.textContent = type;
+                dropdown.appendChild(option);
+            });
+        }
+
+        function adjustWeightSlider(slider) {
+            const normalizedValue = parseInt(slider.value, 10);
+            let weight;
+
+            if (normalizedValue === 0) {
+                weight = 1;
+            } else if (normalizedValue <= 100) {
+                weight = normalizedValue;
+            } else {
+                weight = 100 + (normalizedValue - 100) * 25;
+            }
+
+            const display = document.getElementById("weightValue");
+            display.textContent = weight;
+            slider.dataset.weight = weight;
+        }
+
+        function adjustHeightSlider(slider) {
+            const sliderValue = parseInt(slider.value, 10);
+            let height;
+
+            if (sliderValue === 0) {
+                height = 10;
+            } else if (sliderValue <= 150) {
+                height = Math.round(sliderValue * (500 / 150) / 10) * 10;
+            } else {
+                height = 500 + Math.round((sliderValue - 150) * (1500 / 50) / 25) * 25;
+            }
+
+            const display = document.getElementById("heightValue");
+            display.textContent = height;
+            slider.dataset.height = height;
+        }
+
+        async function fetchPokemonHabitats() {
+            try {
+                const response = await fetch('/api/habitats');
+                if (!response.ok) throw new Error('Failed to fetch habitats');
+                const habitats = await response.json();
+
+                populateDropdown('guessHabitatDropdown', habitats);
+            } catch (error) {
+                console.error('Error fetching Pokémon habitats:', error);
+            }
+        }
+
+        async function fetchGrowthRates() {
+            try {
+                const response = await fetch('/api/growth-rates');
+                if (!response.ok) throw new Error('Failed to fetch growth rates');
+                const growthRates = await response.json();
+
+                populateDropdown('guessGrowthRateDropdown', growthRates);
+            } catch (error) {
+                console.error('Error fetching Pokémon growth rates:', error);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            window.scrollTo(0, 0);
+            disableFieldsIfEmpty();
+            fetchPokemonTypes();
+            fetchPokemonHabitats();
+            fetchGrowthRates();
+        });
+
+    </script>
+</head>
+<body onload="disableFieldsIfEmpty()">
+<div class="wrapper">
+<h1>Pokémon Guessing Game</h1>
+
+<div class="sprite-container">
+    <img th:src="${spriteUrl}" alt="Pokémon Image">
+</div>
+
+<div class="container">
+    <!-- Row 1: Name and ID -->
+    <div class="row">
+        <div class="field">
+            <label for="guessName">Pokémon Name:</label>
+            <input type="text" id="guessName" class="neutral" placeholder="Pokémon Name" oninput="validateInput(this, correctName, 'nameMessage')">
+            <p id="nameMessage"></p>
+        </div>
+        <div class="field">
+            <label for="guessId">PokéDex Number:</label>
+            <input type="number" id="guessId" class="neutral" placeholder="PokéDex Number">
+            <button onclick="validateAndLock('guessId', correctId, 'idMessage')">Lock Answer</button>
+            <p id="idMessage"></p>
+        </div>
+    </div>
+
+    <!-- Row 2: Type1 and Type2 -->
+    <div class="row">
+        <div class="field">
+            <label for="guessType1">Pokémon First Type:</label>
+            <select id="guessType1" class="neutral"></select>
+            <button onclick="validateAndLock('guessType1', correctType1, 'type1Message')">Lock Answer</button>
+            <p id="type1Message"></p>
+        </div>
+        <div class="field">
+            <label for="guessType2">Pokémon Second Type:</label>
+            <select id="guessType2" class="neutral" disabled></select>
+            <button id="lockType2Button" onclick="validateAndLock('guessType2', correctType2, 'type2Message')" disabled>Lock Answer</button>
+            <p id="type2Message"></p>
+        </div>
+    </div>
+
+    <!-- Row 3: Ability1 and Ability2 and Ability3 -->
+    <div class="row">
+        <div class="field">
+            <label for="guessAbility1">Pokémon First Ability:</label>
+            <input type="text" id="guessAbility1" class="neutral" placeholder="Guess First Ability">
+            <button id="lockAbility1Button" onclick="validateAndLock('guessAbility1', correctAbility1, 'ability1Message')">Lock Answer</button>
+            <p id="ability1Message"></p>
+        </div>
+        <div class="field">
+            <label for="guessAbility2">Pokémon Second Ability:</label>
+            <input type="text" id="guessAbility2" class="neutral" placeholder="Guess Second Ability">
+            <button id="lockAbility2Button" onclick="validateAndLock('guessAbility2', correctAbility2, 'ability2Message')">Lock Answer</button>
+            <p id="ability2Message"></p>
+        </div>
+        <div class="field">
+            <label for="guessAbility3">Pokémon Hidden Ability:</label>
+            <input type="text" id="guessAbility3" class="neutral" placeholder="Guess Hidden Ability">
+            <button id="lockAbility3Button" onclick="validateAndLock('guessAbility3', correctAbility3, 'ability3Message')">Lock Answer</button>
+            <p id="ability3Message"></p>
+        </div>
+    </div>
+
+    <!-- Row 4: Debut Generation -->
+    <div class="row">
+        <div class="field">
+            <label for="guessDebutGeneration">Pokémon Debut Generation:</label>
+            <input type="number" id="guessDebutGeneration" class="neutral" placeholder="Guess Pokémon Debut Generation">
+            <button onclick="validateAndLock('guessDebutGeneration', correctDebutGeneration, 'debutGenerationMessage')">Lock Answer</button>
+            <p id="debutGenerationMessage"></p>
+        </div>
+    </div>
+
+    <!-- Row 5: Habitat and Growth Rate -->
+    <div class="row">
+        <div class="field">
+            <label for="guessHabitatDropdown">Pokémon Habitat:</label>
+            <select id="guessHabitatDropdown" class="neutral"></select>
+            <button onclick="validateAndLock('guessHabitatDropdown', correctHabitat, 'habitatDropdownMessage')">Lock Answer</button>
+            <p id="habitatDropdownMessage"></p>
+        </div>
+        <div class="field">
+            <label for="guessGrowthRateDropdown">Pokémon Growth Rate:</label>
+            <select id="guessGrowthRateDropdown" class="neutral"></select>
+            <button onclick="validateAndLock('guessGrowthRateDropdown', correctGrowthRate, 'growthRateDropdownMessage')">Lock Answer</button>
+            <p id="growthRateDropdownMessage"></p>
+        </div>
+    </div>
+
+    <!-- Row 6: Weight-->
+    <div class="field">
+        <label for="guessWeight">Pokémon Weight (kg):</label>
+        <input
+                type="range"
+                id="guessWeight"
+                min="0"
+                max="136"
+                value="0"
+                step="1"
+                oninput="adjustWeightSlider(this)"
+                data-weight="1"
+        >
+        <span id="weightValue">1</span> kg
+        <button onclick="validateAndLockSlider('guessWeight', correctWeight, 'weightMessage', 5)">Lock Answer</button>
+        <p id="weightMessage"></p>
+    </div>
+
+    <!-- Row 7: Height -->
+    <div class="field">
+        <label for="guessHeight">Pokémon Height (cm):</label>
+        <input
+                type="range"
+                id="guessHeight"
+                min="0"
+                max="200"
+                value="0"
+                step="1"
+                oninput="adjustHeightSlider(this)"
+                data-height="10"
+        >
+        <span id="heightValue">10</span> cm
+        <button onclick="validateAndLockSlider('guessHeight', correctHeight, 'heightMessage', 10)">Lock Answer</button>
+        <p id="heightMessage"></p>
+    </div>
+    </div>
+
+</div>
+</div>
+
+<script>
+    correctName = "[[${name}]]";
+    correctId = [[${id}]];
+    correctType1 = "[[${type1}]]";
+    correctType2 = "[[${type2}]]";
+    correctAbility1 = "[[${ability1}]]".replace(/-/g, " ");
+    correctAbility2 = "[[${ability2}]]".replace(/-/g, " ");
+    correctAbility3 = "[[${ability3}]]".replace(/-/g, " ");
+    correctDebutGeneration = [[${debutGeneration}]];
+    correctHabitat = "[[${habitat}]]".replace(/-/g, " ");
+    correctGrowthRate = "[[${growth_rate}]]".replace(/-/g, " ");
+    correctWeight = [[${weight}]] / 10;
+    correctHeight = [[${height}]] * 10;
+</script>
+</body>
+</html>

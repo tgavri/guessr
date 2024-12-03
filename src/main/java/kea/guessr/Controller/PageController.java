@@ -18,6 +18,10 @@ public class PageController {
     public String showPrivacyPage() {
         return "privacy";
     }
+    @GetMapping("/ordsprog")
+    public String showOrdsprogPage() {
+        return "ordsprog";
+    }
     @GetMapping("/admin")
     public String showAdminPage() {
         return "admin";

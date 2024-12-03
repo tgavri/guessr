@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Talemåder Game</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f8f9fa;
+            overflow-x: hidden;
+        }
+
+        .hero {
+            position: relative;
+            background: url('/img/ord.png') no-repeat center center/cover;
+            color: white;
+            text-align: center;
+            padding: 80px 20px;
+            margin-bottom: 40px;
+            border-radius: 0 0 20px 20px;
+            min-height: 300px;
+            max-height: 400px;
+
+            }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Dark semi-transparent overlay */
+            border-radius: 0 0 20px 20px; /* Match the border radius of the hero */
+            z-index: 1; /* Ensures the overlay is below the text */
+        }
+
+        .hero h1,
+        .hero p {
+            position: relative;
+            z-index: 2; /* Ensures the text appears above the overlay */
+        }
+
+
+        footer {
+            background-color: #343a40;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+        footer a {
+            color: #ffc107;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+
+        #explanation {
+            font-size: 16px;
+            font-weight: normal;
+            color: #6c757d;  /* A slightly lighter color for the explanation text */
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 0px solid #ddd;
+        }
+
+        #explanation strong {
+            font-size: 18px;
+            color: #ffc107;  /* Use yellow color for the "Betydning" label */
+        }
+
+        .social-icon img {
+            width: 30px;
+            margin: 0 5px;
+            transition: transform 0.3s ease-in-out;
+        }
+        .social-icon img:hover {
+            transform: scale(1.1);
+        }
+
+        /* Centering the game container */
+        .game-container {
+            max-width: 600px;
+            margin: 30px auto;
+            padding: 30px;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .btn {
+            width: auto;
+            margin: 10px auto;
+        }
+
+        #answer {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 10px;
+        }
+
+        #timer {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: red;
+        }
+        .sentence {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+        .correct {
+            color: green;
+            font-weight: bold; /* Bold for correct answers */
+        }
+
+        .incorrect {
+            color: red;
+        }
+        .explanation {
+            font-style: italic;
+            margin-top: 10px;
+        }
+        .btn-option {
+            margin: 10px 0;
+        }
+
+    </style>
+</head>
+<body>
+<!-- Navbar -->
+<div id="header-placeholder"></div>
+
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+    </div>
+</section>
+
+<div class="container">
+    <div class="text-center my-4">
+        <h1>Ordsprog spillet 🔎</h1>
+        <p>Test din viden om danske talemåder!</p>
+    </div>
+    <div class="game-container">
+        <div id="start-menu" class="text-center">
+            <h3>Vælg spiltilstand</h3>
+            <button class="btn btn-warning btn-option" onclick="startGame('daily')">Daglig Challenge</button>
+            <button class="btn btn-primary btn-option" onclick="startGame('custom')">Vælg antal spørgsmål</button>
+        </div>
+
+        <div id="game-area" class="d-none">
+            <p id="timer" class="text-danger fw-bold"></p> <!-- Timer updates dynamically -->
+            <p id="sentence" class="sentence"></p>
+            <input id="answer" type="text" class="form-control" placeholder="Indtast dit svar her">
+            <div class="d-flex justify-content-center">
+                <button id="submit" class="btn btn-success mt-3" onclick="submitAnswer()">Gæt</button>
+            </div>            <p id="feedback" class="mt-3"></p>
+            <p id="explanation" class="explanation"></p>
+            <div class="d-flex justify-content-center">
+                <button id="next" class="btn btn-secondary d-none mt-3" onclick="nextQuestion()">Næste</button>
+            </div>
+        </div>
+
+        <div id="end-screen" class="d-none text-center">
+            <h3>Spil slut!</h3>
+            <p id="final-score"></p>
+            <button class="btn btn-primary" onclick="restartGame()">Spil igen</button>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<div id="footer-placeholder"></div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    const sentences = [
+        { sentence: "Arbejde som en ___", answer: "hest", explanation: "Arbejde meget." },
+        { sentence: "Begynde på en ___", answer: "frisk", explanation: "Starte forfra/på ny." },
+        { sentence: "Bide i det ___ æble", answer: "sure", explanation: "Gøre noget man ikke har lyst til." },
+        { sentence: "Bide i ___", answer: "græsset", explanation: "Lide nederlag." },
+        { sentence: "Bide sig selv i ___", answer: "halen", explanation: "Være uden løsning, da der så vil komme et nyt problem." },
+        { sentence: "Binde nogen noget på ___", answer: "ærmet", explanation: "Bilde dem noget ind." },
+        { sentence: "Blande ___", answer: "kortene", explanation: "Begynde forfra." },
+        { sentence: "Blive bidt af ___", answer: "noget", explanation: "Blive opslugt af en interesse, passion." },
+        { sentence: "Blive dolket i ___", answer: "ryggen", explanation: "Blive forrådt." },
+        { sentence: "Blive lang i ___", answer: "ansigtet", explanation: "Blive skuffet." },
+        { sentence: "Blive taget med fingrene i ___", answer: "kagedåsen", explanation: "Blive afsløret i at gøre noget ulovligt." },
+        { sentence: "Blive varm om ___", answer: "hjertet", explanation: "Blive glad, rørt." },
+        { sentence: "Bo i en ___", answer: "kuffert", explanation: "At man tit rejser eller flytter." },
+        { sentence: "Bringe nogen i ___", answer: "fedtefadet", explanation: "Få nogen i problemer." },
+        { sentence: "Bringe noget på ___", answer: "banen", explanation: "Nævne noget." },
+        { sentence: "Brodne ___", answer: "kar", explanation: "Personer der opfører sig moralsk forkert." },
+        { sentence: "Bruge ___", answer: "albuerne", explanation: "At bruge hårde midler for at komme frem eller gøre karriere." },
+        { sentence: "Brænde ___", answer: "fingrene", explanation: "Komme galt afsted." },
+        { sentence: "Brænde sit lys i begge ___", answer: "ender", explanation: "Arbejde med for mange ting samtidig, slide sig op." },
+        { sentence: "Bump på ___", answer: "vejen", explanation: "Møde modstand - noget, der gør det svært at opnå noget bestemt." },
+        { sentence: "Bygge ___", answer: "bro", explanation: "At skabe kontakt eller forståelse." },
+        { sentence: "Bygge ___", answer: "rede", explanation: "Indrette sit hjem." },
+        { sentence: "Bære ___", answer: "frugt", explanation: "Give resultat." },
+        { sentence: "Del af ___", answer: "kagen", explanation: "Få sin del af udbyttet af noget." },
+        { sentence: "Dele sol og vind ___", answer: "lige", explanation: "Være retfærdig overfor alle." },
+        { sentence: "Den hellige grav er vel ___", answer: "forvaret", explanation: "Alt er i orden." },
+        { sentence: "Den må du længere ud på ___ med", answer: "landet", explanation: "Svar på en påstand, som man ikke tror er sand." },
+        { sentence: "Den, der gemmer til ___, gemmer til katten", answer: "natten", explanation: "Hvis man gemmer på sine værdier til fremtiden, risikerer man at miste dem." },
+        { sentence: "Der er ingen ko på ___", answer: "isen", explanation: "Ingen fare, ingen problemer." },
+        { sentence: "Der er løbet meget vand i ___", answer: "åen", explanation: "Der er sket meget siden." },
+        { sentence: "Der er ugler i ___", answer: "mosen", explanation: "Der er noget galt, som ikke er åbenlyst." },
+        { sentence: "Der ligger en hund ___", answer: "begravet", explanation: "Der er et problem." },
+        { sentence: "Der skal andre boller på ___", answer: "suppen", explanation: "Det skal være helt anderledes." },
+        { sentence: "Det er der ingen ben ___", answer: "i", explanation: "Nemt." },
+        { sentence: "Det er op ad ___", answer: "bakke", explanation: "En svær eller udfordrende situation." },
+        { sentence: "Det kører på ___", answer: "skinner", explanation: "Fungerer tilfredsstillende, uden problemer." },
+        { sentence: "Det løber en koldt ned ad ___", answer: "ryggen", explanation: "Nogen får kuldegysninger pga. stærkt ubehag." },
+        { sentence: "Det regner (med) ___", answer: "skomagerdrenge", explanation: "Øsregnvejr." },
+        { sentence: "Det skriger til ___", answer: "himlen", explanation: "Dybt rystende og kræver øjeblikkelig indgriben." },
+        { sentence: "Djævelens ___", answer: "advokat", explanation: "At indtage det modsatte synspunkt i en diskussion." },
+        { sentence: "Dreje ___ om", answer: "nøglen", explanation: "Hvis man lukker en forretning." },
+        { sentence: "Dø som ___", answer: "fluer", explanation: "Dø (hurtigt og) i stor mængde." },
+        { sentence: "En bjørne___", answer: "tjeneste", explanation: "En velment tjeneste, der har dårlige virkninger." },
+        { sentence: "En by i ___", answer: "Rusland", explanation: "Noget der er helt ukendt eller fremmed." },
+        { sentence: "En engel gik gennem ___", answer: "stuen", explanation: "Der bliver pludselig stille i en ellers livlig forsamling." },
+        { sentence: "En fjer i ___", answer: "hatten", explanation: "Noget, man kan være stolt af." },
+        { sentence: "En gang til for ___", answer: "prins Knud", explanation: "Gentage noget, fordi det ikke blev forstået første gang." },
+        { sentence: "En streg i ___", answer: "luften", explanation: "Være tynd." },
+        { sentence: "En streg i ___", answer: "regningen", explanation: "En uventet og uønsket hændelse." },
+        { sentence: "En underlig ___", answer: "fisk", explanation: "En mærkelig person." },
+        { sentence: "En varm ___", answer: "kartoffel", explanation: "En sag eller et emne, som ingen ønsker at behandle." },
+        { sentence: "Ende i hat og ___", answer: "briller", explanation: "Udvikle sig utilsigtet, ofte løssluppent eller komisk." },
+        { sentence: "Enlig ___", answer: "svale", explanation: "Enkelt tilfælde." },
+        { sentence: "Falde i god ___", answer: "jord", explanation: "Blive modtaget med velvilje." },
+        { sentence: "Falde i ___", answer: "staver", explanation: "At gå i stå i egne tanker og miste forbindelse til omverdenen." },
+        { sentence: "Falde på ___", answer: "halen", explanation: "Blive meget imponeret over noget." },
+        { sentence: "Fanden er løs i ___", answer: "Laksegade", explanation: "Et værre spektakel." },
+        { sentence: "Fattig som en ___", answer: "kirkerotte", explanation: "Meget fattig." },
+        { sentence: "Feje for egen ___", answer: "dør", explanation: "Sørge for sine egne sager, før man brokker sig over andre." },
+        { sentence: "Feje ind under ___", answer: "gulvtæppet", explanation: "Skjule, hemmeligholde, ignorere, fortrænge." },
+        { sentence: "Finde sine egne ___", answer: "ben", explanation: "Gøre sig klart, hvad man vil eller mener om noget." },
+        { sentence: "Fis i en ___", answer: "hornlygte", explanation: "Opblæst bagatel, flop, fiasko, vrøvl." },
+        { sentence: "Fis i ___", answer: "kasketten", explanation: "At være skør." },
+        { sentence: "Flytte ___", answer: "bjerge", explanation: "Klare det umulige." },
+        { sentence: "For fuld ___", answer: "skru", explanation: "Masser af fart på." },
+        { sentence: "Forslå som en skrædder i ___", answer: "helvede", explanation: "Det rækker ikke ret langt." },
+        { sentence: "Forsvinde som dug for ___", answer: "solen", explanation: "Forsvinde hurtigt og sporløst." },
+        { sentence: "Frisk som en ___", answer: "fisk", explanation: "Sund og rask." },
+        { sentence: "Frisk som en ___", answer: "havørn", explanation: "Være meget frisk." },
+        { sentence: "Fræk som en ___", answer: "slagterhund", explanation: "Meget fræk." },
+        { sentence: "Føre nogen bag ___", answer: "lyset", explanation: "Snyde eller lyve for nogen." },
+        { sentence: "Få alarmklokkerne til at ___", answer: "ringe", explanation: "Advare om en fare." },
+        { sentence: "Få blod på ___", answer: "tanden", explanation: "Få lyst til at prøve, fortsætte eller gentage noget." },
+        { sentence: "Få det forkerte ben ud af ___", answer: "sengen", explanation: "Være i dårligt humør." },
+        { sentence: "Få en appelsin i ___", answer: "turbanen", explanation: "At have heldet med sig." },
+        { sentence: "Få en klokke til at ___", answer: "ringe", explanation: "Komme i tanke om noget." },
+        { sentence: "Få en over ___", answer: "snuden", explanation: "Få kritik." },
+        { sentence: "Få en spand koldt vand i ___", answer: "hovedet", explanation: "Uventet blive afvist, stor skuffelse." },
+        { sentence: "Få en tudse i ___", answer: "halsen", explanation: "Være generet, når man taler eller synger." },
+        { sentence: "Få enderne til at hænge ___", answer: "sammen", explanation: "Løse et indviklet problem." },
+        { sentence: "Få et par på ___", answer: "kassen", explanation: "Få tæv." },
+        { sentence: "Få fingrene i ___", answer: "klemme", explanation: "Komme galt af sted med noget." },
+        { sentence: "Få fluer i ___", answer: "hovedet", explanation: "Få dumme ideer eller blive forstyrret." },
+        { sentence: "Få kniven for ___", answer: "struben", explanation: "Blive presset til noget." },
+        { sentence: "Få kolde ___", answer: "fødder", explanation: "Ombestemme sig, fortryde." },
+        { sentence: "Få luft under ___", answer: "vingerne", explanation: "Kunne gøre som man vil." },
+        { sentence: "Få nogen på ___", answer: "frakken", explanation: "Få tæv." },
+        { sentence: "Få noget galt i ___", answer: "halsen", explanation: "Misforstå noget." },
+        { sentence: "Få noget ind med ___", answer: "skeer", explanation: "Få forklaret noget meget grundigt." },
+        { sentence: "Få pistolen for ___", answer: "brystet", explanation: "Blive presset til noget." },
+        { sentence: "Få serveret noget på et ___", answer: "sølvfad", explanation: "At komme let til noget." },
+        { sentence: "Få slebet kanterne ___", answer: "af", explanation: "Tilpasse sig." },
+        { sentence: "Få sved på ___", answer: "panden", explanation: "Træne hårdt eller være bange, nervøs." },
+        { sentence: "Få så hatten ___", answer: "passer", explanation: "Få tilstrækkeligt." },
+        { sentence: "Få tilbage af samme ___", answer: "mønt", explanation: "Blive behandlet, som man selv har behandlet." },
+        { sentence: "Få/give tommelskruer ___", answer: "på", explanation: "Blive presset hårdt til at gøre eller indrømme noget." },
+        { sentence: "Gammel ___", answer: "rotte", explanation: "Erfaren person." },
+        { sentence: "Gammel vin på nye ___", answer: "flasker", explanation: "Samme indhold sælges som noget nyt." },
+        { sentence: "Gennem ild og ___", answer: "vand", explanation: "Gøre alt hvad der står i ens magt." },
+        { sentence: "Give den en ___", answer: "skalle", explanation: "Gøre et stort stykke arbejde." },
+        { sentence: "Give den ___", answer: "gas", explanation: "Gå til den, slå sig løs, snakke." },
+        { sentence: "Give den hele ___", answer: "armen", explanation: "Anstrenge sig meget." },
+        { sentence: "Give nogen den kolde ___", answer: "skulder", explanation: "Ignorere dem." },
+        { sentence: "Give ___", answer: "pote", explanation: "Give et godt udbytte." },
+        { sentence: "Give på ___", answer: "klods", explanation: "Sælge på kredit." },
+        { sentence: "Give slag på ___", answer: "tasken", explanation: "Komme med en cirkapris." },
+        { sentence: "Goddag mand ___", answer: "økseskaft", explanation: "At tale forbi hinanden eller noget, der ikke giver mening." },
+        { sentence: "Gode miner til slet ___", answer: "spil", explanation: "Lade som om man er enig i noget." },
+        { sentence: "Grave sin egen ___", answer: "grav", explanation: "Skabe alvorlige problemer for sig selv." },
+        { sentence: "Gribe ___", answer: "bolden", explanation: "Tage et ansvar." },
+        { sentence: "Grine som en flækket ___", answer: "træsko", explanation: "Grine højt." },
+        { sentence: "Gøre en god ___", answer: "figur", explanation: "Gøre et godt indtryk." },
+        { sentence: "Gøre rent ___", answer: "bord", explanation: "At skære igennem, få rene linjer." },
+        { sentence: "Gå ___", answer: "agurk", explanation: "Komme ud af kontrol, gå amok." },
+        { sentence: "Gå fra ___", answer: "snøvsen", explanation: "Blive tosset." },
+        { sentence: "Gå galt i ___", answer: "byen", explanation: "At tage fejl." },
+        { sentence: "Gå gennem ild og ___", answer: "vand", explanation: "Gøre alt hvad der står i ens magt." },
+        { sentence: "Gå i ___", answer: "baglås", explanation: "En mekanisme sidder uhjælpeligt fast." },
+        { sentence: "Gå i ___", answer: "fisk", explanation: "Gå skævt, mislykkes, blive ødelagt." },
+        { sentence: "Gå i ___", answer: "hundene", explanation: "Gå i forfald/opløsning (om person)." },
+        { sentence: "Gå i små ___", answer: "sko", explanation: "Være nøjeregnende." },
+        { sentence: "Gå lige efter ___", answer: "bogen", explanation: "At gøre noget som det skal, eller som ventet." },
+        { sentence: "Gå ned med ___", answer: "flaget", explanation: "Blive syg, gå ned, bryde sammen." },
+        { sentence: "Gå nedenom og ___", answer: "hjem", explanation: "Gå fallit, konkurs." },
+        { sentence: "Gå nye ___", answer: "veje", explanation: "Prøve noget nyt." },
+        { sentence: "Gå op ad ___", answer: "bakke", explanation: "Modgang, besværligt fremskridt." },
+        { sentence: "Gå op i hat og ___", answer: "briller", explanation: "Ende i kaos." },
+        { sentence: "Gå op i ___", answer: "røg", explanation: "Når noget mislykkes." },
+        { sentence: "Gå over ___", answer: "stregen", explanation: "Overskride sine/andres grænser." },
+        { sentence: "Gå over åen efter ___", answer: "vand", explanation: "At gøre noget på en unødigt besværlig måde." },
+        { sentence: "Gå rabundus", answer: "Fallit", explanation: "Gå konkurs." },
+        { sentence: "Gå sine egne ___", answer: "veje", explanation: "Vælge sit eget, ofte utraditionelle livsforløb." },
+        { sentence: "Gå som katten om den varme ___", answer: "grød", explanation: "Undvige en ubehagelig situation eller et svært problem." },
+        { sentence: "Gå stille med ___", answer: "dørene", explanation: "Være forsigtig eller diskret." },
+        { sentence: "Går hen over hovedet på ___", answer: "nogen", explanation: "Uden at tage hensyn til den eller de implicerede." },
+        { sentence: "Går ned ad ___", answer: "bakke", explanation: "At det går dårligt." },
+        { sentence: "Går op i hat og ___", answer: "briller", explanation: "Ender i kaos." },
+        { sentence: "Hale torsk i ___", answer: "land", explanation: "At snorke." },
+        { sentence: "Have begge ben på ___", answer: "jorden", explanation: "Være nøgtern og realistisk." },
+        { sentence: "Have bukserne ___", answer: "på", explanation: "At være den der bestemmer, være den stærke i et forhold." },
+        { sentence: "Have det som blommen i et ___", answer: "æg", explanation: "Have det rigtig godt." },
+        { sentence: "Have en finger med i ___", answer: "spillet", explanation: "Spille en ofte betydningsfuld rolle i en bestemt sammenhæng." },
+        { sentence: "Have en høj ___ hos nogen", answer: "stjerne", explanation: "Være vellidt og afholdt af nogen." },
+        { sentence: "Have en kort ___", answer: "lunte", explanation: "Have let ved at hidse sig op." },
+        { sentence: "Have en lille ___ på", answer: "fjer", explanation: "Være lidt fuld." },
+        { sentence: "Have en ræv bag ___", answer: "øret", explanation: "Være snu." },
+        { sentence: "Have et horn i siden på ___", answer: "nogen", explanation: "Være vred på dem." },
+        { sentence: "Have fat i den lange ___", answer: "ende", explanation: "Være i en position hvor man er overlegen eller har kontrol." },
+        { sentence: "Have fingeren på ___", answer: "pulsen", explanation: "Vide hvad der sker." },
+        { sentence: "Have fis i ___", answer: "kasketten", explanation: "Være lidt tosset." },
+        { sentence: "Have flere kasketter ___", answer: "på", explanation: "Have flere funktioner." },
+        { sentence: "Have følehornene ___", answer: "ude", explanation: "Føle sig frem." },
+        { sentence: "Have gode kort på ___", answer: "hånden", explanation: "Have gode chancer, være i en fordelagtig situation." },
+        { sentence: "Have hjertet på rette ___", answer: "sted", explanation: "Føle med andre, empati." },
+        { sentence: "Have hovedet under ___", answer: "armen", explanation: "Ikke tænke sig om." },
+        { sentence: "Have hul i ___", answer: "hovedet", explanation: "Gøre noget dumt." },
+        { sentence: "Have hår på ___", answer: "brystet", explanation: "Vise mod til handling." },
+        { sentence: "Have ild i ___", answer: "rumpen", explanation: "Fare omkring." },
+        { sentence: "Have kviksølv i ___", answer: "enden", explanation: "Fare omkring; være meget foretagsom." },
+        { sentence: "Have lange ___", answer: "arme", explanation: "Have stor magt eller indflydelse." },
+        { sentence: "Have lange ___", answer: "fingre", explanation: "At være tyvagtig." },
+        { sentence: "Have lig i ___", answer: "lasten", explanation: "Have noget i ens fortid, der påvirker negativt." },
+        { sentence: "Have mange bolde i ___", answer: "luften", explanation: "Have gang i mange ting på én gang." },
+        { sentence: "Have mange jern i ___", answer: "ilden", explanation: "Være beskæftiget med mange ting samtidig." },
+        { sentence: "Have noget i ___", answer: "kikkerten", explanation: "Have udset sig nogen eller noget til et bestemt formål." },
+        { sentence: "Have noget i ___", answer: "ærmet", explanation: "Have forberedt noget, som kan forbedre en vanskelig situation." },
+        { sentence: "Have noget med i ___", answer: "rygsækken", explanation: "Have viden og erfaring." },
+        { sentence: "Have næsen i ___", answer: "sky", explanation: "At være arrogant eller nedladende." },
+        { sentence: "Have penge mellem ___", answer: "hænderne", explanation: "Have penge til rådighed." },
+        { sentence: "Have penge som ___", answer: "græs", explanation: "Have mange penge." },
+        { sentence: "Have rent mel i ___", answer: "posen", explanation: "Være ærlig." },
+        { sentence: "Have rotter på ___", answer: "loftet", explanation: "Være skør/tosset." },
+        { sentence: "Have røv i begge ___", answer: "ender", explanation: "Være ualmindelig dum." },
+        { sentence: "Have røven fuld af ___", answer: "penge", explanation: "Være meget rig." },
+        { sentence: "Have snablen i ___", answer: "noget", explanation: "Forsyne sig med noget." },
+        { sentence: "Have sommerfugle i ___", answer: "maven", explanation: "At være nervøs." },
+        { sentence: "Have spidse ___", answer: "albuer", explanation: "Hævde sig på andres bekostning." },
+        { sentence: "Have stær i ___", answer: "kassen", explanation: "Være gravid." },
+        { sentence: "Have ti ___", answer: "tommelfingre", explanation: "At være klodset." },
+        { sentence: "Her er/ligger hunden ___", answer: "begravet", explanation: "Årsagen til noget." },
+        { sentence: "Himmel og jord står i ___", answer: "et", explanation: "Voldsomt uvejr med storm og regn eller sne." },
+        { sentence: "Hjertet sidder helt oppe i ___", answer: "halsen", explanation: "At være bange, angst." },
+        { sentence: "Hold på hat og ___", answer: "briller", explanation: "Pas på." },
+        { sentence: "Holde en bagdør ___", answer: "åben", explanation: "At holde en mulighed åben." },
+        { sentence: "Holde fanen ___", answer: "højt", explanation: "Blive ved, stå ved sine idealer, ikke tabe modet." },
+        { sentence: "Holde gryden i ___", answer: "kog", explanation: "Holde interessen for noget." },
+        { sentence: "Holde hovedet ___", answer: "koldt", explanation: "Bevare overblikket." },
+        { sentence: "Holde kortene tæt ind til ___", answer: "kroppen", explanation: "Være tilbageholdende med at give oplysninger." },
+        { sentence: "Holde ___", answer: "masken", explanation: "Modstå en trang til at røbe ens følelser." },
+        { sentence: "Holde op mens legen er ___", answer: "god", explanation: "Stoppe mens det går godt." },
+        { sentence: "Holde på den forkerte ___", answer: "hest", explanation: "Tag et valg, man senere fortryder." },
+        { sentence: "Holde skruen i ___", answer: "vandet", explanation: "Ikke give op." },
+        { sentence: "Holde tungen lige i ___", answer: "munden", explanation: "Være yderst forsigtig." },
+        { sentence: "Hoppe på ___", answer: "limpinden", explanation: "Lade sig narre til at gøre noget dumt." },
+        { sentence: "Hulter til ___", answer: "bulter", explanation: "Beskrivelse af ting, der ligger i uorden." },
+        { sentence: "Hverken fugl eller ___", answer: "fisk", explanation: "Hverken det ene eller det andet." },
+        { sentence: "Hverken hoved eller ___ i noget", answer: "hale", explanation: "Noget der er usammenhængende." },
+        { sentence: "Hyle som en stukket ___", answer: "gris", explanation: "Skrige eller græde meget højt." },
+        { sentence: "Hænge i en ___", answer: "klokkestreng", explanation: "Være forpligtet til at overholde aftaler på bestemte tidspunkter." },
+        { sentence: "Hænge langt ud af ___", answer: "halsen", explanation: "Være meget træt af noget." }
+    ];
+
+    let gameMode = '';
+    let score = 0;
+    let currentQuestion = 0;
+    let questions = [];
+    let timerInterval;
+    let countdown = 7;
+
+    function startGame(mode) {
+        gameMode = mode;
+        document.getElementById("start-menu").classList.add("d-none");
+        document.getElementById("game-area").classList.remove("d-none");
+
+        // If mode is 'custom', ask the user for the number of questions
+        if (mode === "custom") {
+            const count = prompt("Hvor mange spørgsmål vil du spille? (1-10)", "5");
+
+            // If the user clicks Cancel or provides invalid input, don't start the game
+            if (count === null || isNaN(count) || count < 1 || count > 10) {
+                alert("Indtast venligst et gyldigt tal mellem 1 og 10.");
+                document.getElementById("start-menu").classList.remove("d-none");
+                document.getElementById("game-area").classList.add("d-none");
+                return;  // Exit the function and prevent the game from starting
+            }
+
+            questions = shuffle(sentences).slice(0, parseInt(count));
+        } else {
+            // For 'daily' mode, shuffle and slice for 5 questions
+            questions = shuffle(sentences).slice(0, 5);
+        }
+
+        loadQuestion();  // Load the first question
+    }
+
+
+    function loadQuestion() {
+        clearInterval(timerInterval); // Clear any previous timer
+        countdown = 7;
+
+        const question = questions[currentQuestion];
+        document.getElementById("sentence").textContent = question.sentence.replace("___", "______");
+        document.getElementById("answer").value = '';  // Clear the answer input field
+        document.getElementById("answer").disabled = false; // Enable the input field
+        document.getElementById("feedback").textContent = ''; // Clear feedback
+        document.getElementById("explanation").textContent = ''; // Clear explanation
+        document.getElementById("timer").textContent = ''; // Hide the timer initially
+        document.getElementById("next").classList.add("d-none"); // Hide the "Next" button initially
+        document.getElementById("submit").classList.remove("d-none"); // Show the "Submit" button
+
+        // Ensure the input box is visible again
+        document.getElementById("answer").classList.remove("d-none");  // Show the input box
+
+        // Clear previous feedback styles
+        const feedback = document.getElementById("feedback");
+        feedback.classList.remove("correct", "incorrect");
+
+        // Focus on the input field so you can start typing immediately
+        document.getElementById("answer").focus();
+    }
+
+
+
+    function submitAnswer() {
+        const userAnswer = document.getElementById("answer").value.trim().toLowerCase();
+        const correctAnswer = questions[currentQuestion].answer.toLowerCase();
+        const feedback = document.getElementById("feedback");
+        const explanation = document.getElementById("explanation");
+        const sentenceElement = document.getElementById("sentence");
+
+        // Check if the user's answer is correct
+        if (userAnswer === correctAnswer) {
+            feedback.textContent = "Korrekt!";
+            feedback.classList.remove("incorrect");  // Remove red if previously added
+            feedback.classList.add("correct");  // Add green for correct answer
+            score += 10; // Add 10 points for correct answer
+
+            // Replace the "___" in the sentence with the correct word in green
+            const sentenceWithCorrectAnswer = questions[currentQuestion].sentence.replace("___", `<span style="color: green;"><strong>${correctAnswer}</strong></span>`);
+            sentenceElement.innerHTML = sentenceWithCorrectAnswer; // Update the sentence with the correct word
+        } else {
+            feedback.textContent = `Forkert! Det rigtige svar er "${correctAnswer}".`;
+            feedback.classList.remove("correct");  // Remove green if previously added
+            feedback.classList.add("incorrect");  // Add red for incorrect answer
+
+            // Show the correct answer inside the "___" but in red color
+            const sentenceWithCorrectAnswer = questions[currentQuestion].sentence.replace("___", `<span style="color: red;"><strong>${correctAnswer}</strong></span>`);
+            sentenceElement.innerHTML = sentenceWithCorrectAnswer; // Update the sentence with the correct word
+        }
+
+        // Add "Betydning" label before the explanation
+        explanation.innerHTML = `<strong>Forklaring:</strong> ${questions[currentQuestion].explanation}`;
+
+        // Disable the input and hide the "Gæt" button after answering
+        document.getElementById("submit").classList.add("d-none"); // Hide "Gæt" button
+        document.getElementById("answer").disabled = true; // Disable input after submission
+
+        // Temporarily hide the input box after a correct answer
+        document.getElementById("answer").classList.add("d-none");
+
+        // Show "Næste" button to move to the next question
+        document.getElementById("next").classList.remove("d-none");
+
+        startNextQuestionTimer(); // Start the countdown for the next question
+    }
+
+
+    function startNextQuestionTimer() {
+        const nextButton = document.getElementById("next");
+
+        // Set the initial text for the "Næste" button
+        nextButton.textContent = `Tast Enter for at fortsætte`;
+
+        /* countdown hvis det ønskes
+        timerInterval = setInterval(() => {
+            countdown--;
+            nextButton.textContent = `Næste spørgsmål om: ${countdown} sek.`;  // Update the button text with the countdown
+
+            if (countdown === 0) {
+                clearInterval(timerInterval);
+                nextButton.textContent = "Næste spørgsmål";  // Change the button text when countdown ends
+                nextButton.disabled = false;  // Enable the button
+                infoMessage.textContent = "Tryk Enter for at gå videre";  // Keep the info message visible after the countdown
+            }
+        }, 1000);*/
+    }
+
+
+    function nextQuestion() {
+        clearInterval(timerInterval); // Clear any running timer
+        currentQuestion++;
+        if (currentQuestion < questions.length) {
+            loadQuestion();
+        } else {
+            endGame();
+        }
+    }
+
+    function endGame() {
+        clearInterval(timerInterval); // Ensure no timer continues
+        document.getElementById("game-area").classList.add("d-none");
+        document.getElementById("end-screen").classList.remove("d-none");
+        document.getElementById("final-score").textContent = `Din score: ${score}/${questions.length * 10}`;
+    }
+
+    function restartGame() {
+        score = 0;
+        currentQuestion = 0;
+        gameMode = '';
+        document.getElementById("start-menu").classList.remove("d-none");
+        document.getElementById("end-screen").classList.add("d-none");
+    }
+
+    function shuffle(array) {
+        return array.sort(() => Math.random() - 0.5);
+    }
+
+    $(document).ready(function () {
+
+        $('#header-placeholder').load('/fragments/navbar');
+
+        $('#footer-placeholder').load('/fragments/footer');
+
+    });
+    document.addEventListener("keydown", function (event) {
+        // Check if the Enter key is pressed
+        if (event.key === "Enter") {
+            // If the "Næste" button is visible, trigger nextQuestion
+            if (!document.getElementById("next").classList.contains("d-none")) {
+                nextQuestion();  // Proceed to the next question if "Næste" button is visible
+            }
+            // Otherwise, submit the answer if the "Gæt" button is visible
+            else if (!document.getElementById("submit").classList.contains("d-none")) {
+                submitAnswer();  // Submit the current answer if "Gæt" button is visible
+            }
+        }
+    });
+
+</script>
+</body>
+</html>

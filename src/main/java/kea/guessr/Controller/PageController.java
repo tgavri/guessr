@@ -36,5 +36,8 @@ public class PageController {
         return "fragments/footer";
     }
 
+    @GetMapping("/fragtments/cookies")
+    public String getIndexCookies() { return "fragments/cookies"; }
+
 
 }

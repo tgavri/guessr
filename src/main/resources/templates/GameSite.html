@@ -69,7 +69,7 @@
     <div class="ContainerGames">
         <div class="Games">
             <canvas id="gameCanvas" width="800" height="400"></canvas>
-            <button id="restartButton" onclick="restartGame()">Restart Game</button>
+            <button id="restartButton" onclick="restartGame()">Genstart Spil</button>
 
         </div>
     </div>
@@ -77,7 +77,6 @@
 <div id="footer-placeholder"></div>
 
 <script>
-    // Get canvas, context, and restart button
     const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
     const restartButton = document.getElementById('restartButton');
@@ -90,6 +89,8 @@
     let obstacles = [];
     let isGameOver = false;
     let obstacleTimer = null;
+    let score = 0;
+    let highScore = localStorage.getItem('highScore') || 0;
 
     // Add key event listener for jumping
     window.addEventListener('keydown', (e) => {
@@ -99,35 +100,102 @@
         }
     });
 
+    const ObstacleType = {
+        SQUARE: 'square',
+        TALL: 'tall',
+        FLYING: 'flying',
+        MULTIPLE: 'multiple'
+    };
+
     // Function to create obstacles
     function createObstacle() {
+        // Determine obstacle type based on a random chance
+        const obstacleTypes = Object.values(ObstacleType);
+        const obstacleType = obstacleTypes[Math.floor(Math.random() * obstacleTypes.length)];
+
+        switch(obstacleType) {
+            case ObstacleType.SQUARE:
+                createSquareObstacle();
+                break;
+            case ObstacleType.TALL:
+                createTallObstacle();
+                break;
+            case ObstacleType.FLYING:
+                createFlyingObstacle();
+                break;
+            default:
+                createSquareObstacle();
+        }
+    }
+    function createSquareObstacle() {
         const size = Math.random() * 30 + 20; // Random size
-        obstacles.push({ x: canvas.width, y: groundHeight - size, width: size, height: size });
+        obstacles.push({
+            type: ObstacleType.SQUARE,
+            x: canvas.width,
+            y: groundHeight - size,
+            width: size,
+            height: size,
+            color: 'darkblue'
+        });
     }
 
+    // Tall, narrow obstacle
+    function createTallObstacle() {
+        const width = Math.random() * 20 + 10;
+        const height = Math.random() * 50 + 50; // Taller obstacle
+        obstacles.push({
+            type: ObstacleType.TALL,
+            x: canvas.width,
+            y: groundHeight - height,
+            width: width,
+            height: height,
+            color: 'darkred'
+        });
+    }
+
+    // Flying obstacle (above ground)
+    function createFlyingObstacle() {
+        const size = Math.random() * 20 + 15;
+        obstacles.push({
+            type: ObstacleType.FLYING,
+            x: canvas.width,
+            y: groundHeight - (Math.random() * 100 + 100), // Random height above ground
+            width: size,
+            height: size,
+            color: 'purple'
+        });
+    }
 
     function startObstacleCreation() {
-        obstacleTimer = setInterval(createObstacle, 1000);
-    }
+        const minInterval = 800;
+        const maxInterval = 1000;
+        const interval = Math.random() * (maxInterval - minInterval) + minInterval;
 
+        obstacleTimer = setInterval(createObstacle, interval);
+    }
 
     function stopObstacleCreation() {
         clearInterval(obstacleTimer);
     }
 
-
     function restartGame() {
+        // Update high score if necessary
+        if (score > highScore) {
+            highScore = score;
+            localStorage.setItem('highScore', highScore);
+        }
+
         // Reset variables
         character = { x: 50, y: 300, width: 30, height: 50, velocityY: 0, gravity: 0.8, jumping: false };
         gameSpeed = 4;
         obstacles = [];
         isGameOver = false;
+        score = 0;
         lastSpeedIncrease = Date.now();
         restartButton.style.display = 'none';
         startObstacleCreation();
         gameLoop();
     }
-
 
     function drawCharacter() {
         const centerX = character.x + character.width / 2;
@@ -172,16 +240,20 @@
         ctx.closePath();
     }
 
-
     function gameLoop() {
         if (isGameOver) {
             ctx.fillStyle = 'black';
             ctx.font = '30px Arial';
-            ctx.fillText('Game Over!', canvas.width / 2 - 80, canvas.height / 2);
+            ctx.fillText('Spillet er slut!', canvas.width / 2 - 80, canvas.height / 2);
+            ctx.fillText(`Score: ${score}`, canvas.width / 2 - 60, canvas.height / 2 + 40);
+            ctx.fillText(`High Score: ${highScore}`, canvas.width / 2 - 80, canvas.height / 2 + 80);
             restartButton.style.display = 'block'; // Show restart button
             stopObstacleCreation(); // Stop obstacles
             return;
         }
+
+        // Increment score
+        score++;
 
         // Clear the canvas
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -189,6 +261,12 @@
         // Draw the ground
         ctx.fillStyle = 'green';
         ctx.fillRect(0, groundHeight, canvas.width, 50);
+
+        // Draw score
+        ctx.fillStyle = 'black';
+        ctx.font = '20px Arial';
+        ctx.fillText(`Score: ${score}`, 10, 30);
+        ctx.fillText(`High Score: ${highScore}`, 10, 60);
 
         // Draw the character
         drawCharacter();
@@ -215,7 +293,7 @@
             obs.x -= gameSpeed;
 
             // Draw obstacle
-            ctx.fillStyle = 'darkblue';
+            ctx.fillStyle = obs.color;
             ctx.fillRect(obs.x, obs.y, obs.width, obs.height);
 
             // Collision detection
@@ -236,7 +314,39 @@
         requestAnimationFrame(gameLoop);
     }
 
+    // Add gamepad support
+    let gamepad = null;
+
+    window.addEventListener('gamepadconnected', (e) => {
+        gamepad = e.gamepad;
+        console.log('Gamepad connected', gamepad);
+    });
+
+    window.addEventListener('gamepaddisconnected', (e) => {
+        gamepad = null;
+        console.log('Gamepad disconnected');
+    });
+
+    function handleGamepadInput() {
+        if (!gamepad) {
+            const gamepads = navigator.getGamepads();
+            gamepad = gamepads[0]; // Use the first connected gamepad
+        }
+
+        if (gamepad) {
+            // Jump when A/X button is pressed
+            if (gamepad.buttons[0].pressed && !character.jumping) {
+                character.velocityY = -15;
+                character.jumping = true;
+            }
+        }
+
+        // Continue checking for gamepad input
+        requestAnimationFrame(handleGamepadInput);
+    }
+
     // Start the game
     startObstacleCreation();
     gameLoop();
-</script>
+    handleGamepadInput();
+    </script>

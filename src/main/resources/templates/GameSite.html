@@ -23,10 +23,10 @@
         }
 
         .Background-containerGames {
-            width: 100vw;
-            height: 120vh;
+            width: 1920px;
+            height: 1080px;
             position: relative;
-            background-image: url('/static/img/Baggrundbillede-skov.jpeg');
+            background-image: url('/img/Baggrundbillede-skov.jpeg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -184,7 +184,7 @@
         // As game speed increases, reduce the interval
         const speedFactor = Math.max(1, gameSpeed - 3); // Start adjusting after speed 4
         const minInterval = Math.max(500, baseMinInterval / speedFactor);
-        const maxInterval = Math.max(800, baseMaxInterval / speedFactor);
+        const maxInterval = Math.max(700, baseMaxInterval / speedFactor);
 
         return Math.random() * (maxInterval - minInterval) + minInterval;
     }

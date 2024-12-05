@@ -50,6 +50,8 @@ public class TriviaService {
                         questionData.put("incorrectAnswers", incorrectAnswers);
 
                         questionData.put("difficulty", questionNode.get("difficulty").asText());
+                        questionData.put("category", questionNode.get("category").asText()); // Add category field
+
                         triviaQuestions.add(questionData);
                     }
                 }
@@ -58,6 +60,7 @@ public class TriviaService {
             throw new RuntimeException("Failed to fetch trivia questions", e);
         }
     }
+
 
 
     // Get questions filtered by difficulty

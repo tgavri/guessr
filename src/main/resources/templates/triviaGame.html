@@ -110,6 +110,7 @@
   <!-- Question Display -->
   <div id="question-container" style="display: none;">
     <p id="question-number"></p> <!-- Display question number -->
+    <p id="category"></p> <!-- Placeholder for category -->
     <p id="question"></p> <!-- Display the question -->
     <div id="answers"></div> <!-- Grid for answers -->
     <p id="score">Score: 0</p> <!-- Display the score -->
@@ -150,6 +151,7 @@
       $('#question-container').empty();
       $('#question-container').html(`
         <p id="question-number"></p>
+        <p id="category"></p>
         <p id="question"></p>
         <div id="answers"></div>
         <p id="score">Score: 0</p>
@@ -181,9 +183,14 @@
         const answers = [...question.incorrectAnswers, question.correctAnswer];
         answers.sort(() => Math.random() - 0.5);
 
-        $('#question').html(question.question);
-        $('#answers').empty();
+        // Display the category
+        $('#category').text(`Category: ${question.category}`);
 
+        // Display the question
+        $('#question').html(question.question);
+
+        // Populate the answers
+        $('#answers').empty();
         answers.forEach(answer => {
           $('#answers').append(`<button>${answer}</button>`);
         });
@@ -198,6 +205,8 @@
         endGame();
       }
     }
+
+
 
     function handleAnswerSelection(selectedElement) {
       const selectedAnswer = selectedElement.text().trim(); // Ensure no extra spaces

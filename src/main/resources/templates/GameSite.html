@@ -177,14 +177,14 @@
 
     function calculateObstacleInterval() {
         // Base interval range
-        const baseMinInterval = 1100;
+        const baseMinInterval = 1200;
         const baseMaxInterval = 1600;
 
         // Adjust interval based on game speed
         // As game speed increases, reduce the interval
         const speedFactor = Math.max(1, gameSpeed - 3); // Start adjusting after speed 4
         const minInterval = Math.max(500, baseMinInterval / speedFactor);
-        const maxInterval = Math.max(700, baseMaxInterval / speedFactor);
+        const maxInterval = Math.max(800, baseMaxInterval / speedFactor);
 
         return Math.random() * (maxInterval - minInterval) + minInterval;
     }

@@ -13,7 +13,7 @@
             width: 1920px;
             margin: 10px;
             background-color: #f0f0f0;
-            background-image: url("/img/Baggrundbillede-skov.jpeg");
+            background-image: url("/img/BaggrundbilledeQuest.jpeg");
 
         }
         .quiz-container {
@@ -265,7 +265,24 @@
 
         function getRandomColor() {
             const colors = ['#ea1f1f', '#14de6b', '#45B7D1', '#FDCB6E'];
-            return colors[Math.floor(Math.random() * colors.length)];
+            const usedColors = JSON.parse(localStorage.getItem('usedColors') || '[]');
+
+
+            const availableColors = colors.filter(color => !usedColors.includes(color));
+
+
+            if (availableColors.length === 0) {
+                localStorage.removeItem('usedColors');
+                return colors[Math.floor(Math.random() * colors.length)];
+            }
+
+            const selectedColor = availableColors[Math.floor(Math.random() * availableColors.length)];
+
+
+            usedColors.push(selectedColor);
+            localStorage.setItem('usedColors', JSON.stringify(usedColors));
+
+            return selectedColor;
         }
     });
 </script>

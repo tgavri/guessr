@@ -26,7 +26,7 @@
             width: 100vw;
             height: 120vh;
             position: relative;
-            background-image: url('https://wallpapers.com/images/featured/open-world-games-ew2yvrmjn6q38krq.jpg');
+            background-image: url('/static/img/Baggrundbillede-skov.jpeg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -178,13 +178,13 @@
     function calculateObstacleInterval() {
         // Base interval range
         const baseMinInterval = 1100;
-        const baseMaxInterval = 1500;
+        const baseMaxInterval = 1600;
 
         // Adjust interval based on game speed
         // As game speed increases, reduce the interval
         const speedFactor = Math.max(1, gameSpeed - 3); // Start adjusting after speed 4
         const minInterval = Math.max(500, baseMinInterval / speedFactor);
-        const maxInterval = Math.max(900, baseMaxInterval / speedFactor);
+        const maxInterval = Math.max(700, baseMaxInterval / speedFactor);
 
         return Math.random() * (maxInterval - minInterval) + minInterval;
     }

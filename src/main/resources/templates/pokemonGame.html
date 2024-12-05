@@ -703,7 +703,7 @@
         let countdown;
         switch(gameMode) {
             case 'quick':
-                countdown = 10;
+                countdown = 15;
                 break;
             case 'free':
                 timerContainer.style.display = 'none';
@@ -721,7 +721,7 @@
                     countdown -= 1;
                     timerText.textContent = countdown;
 
-                    const progressPercent = countdown / (gameMode === 'quick' ? 10 : 60);
+                    const progressPercent = countdown / (gameMode === 'quick' ? 15 : 60);
                     const offset = totalLength * (1 - progressPercent);
                     timerCircle.style.strokeDashoffset = offset;
 

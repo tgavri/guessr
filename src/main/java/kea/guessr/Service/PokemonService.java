@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import kea.guessr.Model.Pokemon;
 import kea.guessr.Model.PokemonDTO;
+import kea.guessr.Repository.DailyRepository;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
@@ -16,7 +17,6 @@ import java.util.Map;
 
 @Service
 public class PokemonService {
-
     private final ObjectMapper objectMapper;
     private List<Map<String, Object>> answersList = new ArrayList<>();
     private int savedCount = 0; // Track saved Pokémon count
@@ -28,18 +28,6 @@ public class PokemonService {
 
     public List<Integer> getPokemonScores() {
         return pokemonScores; // Expose Pokémon scores
-    }
-
-    public void clearAnswersList() {
-        answersList.clear();
-    }
-
-    public void clearPokemonScores () {
-        pokemonScores.clear();
-    }
-
-    public void resetSavedCount() {
-        savedCount = 0;
     }
 
     public PokemonService(ObjectMapper objectMapper) {
@@ -141,6 +129,7 @@ public class PokemonService {
         answersMap.put("growth_rate", currentAnswers.getGrowth_rate());
         answersMap.put("debutGeneration", currentAnswers.getDebutGeneration());
         answersMap.put("spriteUrl", currentAnswers.getSprite());
+        answersMap.put("gameMode", currentAnswers.getGameMode());
 
         int score = 0;
         for (Map.Entry<String, Object> entry : answersMap.entrySet()) {
@@ -222,11 +211,10 @@ public class PokemonService {
                     }
                 }
             }
-            System.out.println("Fetched types: " + types); // Debug log
             return types;
 
         } catch (Exception e) {
-            e.printStackTrace(); // Print error details to the console
+            e.printStackTrace();
             throw new RuntimeException("Failed to fetch Pokémon types", e);
         }
     }

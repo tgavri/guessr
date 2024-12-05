@@ -82,7 +82,15 @@
     const restartButton = document.getElementById('restartButton');
 
     // Game variables
-    let character = { x: 50, y: 300, width: 30, height: 50, velocityY: 0, gravity: 0.8, jumping: false };
+    let character = {
+        x: 50,
+        y: 300,
+        width: 30,
+        height: 50,
+        velocityY: 0,
+        gravity: 0.8,
+        jumping: false
+    };
     let groundHeight = canvas.height - 50;
     let gameSpeed = 4;
     let lastSpeedIncrease = Date.now();
@@ -127,6 +135,7 @@
                 createSquareObstacle();
         }
     }
+
     function createSquareObstacle() {
         const size = Math.random() * 30 + 20; // Random size
         obstacles.push({
@@ -166,12 +175,28 @@
         });
     }
 
-    function startObstacleCreation() {
-        const minInterval = 800;
-        const maxInterval = 1000;
-        const interval = Math.random() * (maxInterval - minInterval) + minInterval;
+    function calculateObstacleInterval() {
+        // Base interval range
+        const baseMinInterval = 1100;
+        const baseMaxInterval = 1500;
 
-        obstacleTimer = setInterval(createObstacle, interval);
+        // Adjust interval based on game speed
+        // As game speed increases, reduce the interval
+        const speedFactor = Math.max(1, gameSpeed - 3); // Start adjusting after speed 4
+        const minInterval = Math.max(500, baseMinInterval / speedFactor);
+        const maxInterval = Math.max(900, baseMaxInterval / speedFactor);
+
+        return Math.random() * (maxInterval - minInterval) + minInterval;
+    }
+
+    function startObstacleCreation() {
+        // Stop any existing timer
+        if (obstacleTimer) {
+            clearInterval(obstacleTimer);
+        }
+
+        // Create a new timer with dynamically calculated interval
+        obstacleTimer = setInterval(createObstacle, calculateObstacleInterval());
     }
 
     function stopObstacleCreation() {
@@ -281,10 +306,13 @@
             character.jumping = false;
         }
 
-        // Speed increases every 10 seconds
-        if (Date.now() - lastSpeedIncrease > 10000) {
+        // Speed increases every 7 seconds
+        if (Date.now() - lastSpeedIncrease > 7000) {
             gameSpeed += 1;
             lastSpeedIncrease = Date.now();
+
+            // Restart obstacle creation with new interval
+            startObstacleCreation();
         }
 
         // Manage obstacles

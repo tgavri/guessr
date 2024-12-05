@@ -22,6 +22,8 @@ public class PageController {
     public String showOrdsprogPage() {
         return "ordsprog";
     }
+    @GetMapping("/pokemonFront")
+    public String getPokemonFront() {return "pokemonFront";}
     @GetMapping("/admin")
     public String showAdminPage() {
         return "admin";

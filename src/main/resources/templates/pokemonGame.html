@@ -461,6 +461,8 @@
         }
 
         function fetchNextPokemon() {
+            const gameMode = document.getElementById("gameMode").value;
+
             const currentAnswers = {
                 pokemonId: correctId,
                 name: answersLog['guessName']?.correct || false,
@@ -475,7 +477,8 @@
                 habitat: answersLog['guessHabitatDropdown']?.correct || false,
                 growth_rate: answersLog['guessGrowthRateDropdown']?.correct || false,
                 debutGeneration: answersLog['guessDebutGeneration']?.correct || false,
-                sprite: spriteUrl
+                sprite: spriteUrl,
+                gameMode: gameMode
             };
 
             fetch('/savePokemonAnswers', {
@@ -498,7 +501,8 @@
                             window.location.href = '/pokemonScore';
                         } else {
                             // Redirect to the next Pokémon
-                            window.location.href = '/pokemonGame';
+                            const gameMode = data.gameMode; // Extract game mode from response
+                            window.location.href = `/pokemonGame?mode=${gameMode}`;
                         }
                     } else {
                         alert("An error occurred while saving your answers.");
@@ -540,6 +544,7 @@
     </script>
 </head>
 <body onload="disableFieldsIfEmpty()">
+<input type="hidden" id="gameMode" value="${gameMode}" th:value="${gameMode}">
 <div class="wrapper">
     <h1>Pokémon Guessing Game</h1>
     <div class="top-row">
@@ -686,12 +691,28 @@
         fetchPokemonHabitats();
         fetchGrowthRates();
 
-        let countdown = 60; // Timer starts at 60 seconds
+        const gameMode = document.getElementById("gameMode").value;
+        const timerContainer = document.getElementById("timerContainer");
         const timerText = document.getElementById("timerText");
         const timerCircle = document.getElementById("timerCircle");
+        console.log("Game mode:", gameMode);
+        console.log("Timer container:", document.getElementById("timerContainer"));
+        console.log("Timer text:", document.getElementById("timerText"));
+        console.log("Timer circle:", document.getElementById("timerCircle"));
 
-        // Total circumference of the circle (2πr)
-        const totalLength = 2 * Math.PI * 45; // Radius is 45
+        let countdown;
+        switch(gameMode) {
+            case 'quick':
+                countdown = 10;
+                break;
+            case 'free':
+                timerContainer.style.display = 'none';
+                return;
+            default:
+                countdown = 60;
+        }
+
+        const totalLength = 2 * Math.PI * 45;
         timerCircle.style.strokeDasharray = totalLength;
 
         function startCircularCountdown() {
@@ -700,7 +721,7 @@
                     countdown -= 1;
                     timerText.textContent = countdown;
 
-                    const progressPercent = countdown / 60;
+                    const progressPercent = countdown / (gameMode === 'quick' ? 10 : 60);
                     const offset = totalLength * (1 - progressPercent);
                     timerCircle.style.strokeDashoffset = offset;
 
@@ -760,7 +781,9 @@
             document.getElementById("heightLabel").textContent = `Pokémon Height (cm): ${correctHeight}`;
         }
 
-        startCircularCountdown();
+        if (gameMode !== 'free') {
+            startCircularCountdown();
+        }
     });
 
 

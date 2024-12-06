@@ -4,22 +4,18 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import kea.guessr.Model.Pokemon;
 import kea.guessr.Model.PokemonDTO;
-import kea.guessr.Repository.DailyRepository;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class PokemonService {
     private final ObjectMapper objectMapper;
     private List<Map<String, Object>> answersList = new ArrayList<>();
-    private int savedCount = 0; // Track saved Pokémon count
+    private int savedCount = 0;
     private List<Integer> pokemonScores = new ArrayList<>();
 
     public int getSavedCount() {
@@ -27,8 +23,7 @@ public class PokemonService {
     }
 
     public List<Integer> getPokemonScores() {
-        return pokemonScores; // Expose Pokémon scores
-    }
+        return pokemonScores;}
 
     public PokemonService(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
@@ -205,13 +200,13 @@ public class PokemonService {
             if (results != null && results.isArray()) {
                 for (JsonNode typeNode : results) {
                     String typeName = typeNode.get("name").asText();
-                    // Exclude "stellar" and "unknown"
                     if (!"stellar".equalsIgnoreCase(typeName) && !"unknown".equalsIgnoreCase(typeName)) {
                         types.add(capitalizeFirstLetter(typeName));
                     }
                 }
             }
-            return types;
+
+            return sortAlphabetically(types);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -299,6 +294,11 @@ public class PokemonService {
             }
         }
         return false;
+    }
+
+    private List<String> sortAlphabetically(List<String> list) {
+        Collections.sort(list, Comparator.naturalOrder());
+        return list;
     }
 
     private String capitalizeFirstLetter(String input) {

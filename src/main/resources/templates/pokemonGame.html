@@ -25,25 +25,24 @@
             flex-direction: column;
             justify-content: flex-start;
             align-items: center;
-            width: 90%;
-            max-width: 800px;
-            min-height: 90vh;
+            width: 90vw;
+            max-width: 80vmax;
+            min-height: 70vh;
             background: rgba(255, 255, 255, 0.7);
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-            padding: 20px;
+            border-radius: 2vmin;
+            box-shadow: 0 2vmin 5vmin rgba(0, 0, 0, 0.5);
+            padding: 5vmin;
             text-align: center;
-            margin-top: 25vh;
-            margin-bottom: 20vh;
+            margin-top: 10vh;
             overflow: hidden;
         }
 
         .container {
             width: 100%;
-            max-width: 600px;
+            max-width: 60vmax;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 2vh;
         }
 
         .row {
@@ -59,7 +58,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 20px;
+            gap: 2vmin;
             width: 100%;
         }
 
@@ -68,25 +67,25 @@
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            margin-bottom: 20px;
-            width: 120px;
-            height: 120px;
+            margin-bottom: 2vmin;
+            width: 15vmin;
+            height: 15vmin;
         }
 
         #circularTimer {
             position: relative;
-            width: 100px;
-            height: 100px;
+            width: 12vmin;
+            height: 12vmin;
             display: flex;
             justify-content: center;
             align-items: center;
-            stroke-width: 10;
+            stroke-width: 1vmin;
         }
 
         #timerText {
             position: absolute;
-            top: -30px;
-            font-size: 24px;
+            top: -2vmin;
+            font-size: 2vmin;
             font-weight: bold;
             color: #000;
             text-align: center;
@@ -103,7 +102,7 @@
 
         #circularTimer circle:first-child {
             fill: none;
-            stroke-width: 10;
+            stroke-width: 1vmin;
             stroke: #ddd;
         }
 
@@ -112,25 +111,35 @@
             stroke-dasharray: 283;
             stroke-dashoffset: 283;
             transition: stroke-dashoffset 1s linear;
-            stroke-width: 10;
+            stroke-width: 1vmin;
         }
 
         .sprite-container {
             text-align: center;
-            padding: 10px;
-            border: 1px solid black;
+            padding: 1vmin;
+            border: 0.5vmin solid black;
             display: inline-block;
         }
 
         button {
-            padding: 10px 20px;
-            font-size: 16px;
+            padding: 1vmin 2vmin;
+            font-size: 1.5vmin;
             cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 1vmin;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
         }
 
         button:disabled {
             background-color: lightgray;
             color: darkgray;
+            border: 0.1vmin solid #ccc;
         }
 
         .field {
@@ -143,50 +152,51 @@
         .field input,
         .field select {
             width: 100%;
-            padding: 8px;
+            padding: 1vmin;
             box-sizing: border-box;
-            font-size: 14px;
+            font-size: 1.2vmin;
         }
 
         .field button {
-            margin-top: 5px;
-            padding: 5px 10px;
-            font-size: 14px;
+            margin-top: 0.5vmin;
+            padding: 0.5vmin 1vmin;
+            font-size: 1.2vmin;
             cursor: pointer;
         }
 
         .field p {
-            margin: 5px 0 0;
-            font-size: 12px;
+            margin: 0.5vmin 0 0;
+            font-size: 1vmin;
             color: gray;
         }
 
         img {
-            max-width: 260px;
+            max-width: 25vmin;
             height: auto;
         }
 
         h1 {
-            margin-bottom: 20px;
+            margin-bottom: 2vmin;
+            font-size: 3vmin;
             color: black;
         }
 
         .correct {
             background-color: lightgreen;
             color: black;
-            border: 2px solid green; /* Optional: to show a green border */
+            border: 0.2vmin solid green;
         }
 
         .incorrect {
             background-color: lightcoral;
             color: black;
-            border: 2px solid red; /* Optional: to show a red border */
+            border: 0.2vmin solid red;
         }
 
         .disabled {
             background-color: lightgray;
             color: darkgray;
-            border: 1px solid #ccc;
+            border: 0.1vmin solid #ccc;
         }
 
         .neutral {
@@ -197,25 +207,25 @@
         input[type="range"] {
             width: 100%;
             appearance: none;
-            height: 8px;
+            height: 0.8vmin;
             background: #ddd;
             outline: none;
-            border-radius: 4px;
+            border-radius: 0.4vmin;
             cursor: pointer;
         }
 
         input[type="range"]::-webkit-slider-thumb {
             appearance: none;
-            width: 16px;
-            height: 16px;
+            width: 1.6vmin;
+            height: 1.6vmin;
             border-radius: 50%;
             background: #007bff;
             cursor: pointer;
         }
 
         input[type="range"]::-moz-range-thumb {
-            width: 16px;
-            height: 16px;
+            width: 1.6vmin;
+            height: 1.6vmin;
             border-radius: 50%;
             background: #007bff;
             cursor: pointer;
@@ -227,12 +237,6 @@
 
         .incorrect-slider {
             background: lightcoral !important;
-        }
-
-        button:disabled {
-            background-color: lightgray;
-            color: darkgray;
-            border: 1px solid #ccc;
         }
     </style>
 
@@ -248,13 +252,12 @@
         let correctHeight = 0;
         const spriteUrl = "[[${spriteUrl}]]";
         let answersLog = {};
-        let pokemonCount = 0;
 
         function validateInput(input, correctValue, messageElementId) {
             const inputValue = input.value.trim();
             const messageElement = document.getElementById(messageElementId);
 
-            const key = input.id; // Use input's id as the key in answersLog
+            const key = input.id;
 
             if (input.type === 'number') {
                 const inputNumericValue = Number(inputValue);
@@ -304,7 +307,6 @@
                 isCorrect = normalizeText(inputValue) === normalizeText(correctValue);
             }
 
-            // Update answersLog with the result
             answersLog[inputId] = {
                 correct: isCorrect,
                 userAnswer: inputValue || null
@@ -492,16 +494,15 @@
                     if (!response.ok) {
                         throw new Error('Failed to save Pokémon answers');
                     }
-                    return response.json(); // Parse the JSON response
+                    return response.json();
                 })
                 .then(data => {
                     if (data.success) {
                         if (data.shouldRedirect) {
-                            // Redirect to the final page after 5 Pokémon
                             window.location.href = '/pokemonScore';
                         } else {
                             // Redirect to the next Pokémon
-                            const gameMode = data.gameMode; // Extract game mode from response
+                            const gameMode = data.gameMode;
                             window.location.href = `/pokemonGame?mode=${gameMode}`;
                         }
                     } else {
@@ -744,7 +745,7 @@
             inputs.forEach(input => {
 
                 if (input.textContent !== "Next Pokémon" && !input.classList.contains("correct") && !input.classList.contains("incorrect")) {
-                    input.disabled = true; // Lock input
+                    input.disabled = true;
                     input.classList.add("disabled");
                 }
 

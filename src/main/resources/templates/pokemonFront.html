@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-image: url('https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/eb6d7e02-84f3-4e3a-a5b5-7c1489afc0f2/d7hjsj7-6f135f19-37f9-418b-8062-f3a6498858b1.png/v1/fit/w_718,h_404,q_70,strp/pokemon__ash_capture_pokemon__wallpaper__by_kill3rcombo_d7hjsj7-375w-2x.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NDA0IiwicGF0aCI6IlwvZlwvZWI2ZDdlMDItODRmMy00ZTNhLWE1YjUtN2MxNDg5YWZjMGYyXC9kN2hqc2o3LTZmMTM1ZjE5LTM3ZjktNDE4Yi04MDYyLWYzYTY0OTg4NThiMS5wbmciLCJ3aWR0aCI6Ijw9NzE4In1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.lqkd3me3AY1ys2elwscvfNH_g-efMGfW3EKY4WrEupw');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: black;
+        }
+
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: start;
+            align-items: center;
+            width: 90%;
+            max-width: 800px;
+            min-height: 90vh;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            text-align: center;
+            margin-top: 25vh;
+            margin-bottom: 20vh;
+            overflow: hidden;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-top: 20px;
+            cursor: pointer;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .top-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 50px;
+            gap: 20px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <h1>Pokémon Guessing Game</h1>
+        <div class="top-row">
+            <div class="top-row">
+                <button onclick="redirectToGame('daily')">Daily</button>
+                <button onclick="redirectToGame('quick')">Quick Play</button>
+                <button onclick="redirectToGame('free')">Free Play</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+<script>
+
+    function redirectToGame(mode) {
+        window.location.href = `/pokemonGame?mode=${mode}`;
+    }
+</script>

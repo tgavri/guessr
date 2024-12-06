@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class PageController {
+  
+    @Autowired
+    private UserRepository userRepository;
+  
     @GetMapping("/")
     public String showIndexPage() {
         return "index";
@@ -29,8 +33,6 @@ public class PageController {
     public String showOrdsprogPage() {
         return "ordsprog";
     }
-    @Autowired
-    private UserRepository userRepository;
 
     @GetMapping("/profile")
     public String showProfilePage(Model model, HttpSession session) {
@@ -57,6 +59,10 @@ public class PageController {
         session.setAttribute("tempPassword", password);
         return "redirect:/profile";
     }
+
+    @GetMapping("/pokemonFront")
+    public String getPokemonFront() {return "pokemonFront";}
+
     @GetMapping("/admin")
     public String showAdminPage() {
         return "admin";
@@ -70,6 +76,9 @@ public class PageController {
     public String getIndexFooter() {
         return "fragments/footer";
     }
+
+    @GetMapping("/fragtments/cookies")
+    public String getIndexCookies() { return "fragments/cookies"; }
 
 
 }

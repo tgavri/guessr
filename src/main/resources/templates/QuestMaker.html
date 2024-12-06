@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 1080px;
+            width: 1920px;
+            margin: 10px;
+            background-color: #f0f0f0;
+            background-image: url("/img/BaggrundbilledeQuest.jpeg");
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+
+
+        }
+        .quiz-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            width: 500px;
+            padding: 20px;
+            text-align: center;
+        }
+        .question {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .answer-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .answer-btn {
+            padding: 15px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .answer-btn:hover {
+            opacity: 0.9;
+        }
+        #create-question-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        #create-question-form input,
+        #create-question-form textarea {
+            margin-bottom: 10px;
+            padding: 10px;
+        }
+        #question-list {
+            margin-top: 20px;
+            text-align: left;
+        }
+        .question-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        .control-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        .control-buttons button {
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="quiz-container">
+    <div id="create-question-section">
+        <h2>Stil et spørgsmål</h2>
+        <div id="question-count">Spørgsmål: 0/10</div>
+        <form id="create-question-form">
+            <textarea id="question-text" placeholder="Skriv dit spørgsmål" required></textarea>
+            <input type="text" id="answer1" placeholder="Svar: 1" required>
+            <input type="text" id="answer2" placeholder="Svar: 2" required>
+            <input type="text" id="answer3" placeholder="Svar: 3" required>
+            <input type="text" id="answer4" placeholder="Svar: 4" required>
+            <select id="correct-answer" required>
+                <option value="">Vælg korrekt svar</option>
+                <option value="1">Svar 1</option>
+                <option value="2">Svar 2</option>
+                <option value="3">Svar 3</option>
+                <option value="4">Svar 4</option>
+            </select>
+            <button type="submit">Tilføj spørgsmål</button>
+        </form>
+        <div id="question-list"></div>
+        <div class="control-buttons">
+            <button id="start-game" disabled>Start Spil</button>
+            <button id="reset-game">Genstart</button>
+        </div>
+    </div>
+
+    <div id="quiz-section" style="display:none;">
+        <div class="question" id="current-question"></div>
+        <div class="answer-buttons" id="answer-container"></div>
+        <div class="control-buttons">
+            <button id="back-to-questions">Back to Questions</button>
+            <button id="reset-quiz">Reset Quiz</button>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        const MAX_QUESTIONS = 10;
+        let questions = JSON.parse(localStorage.getItem('quizQuestions') || '[]');
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+
+        function updateQuestionCount() {
+            $('#question-count').text(`Questions: ${questions.length}/${MAX_QUESTIONS}`);
+            $('#start-game').prop('disabled', questions.length === 0);
+        }
+
+
+        function renderQuestionList() {
+            const $questionList = $('#question-list').empty();
+            questions.forEach((q, index) => {
+                const $item = $('<div>')
+                    .addClass('question-item')
+                    .html(`<span>${q.question}</span>`)
+                    .appendTo($questionList);
+
+                $('<button>')
+                    .text('Delete')
+                    .on('click', function() {
+                        questions.splice(index, 1);
+                        saveQuestions();
+                        renderQuestionList();
+                        updateQuestionCount();
+                    })
+                    .appendTo($item);
+            });
+        }
+
+        // Save questions to localStorage
+        function saveQuestions() {
+            localStorage.setItem('quizQuestions', JSON.stringify(questions));
+        }
+
+        // Initial render of questions
+        renderQuestionList();
+        updateQuestionCount();
+
+        $('#create-question-form').on('submit', function(e) {
+            e.preventDefault();
+
+            // Check question limit
+            if (questions.length >= MAX_QUESTIONS) {
+                alert(`Maximum ${MAX_QUESTIONS} questions allowed`);
+                return;
+            }
+
+            const questionData = {
+                question: $('#question-text').val(),
+                answers: [
+                    $('#answer1').val(),
+                    $('#answer2').val(),
+                    $('#answer3').val(),
+                    $('#answer4').val()
+                ],
+                correctAnswer: parseInt($('#correct-answer').val())
+            };
+
+            questions.push(questionData);
+            saveQuestions();
+            renderQuestionList();
+            updateQuestionCount();
+
+            // Clear form
+            $('#create-question-form')[0].reset();
+        });
+
+        // Start Game Button
+        $('#start-game').on('click', function() {
+            if (questions.length === 0) {
+                alert('Please add at least one question');
+                return;
+            }
+            startQuiz();
+        });
+
+        // Reset Game Button
+        $('#reset-game').on('click', function() {
+            questions = [];
+            localStorage.removeItem('quizQuestions');
+            renderQuestionList();
+            updateQuestionCount();
+        });
+
+        function startQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            $('#create-question-section').hide();
+            $('#quiz-section').show();
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            if (currentQuestionIndex >= questions.length) {
+                endQuiz();
+                return;
+            }
+
+            const currentQuestion = questions[currentQuestionIndex];
+            $('#current-question').text(currentQuestion.question);
+
+            const $answerContainer = $('#answer-container').empty();
+            currentQuestion.answers.forEach((answer, index) => {
+                $('<button>')
+                    .addClass('answer-btn')
+                    .text(answer)
+                    .css('background-color', getRandomColor())
+                    .data('index', index + 1)
+                    .on('click', handleAnswer)
+                    .appendTo($answerContainer);
+            });
+        }
+
+        function handleAnswer(e) {
+            const selectedAnswer = $(e.target).data('index');
+            const currentQuestion = questions[currentQuestionIndex];
+
+            if (selectedAnswer === currentQuestion.correctAnswer) {
+                score++;
+                alert('Correct!');
+            } else {
+                alert('Wrong answer!');
+            }
+
+            currentQuestionIndex++;
+            loadQuestion();
+        }
+
+        function endQuiz() {
+            $('#answer-container').empty();
+            $('#current-question').text(`Quiz Completed! Your score: ${score}/${questions.length}`);
+        }
+
+        // Back to Questions Button
+        $('#back-to-questions').on('click', function() {
+            $('#quiz-section').hide();
+            $('#create-question-section').show();
+        });
+
+        // Reset Quiz Button
+        $('#reset-quiz').on('click', function() {
+            $('#quiz-section').hide();
+            startQuiz();
+        });
+
+        function getRandomColor() {
+            const colors = ['#ea1f1f', '#14de6b', '#45B7D1', '#FDCB6E'];
+            const usedColors = JSON.parse(localStorage.getItem('usedColors') || '[]');
+
+
+            const availableColors = colors.filter(color => !usedColors.includes(color));
+
+
+            if (availableColors.length === 0) {
+                localStorage.removeItem('usedColors');
+                return colors[Math.floor(Math.random() * colors.length)];
+            }
+
+            const selectedColor = availableColors[Math.floor(Math.random() * availableColors.length)];
+
+
+            usedColors.push(selectedColor);
+            localStorage.setItem('usedColors', JSON.stringify(usedColors));
+
+            return selectedColor;
+        }
+    });
+</script>
+</body>
+</html>

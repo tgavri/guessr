@@ -1,7 +1,9 @@
 package kea.guessr.Controller;
 
+import kea.guessr.Model.Daily;
 import kea.guessr.Model.Pokemon;
 import kea.guessr.Model.PokemonDTO;
+import kea.guessr.Repository.DailyRepository;
 import kea.guessr.Service.PokemonService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +18,12 @@ import java.util.*;
 public class PokemonController {
 
     private final PokemonService pokemonService;
+    DailyRepository dailyRepository;
     private final List<Pokemon> pokemonList;
 
-    public PokemonController(PokemonService pokemonService) {
+    public PokemonController(PokemonService pokemonService, DailyRepository dailyRepository) {
         this.pokemonService = pokemonService;
+        this.dailyRepository = dailyRepository;
         selectRandomPokemon();
         pokemonList = new ArrayList<>();
     }
@@ -49,14 +53,51 @@ public class PokemonController {
     }
 
     @GetMapping("/pokemonGame")
-    public String loadGame(Model model) {
+    public String loadGame(@RequestParam(defaultValue = "daily") String mode, Model model) {
+        if (mode.equals("daily")) {
+            String todayDate = java.time.LocalDate.now().toString();
+
+            Optional<Daily> dailyEntryOptional = dailyRepository.findByGameNameAndDate("Pokemon", todayDate);
+
+            if (dailyEntryOptional.isEmpty() || dailyEntryOptional.get().getPokemonIds().size() < 5) {
+                List<Integer> randomPokemonIds = new ArrayList<>();
+                while (randomPokemonIds.size() < 5) {
+                    Pokemon randomPokemon = selectRandomPokemon();
+                    if (!randomPokemonIds.contains(randomPokemon.getId())) {
+                        randomPokemonIds.add(randomPokemon.getId());
+                    }
+                }
+                Daily newDailyEntry = new Daily("Pokemon", randomPokemonIds, new ArrayList<>(), todayDate);
+                dailyRepository.save(newDailyEntry);
+
+                dailyEntryOptional = Optional.of(newDailyEntry);
+            }
+
+            if (dailyEntryOptional.isPresent()) {
+                Daily dailyEntry = dailyEntryOptional.get();
+
+                List<Integer> dailyPokemonIds = dailyEntry.getPokemonIds();
+                if (dailyPokemonIds.size() == 5) {
+                    int nextIndex = pokemonList.size();
+                    if (nextIndex < dailyPokemonIds.size()) {
+                        int pokemonId = dailyPokemonIds.get(nextIndex);
+                        Pokemon selectedPokemon = pokemonService.fetchPokemon(pokemonId);
+                        pokemonList.add(selectedPokemon);
+
+                        populateModelWithPokemonData(model, selectedPokemon, mode);
+                        return "pokemonGame";
+                    }
+                }
+            }
+        }
         Pokemon selectedPokemon = selectRandomPokemon();
         pokemonList.add(selectedPokemon);
 
-        for (Pokemon pokemon : pokemonList) {
-            System.out.println(pokemon.getName());
-        }
+        populateModelWithPokemonData(model, selectedPokemon, mode);
+        return "pokemonGame";
+    }
 
+    private void populateModelWithPokemonData(Model model, Pokemon selectedPokemon, String mode) {
         model.addAttribute("spriteUrl", selectedPokemon.getSpriteUrl());
         model.addAttribute("name", selectedPokemon.getName());
         model.addAttribute("id", selectedPokemon.getId());
@@ -71,36 +112,33 @@ public class PokemonController {
         model.addAttribute("weight", selectedPokemon.getWeight());
         model.addAttribute("height", selectedPokemon.getHeight());
         model.addAttribute("pokemonList", pokemonList);
-
-        return "pokemonGame";
+        model.addAttribute("gameMode", mode);
     }
 
     @PostMapping("/savePokemonAnswers")
-    public ResponseEntity<?> savePokemonAnswers(@RequestBody PokemonDTO currentAnswers) {
-        try {
-            System.out.println("Received answers: " + currentAnswers);
+    @ResponseBody
+    public Map<String, Object> savePokemonAnswers(@RequestBody PokemonDTO currentAnswers) {
 
-            pokemonService.savePokemonAnswers(currentAnswers);
+        pokemonService.savePokemonAnswers(currentAnswers);
+        int savedCount = pokemonService.getSavedCount();
+        boolean shouldRedirect = savedCount >= 5;
 
-            // Get the current saved count
-            int savedCount = pokemonService.getSavedCount();
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", true);
+        response.put("shouldRedirect", shouldRedirect);
 
-            // Check if the player has saved 5 Pokémon
-            boolean shouldRedirect = savedCount >= 5;
-
-            return ResponseEntity.ok().body(Map.of("success", true, "shouldRedirect", shouldRedirect));
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(Map.of("success", false, "message", "Error saving answers"));
+        if (!shouldRedirect) {
+            response.put("gameMode", currentAnswers.getGameMode());
         }
+
+        return response;
     }
 
     @PostMapping("/resetGame")
     public ResponseEntity<?> resetGame() {
         try {
-
             pokemonService.resetGameData();
+            pokemonList.clear();
 
             return ResponseEntity.ok().body(Map.of("success", true, "message", "Game reset successfully"));
         } catch (Exception e) {

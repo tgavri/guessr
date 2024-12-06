@@ -14,6 +14,15 @@ public class PokemonDTO {
     private Boolean growth_rate;
     private Boolean debutGeneration;
     private String sprite;
+    private String gameMode;
+
+    public String getGameMode () {
+        return gameMode;
+    }
+
+    public void setGameMode (String gameMode) {
+        this.gameMode = gameMode;
+    }
 
     public String getSprite () {
         return sprite;
@@ -126,4 +135,5 @@ public class PokemonDTO {
     public void setDebutGeneration(Boolean debutGeneration) {
         this.debutGeneration = debutGeneration;
     }
+
 }

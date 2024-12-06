@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trivia Game</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: linear-gradient(135deg, #12d1ba, #2575fc);
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
+
+    #game-container {
+      max-width: 60%;
+      margin: auto;
+      padding: 20px;
+      background: #e4e1e1;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    #difficulty-selection {
+      margin-bottom: 20px;
+    }
+
+    #answers {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr); /* Two buttons per row */
+      gap: 20px; /* Space between buttons */
+      margin-top: 20px;
+    }
+
+    #answers button {
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      height: 200px;
+      padding: 20px 10px;
+      font-size: 50px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    #answers button:hover {
+      background-color: #0056b3;
+      transform: scale(1.05);
+    }
+
+    #answers button:active {
+      background-color: #003d80;
+      transform: scale(0.98);
+    }
+
+    #answers button.disabled {
+      pointer-events: none;
+      background-color: #ccc;
+      color: #666;
+    }
+
+    #next-question, #start-game {
+      padding: 10px 20px;
+      background: #28a745;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    #next-question:hover, #start-game:hover {
+      background: #218838;
+    }
+    #difficulty {
+      font-size: 16px;
+      padding: 8px 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background-color: white;
+      color: black; /* Default text color for dropdown */
+      appearance: none; /* Remove default styling */
+      cursor: pointer;
+      width: 150px;
+    }
+
+  </style>
+</head>
+<body>
+<div id="game-container">
+  <h1>Trivia Spil</h1>
+
+  <!-- Difficulty Selection -->
+  <div id="difficulty-selection">
+    <label for="difficulty">Vælg sværhedsgrad:</label>
+    <select id="difficulty">
+      <option value="easy">Let</option>
+      <option value="medium">Medium</option>
+      <option value="hard">Svær</option>
+    </select>
+    <button id="start-game">Start Spillet</button>
+  </div>
+
+  <!-- Question Display -->
+  <div id="question-container" style="display: none;">
+    <p id="question-number"></p> <!-- Display question number -->
+    <p id="category"></p> <!-- Placeholder for category -->
+    <p id="question"></p> <!-- Display the question -->
+    <div id="answers"></div> <!-- Grid for answers -->
+    <p id="score">Score: 0</p> <!-- Display the score -->
+    <button id="next-question" style="display: none;">Next Question</button>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function () {
+    const baseUrl = "http://localhost:8080/api/trivia";
+    let triviaData = [];
+    let currentIndex = 0;
+    let score = 0;
+
+    // Fetch questions from the backend by difficulty
+    function fetchQuestions(difficulty) {
+      $.ajax({
+        url: `${baseUrl}/questions`,
+        method: 'GET',
+        data: { difficulty: difficulty },
+        success: function (data) {
+          triviaData = data;
+          currentIndex = 0;
+          score = 0;
+          updateScore();
+          updateQuestionNumber();
+          $('#difficulty-selection').hide();
+          $('#question-container').show();
+          displayQuestion();
+        },
+        error: function () {
+          alert("Kunne ikke hente spørgsmålene. Prøv igen senere.");
+        }
+      });
+    }
+
+    function restartGame() {
+      $('#question-container').empty();
+      $('#question-container').html(`
+        <p id="question-number"></p>
+        <p id="category"></p>
+        <p id="question"></p>
+        <div id="answers"></div>
+        <p id="score">Score: 0</p>
+        <button id="next-question" style="display: none;">Næste Spørgsmål</button>
+      `);
+      $('#difficulty-selection').show();
+      $('#question-container').hide();
+      triviaData = [];
+      currentIndex = 0;
+      score = 0;
+      bindEventListeners();
+    }
+
+    function bindEventListeners() {
+      $('#start-game').off('click').on('click', function () {
+        const difficulty = $('#difficulty').val();
+        fetchQuestions(difficulty);
+      });
+
+      $('#next-question').off('click').on('click', function () {
+        currentIndex++;
+        displayQuestion();
+      });
+    }
+
+    function displayQuestion() {
+      if (currentIndex < triviaData.length) {
+        const question = triviaData[currentIndex];
+        const answers = [...question.incorrectAnswers, question.correctAnswer];
+        answers.sort(() => Math.random() - 0.5);
+
+        // Display the category
+        $('#category').text(`Category: ${question.category}`);
+
+        // Display the question
+        $('#question').html(question.question);
+
+        // Populate the answers
+        $('#answers').empty();
+        answers.forEach(answer => {
+          $('#answers').append(`<button>${answer}</button>`);
+        });
+
+        $('#answers button').off('click').on('click', function () {
+          handleAnswerSelection($(this));
+        });
+
+        updateQuestionNumber();
+        $('#next-question').hide();
+      } else {
+        endGame();
+      }
+    }
+
+
+
+    function handleAnswerSelection(selectedElement) {
+      const selectedAnswer = selectedElement.text().trim(); // Ensure no extra spaces
+      const correctAnswer = triviaData[currentIndex].correctAnswer.trim(); // Ensure no extra spaces
+
+      if (selectedAnswer === correctAnswer) {
+        // If the selected answer is correct, highlight it in green
+        selectedElement.css('background', '#28a745');
+        score += 10;
+      } else {
+        // If the selected answer is incorrect, highlight it in red
+        selectedElement.css('background', '#dc3545');
+
+        // Highlight the correct answer in green
+        $('#answers button').each(function () {
+          if ($(this).text().trim() === correctAnswer) {
+            $(this).css('background', '#28a745');
+          }
+        });
+      }
+
+      updateScore();
+      $('#answers button').attr('disabled', true); // Disable further clicks
+      $('#next-question').show();
+    }
+
+
+    function updateScore() {
+      $('#score').text(`Score: ${score}`);
+    }
+
+    function updateQuestionNumber() {
+      $('#question-number').text(`Question ${currentIndex + 1} of ${triviaData.length}`);
+    }
+
+    function endGame() {
+      $.ajax({
+        url: `${baseUrl}/save-score`,
+        method: 'POST',
+        data: { score: score },
+        success: function () {
+          $('#question-container').html(`
+            <h2>Game Over!</h2>
+            <p>You scored ${score} points out of ${triviaData.length * 10}!</p>
+            <button id="restart-game">Restart Game</button>
+          `);
+          $('#restart-game').on('click', function () {
+            restartGame();
+          });
+        },
+        error: function () {
+          alert("Failed to save your score. Please try again.");
+        }
+      });
+    }
+
+    bindEventListeners();
+  });
+</script>
+</body>
+</html>

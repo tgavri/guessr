@@ -7,24 +7,18 @@
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <style>
-        .ContainerGames {
-            margin-top: 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            text-align: center;
-            background-color: rgba(0, 0, 0, 0.8);
-            padding: 20px;
+        html, body {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
             width: 100%;
-            max-width: 1400px;
-            height: 800px;
+            height: 100%;
+            overflow: hidden;
         }
 
         .Background-containerGames {
-            width: 1920px;
-            height: 1080px;
+            width: 100vw;
+            height: 100vh;
             position: relative;
             background-image: url('/img/Baggrundbillede-skov.jpeg');
             background-size: cover;
@@ -34,23 +28,36 @@
             align-items: center;
             justify-content: center;
         }
-        .Games {
-            margin-top: 20px;
+
+        .ContainerGames {
+            margin-top: 0;
+            padding: 10px;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
+            color: white;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.8);
+            width: 90%;
+            max-width: 1200px;
+            height: 70%;
+            border-radius: 10px; /* Optional: Adds rounded corners */
         }
+
         canvas {
             display: block;
             margin: 0 auto;
             background-color: #f0f0f0;
-            border: 5px solid #000;
+            border: 3px solid #000;
+            max-width: 100%;
+            height: auto;
         }
 
         #restartButton {
             display: none;
             position: absolute;
-            top: 30%;
+            top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             padding: 10px 20px;
@@ -61,10 +68,41 @@
             border-radius: 5px;
             cursor: pointer;
         }
+
+        /* Add responsiveness */
+        @media (max-width: 768px) {
+            .ContainerGames {
+                height: 80%;
+                padding: 10px;
+            }
+
+            canvas {
+                width: 100%;
+                height: auto;
+            }
+
+            #restartButton {
+                font-size: 16px;
+                padding: 8px 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .ContainerGames {
+                width: 95%;
+                height: 85%;
+            }
+
+            #restartButton {
+                font-size: 14px;
+                padding: 6px 12px;
+            }
+        }
     </style>
 </head>
 <body>
 <div id="header-placeholder"></div>
+
 <div class="Background-containerGames">
     <div class="ContainerGames">
         <div class="Games">
@@ -77,6 +115,10 @@
 <div id="footer-placeholder"></div>
 
 <script>
+    $(document).ready(function () {
+        $('#header-placeholder').load('/fragments/navbar');
+        $('#footer-placeholder').load('/fragments/footer');
+    });
     const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
     const restartButton = document.getElementById('restartButton');

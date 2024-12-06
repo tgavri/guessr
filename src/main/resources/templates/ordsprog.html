@@ -130,6 +130,35 @@
         .btn-option {
             margin: 10px 0;
         }
+        button.disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        .tooltip-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip-content {
+            visibility: hidden;
+            background-color: #f8d7da; /* Light red */
+            color: #721c24; /* Dark red */
+            text-align: center;
+            border-radius: 5px;
+            padding: 5px 10px;
+            position: absolute;
+            z-index: 1;
+            bottom: 85%; /* Position above the button */
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            font-size: 0.9rem;
+        }
+
+        .tooltip-container:hover .tooltip-content {
+            visibility: visible;
+        }
 
     </style>
 </head>
@@ -159,9 +188,14 @@
             <p id="timer" class="text-danger fw-bold"></p> <!-- Timer updates dynamically -->
             <p id="sentence" class="sentence"></p>
             <input id="answer" type="text" class="form-control" placeholder="Indtast dit svar her">
+
             <div class="d-flex justify-content-center">
                 <button id="submit" class="btn btn-success mt-3" onclick="submitAnswer()">Gæt</button>
             </div>            <p id="feedback" class="mt-3"></p>
+            <div class="tooltip-container">
+                <button id="hint" class="btn btn-warning" onclick="useHint()">Hint</button>
+                <div class="tooltip-content" id="tooltip">Brug af hint koster 50% af dine point</div>
+            </div>
             <p id="explanation" class="explanation"></p>
             <div class="d-flex justify-content-center">
                 <button id="next" class="btn btn-secondary d-none mt-3" onclick="nextQuestion()">Næste</button>
@@ -382,7 +416,368 @@
         { sentence: "Hverken hoved eller ___ i noget", answer: "hale", explanation: "Noget der er usammenhængende." },
         { sentence: "Hyle som en stukket ___", answer: "gris", explanation: "Skrige eller græde meget højt." },
         { sentence: "Hænge i en ___", answer: "klokkestreng", explanation: "Være forpligtet til at overholde aftaler på bestemte tidspunkter." },
-        { sentence: "Hænge langt ud af ___", answer: "halsen", explanation: "Være meget træt af noget." }
+        { sentence: "Hænge langt ud af ___", answer: "halsen", explanation: "Være meget træt af noget." },
+        { sentence: "Hænge med ___", answer: "hovedet", explanation: "Være trist." },
+        { sentence: "Hænge med ___", answer: "næbbet", explanation: "Være ked af det." },
+        { sentence: "Høre en knappenål falde til ___", answer: "jorden", explanation: "Der er meget stille." },
+        { sentence: "Høre en lille fugl ___", answer: "synge", explanation: "Høre et rygte." },
+        { sentence: "Høre ___ synge", answer: "englene", explanation: "Være meget lykkelig." },
+        { sentence: "Hånden på ___", answer: "hjertet", explanation: "Vær oprigtig, ærlig." },
+        { sentence: "Hård ___", answer: "banan", explanation: "En barsk person." },
+        { sentence: "Hårene rejser sig på ___ af en", answer: "hovedet", explanation: "Forfærdelse." },
+        { sentence: "I lange ___", answer: "baner", explanation: "I massevis." },
+        { sentence: "I sit ansigts ___", answer: "sved", explanation: "Under store anstrengelser." },
+        { sentence: "I vilden ___", answer: "sky", explanation: "Højt og gennemtrængende." },
+        { sentence: "Ikke den skarpeste kniv i ___", answer: "skuffen", explanation: "Ikke særlig kvik." },
+        { sentence: "Ikke eje en rød ___", answer: "reje", explanation: "Fattig." },
+        { sentence: "Ikke få et ben til ___", answer: "jorden", explanation: "Ikke have en chance." },
+        { sentence: "Ikke give ved ___", answer: "dørene", explanation: "Ikke være særlig gavmild, ikke lade nogen få noget for nemt." },
+        { sentence: "Ikke gøre en kat ___", answer: "fortræd", explanation: "Ikke genere nogen eller noget." },
+        { sentence: "Ikke hænge på ___", answer: "træerne", explanation: "Noget der er sjældent." },
+        { sentence: "Ikke kunne få armene ___", answer: "ned", explanation: "Være meget begejstret." },
+        { sentence: "Ikke kunne se skoven for bare ___", answer: "træer", explanation: "Være så optaget af detaljer, at man ikke kan se helheden." },
+        { sentence: "Ikke lægge fingrene ___", answer: "imellem", explanation: "Ikke være skånsom og tilbageholdende." },
+        { sentence: "Ikke løfte/røre en ___", answer: "finger", explanation: "Ikke gøre noget som helst." },
+        { sentence: "Ikke noget at skrive hjem ___", answer: "om", explanation: "Dårligt." },
+        { sentence: "Ikke nå nogen til ___", answer: "sokkeholderne", explanation: "Ikke kunne måle sig med andre." },
+        { sentence: "Ikke til at bide skeer ___", answer: "med", explanation: "Om en person, som er svær at diskutere med eller overbevise." },
+        { sentence: "Ikke tro nogen over en ___", answer: "dørtærskel", explanation: "Ikke tro på, hvad nogen siger." },
+        { sentence: "Ingen ___", answer: "dikkedarer", explanation: "Ligetil." },
+        { sentence: "Ingen ko på ___", answer: "isen", explanation: "Ingen fare." },
+        { sentence: "Julen står for ___", answer: "døren", explanation: "Det er snart jul." },
+        { sentence: "Kamp til ___", answer: "stregen", explanation: "Hård modstand eller konkurrence, lige indtil afgørelsen." },
+        { sentence: "Kaste benzin på ___", answer: "bålet", explanation: "Gøre noget værre." },
+        { sentence: "Kaste grus i ___", answer: "maskineriet", explanation: "Ødelægge noget." },
+        { sentence: "Kaste guld på ___", answer: "gaden", explanation: "Lade en chance gå til spilde." },
+        { sentence: "Kaste håndklædet i ___", answer: "ringen", explanation: "Give op." },
+        { sentence: "Kaste lys over ___", answer: "noget", explanation: "Fremføre fakta." },
+        { sentence: "Kaste perler for ___", answer: "svin", explanation: "Give noget værdifuldt til nogen, der ikke sætter pris på det." },
+        { sentence: "Kende sine lus på ___", answer: "gangen", explanation: "Vide, hvem man har med at gøre." },
+        { sentence: "Kigge dybt i ___", answer: "flasken", explanation: "Drikke for meget." },
+        { sentence: "Klap ___", answer: "hesten", explanation: "Tag det roligt." },
+        { sentence: "Klappe ___", answer: "hesten", explanation: "Give sig tid til en ekstra overvejelse." },
+        { sentence: "Klemme balderne ___", answer: "sammen", explanation: "Tage sig sammen." },
+        { sentence: "Knibe sig i ___", answer: "armen", explanation: "Bevise for sig selv, at det er rigtigt." },
+        { sentence: "Komme fra asken i til ___", answer: "ilden", explanation: "Komme fra en slem situation ud i noget, der er værre." },
+        { sentence: "Komme fra dynen i ___", answer: "halmen", explanation: "Komme i en ubehagelig situation." },
+        { sentence: "Komme ind i ___", answer: "kampen", explanation: "At gøre noget, deltage." },
+        { sentence: "Komme til ___", answer: "kort", explanation: "Ikke slå til eller klare sig." },
+        { sentence: "Komme ud af ___", answer: "fjerene", explanation: "Stå op af sengen." },
+        { sentence: "Komme ud af ___", answer: "røret", explanation: "Komme afsted." },
+        { sentence: "Komme ud af ___", answer: "starthullerne", explanation: "Komme i gang." },
+        { sentence: "Kommer som sendt fra ___", answer: "himlen", explanation: "Noget kommer, lige når der er brug for det." },
+        { sentence: "Koste spidsen af en ___", answer: "jetjager", explanation: "Være meget dyrt." },
+        { sentence: "Kridte ___", answer: "skoene", explanation: "Samle mod og forberede sig på at gøre en kraftig indsats." },
+        { sentence: "Krig på ___", answer: "kniven", explanation: "Være i konflikt." },
+        { sentence: "Krybe ind i et ___", answer: "musehul", explanation: "Blive flov." },
+        { sentence: "Kø ved ___", answer: "håndvasken", explanation: "Personer forsøger at retfærdiggøre deres handlinger." },
+        { sentence: "Købe katten i ___", answer: "sækken", explanation: "Blive snydt ved at købe noget ubeset." },
+        { sentence: "Køre kanonerne i ___", answer: "stillingen", explanation: "Gøre klar til en aktion eller vanskelig forhandling." },
+        { sentence: "Køre med ___", answer: "klatten", explanation: "At have styr på noget." },
+        { sentence: "Køre på ___", answer: "frihjul", explanation: "Få fordel af noget, en anden har gjort." },
+        { sentence: "Lade ___ op", answer: "batterierne", explanation: "Få friske kræfter eller inspiration." },
+        { sentence: "Lade døren stå på ___", answer: "klem", explanation: "Holde en mulighed åben." },
+        { sentence: "Lade ti-øren ___", answer: "falde", explanation: "Forstå sammenhængen." },
+        { sentence: "Lege med ___", answer: "ilden", explanation: "Gøre noget farligt eller risikabelt." },
+        { sentence: "Leve på en stor ___", answer: "fod", explanation: "Være velhavende, leve over evne." },
+        { sentence: "Leve på ___", answer: "klods", explanation: "Leve på kredit." },
+        { sentence: "Leve som kat og ___", answer: "hund", explanation: "Leve sammen og altid være uenige." },
+        { sentence: "Levere ___", answer: "varen", explanation: "Gøre det der forventes." },
+        { sentence: "Liden tue vælter stort ___", answer: "læs", explanation: "En lille ting kan have en voldsom effekt." },
+        { sentence: "Lige til højre___", answer: "benet", explanation: "Det ligger lige for." },
+        { sentence: "Lige til ___", answer: "øllet", explanation: "Kun lige nok." },
+        { sentence: "Lige ud ad ___", answer: "landevejen", explanation: "Nemt." },
+        { sentence: "Ligne en druknet ___", answer: "mus", explanation: "Være meget våd." },
+        { sentence: "Ligne en hængt ___", answer: "kat", explanation: "Se meget træt og slidt ud." },
+        { sentence: "Ligne noget ___ har slæbt ind", answer: "katten", explanation: "Se forfærdelig ud." },
+        { sentence: "Logik for ___", answer: "burhøns", explanation: "Noget er indlysende." },
+        { sentence: "Lokummet ___", answer: "brænder", explanation: "Det går meget dårligt." },
+        { sentence: "Lugte ___", answer: "lunten", explanation: "Have på fornemmelsen." },
+        { sentence: "Lukke ___", answer: "butikken", explanation: "Slutte af, holde op." },
+        { sentence: "Lægge ansigtet i de rigtige ___", answer: "folder", explanation: "Finde et passende ansigtsudtryk." },
+        { sentence: "Lægge hjernen/hovedet i ___", answer: "blød", explanation: "Tænke sig godt om for at finde en løsning." },
+        { sentence: "Lægge hovedet på ___", answer: "blokken", explanation: "Garantere eller love noget." },
+        { sentence: "Lægge kortene på ___", answer: "bordet", explanation: "Fremlægge en hemmeligholdt viden." },
+        { sentence: "Lægge sig i ___", answer: "selen", explanation: "Anstrenge sig." },
+        { sentence: "Lægge vejen ___", answer: "forbi", explanation: "Passere eller besøge nogen på vej et sted hen." },
+        { sentence: "Læse mellem ___", answer: "linjerne", explanation: "Læse noget indirekte, uden det står direkte." },
+        { sentence: "Løbe hornene ___", answer: "af sig", explanation: "Lære mens man er ung." },
+        { sentence: "Løbe koldt ned ad ___", answer: "ryggen", explanation: "Få kuldegysninger pga. stærkt ubehag." },
+        { sentence: "Løbe om hjørner med ___", answer: "nogen", explanation: "Narre eller snyde nogen." },
+        { sentence: "Løbe sig staver i ___", answer: "livet", explanation: "Sætte sine ambitioner for højt." },
+        { sentence: "Løbe ud i ___", answer: "sandet", explanation: "Bliver ikke til noget." },
+        { sentence: "Løfte ___", answer: "dyner", explanation: "Gå meget tæt på folks privatliv eller en anden sag." },
+        { sentence: "Maje sig ___", answer: "ud", explanation: "Pynte sig, sminke sig, klæde sig festligt på." },
+        { sentence: "Male fanden på ___", answer: "væggen", explanation: "Forestille sig det værste." },
+        { sentence: "Mangle ___", answer: "gnisten", explanation: "Mangle interesse." },
+        { sentence: "Med det ___", answer: "vuns", explanation: "Gøre ting med det samme." },
+        { sentence: "Nissen flytter ___", answer: "med", explanation: "Situationen er den samme uanset omgivelser." },
+        { sentence: "Nul komma ___", answer: "fem", explanation: "Hurtigt." },
+        { sentence: "Næste levende ___", answer: "billede", explanation: "Næste, der står for tur." },
+        { sentence: "Når katten er ude, spiller musene på ___", answer: "bordet", explanation: "Hvis der ikke er opsyn, fører det til uorden." },
+        { sentence: "Når man taler om ___, så skinner den", answer: "solen", explanation: "Udtryk for glædelig overraskelse, når nogen man taler om, dukker op." },
+        { sentence: "Opfinde den dybe ___", answer: "tallerken", explanation: "Finde på en genial løsning eller ny opdagelse." },
+        { sentence: "Over stok og ___", answer: "sten", explanation: "Fuld fart på." },
+        { sentence: "Pege ___", answer: "fingre", explanation: "Gøre nar." },
+        { sentence: "Plukke en ___ med nogen", answer: "høne", explanation: "Være vred på nogen og ville sige det." },
+        { sentence: "Presse ___", answer: "citronen", explanation: "Udnytte situationen fuldt ud." },
+        { sentence: "Prikken over ___", answer: "i’et", explanation: "Noget helt perfekt." },
+        { sentence: "Pudse ___", answer: "brillerne", explanation: "Få klarhed over sin situation." },
+        { sentence: "Punge ___", answer: "ud", explanation: "Betale." },
+        { sentence: "Puste til ___", answer: "ilden", explanation: "Gøre en konflikt værre." },
+        { sentence: "På et hængende ___", answer: "hår", explanation: "I sidste øjeblik." },
+        { sentence: "På lige ___", answer: "fod", explanation: "På lige vilkår." },
+        { sentence: "På med ___", answer: "vanten", explanation: "Opfordring til at komme i gang med en opgave." },
+        { sentence: "På slap ___", answer: "line", explanation: "Uhøjtideligt, improviserende i en uvant situation." },
+        { sentence: "Rage kastanjerne ud af ___", answer: "ilden", explanation: "Tage sig af problemer." },
+        { sentence: "Redde ___", answer: "ansigt", explanation: "Undgå tab af prestige eller ydmygelse." },
+        { sentence: "Rejse ___", answer: "børster", explanation: "Blive vred." },
+        { sentence: "Rende fra Herodes til ___", answer: "Pilatus", explanation: "Henvende sig mange steder for at nå et mål." },
+        { sentence: "Rene ord for ___", answer: "pengene", explanation: "Noget, der ikke kan misforstås." },
+        { sentence: "Rosinen i ___", answer: "pølseenden", explanation: "Det eller den allersidste." },
+        { sentence: "Runde det skarpe ___", answer: "hjørne", explanation: "En rund fødselsdag, især 40 eller 50 år." },
+        { sentence: "Ryste i ___", answer: "bukserne", explanation: "Være bange." },
+        { sentence: "Ryste noget ud af ___", answer: "ærmet", explanation: "Hurtigt og nemt vise noget, man kan." },
+        { sentence: "Rød som en ___", answer: "reje", explanation: "Være meget rød." },
+        { sentence: "Råbe vagt i ___", answer: "gevær", explanation: "Gøre kraftigt opmærksom på noget." },
+        { sentence: "Sang fra de varme ___", answer: "lande", explanation: "En dårlig forklaring." },
+        { sentence: "Save den gren over man selv sidder ___", answer: "på", explanation: "Skade sig selv." },
+        { sentence: "Se dagens ___", answer: "lys", explanation: "Blive født, skabt, eller til." },
+        { sentence: "Se gennem fingrene med ___", answer: "noget", explanation: "Undlade at påtale en mangel eller fejl." },
+        { sentence: "Se ___", answer: "giraffen", explanation: "Se en bestemt person." },
+        { sentence: "Se lys for enden af ___", answer: "tunnelen", explanation: "Opleve håb om, at tingene bliver bedre." },
+        { sentence: "Sende ___ videre", answer: "aben", explanation: "Give en ubehagelig problemstilling videre til andre." },
+        { sentence: "Serveret på et ___", answer: "sølvfad", explanation: "Have let adgang til at opnå noget." },
+        { sentence: "Sidde i ___", answer: "suppedasen", explanation: "Være i en ubehagelig situation." },
+        { sentence: "Skeletter i ___", answer: "skabet", explanation: "Ubehagelige hemmeligheder." },
+        { sentence: "Skille fårene fra ___", answer: "bukkene", explanation: "Skille det gode fra det onde." },
+        { sentence: "Skomager, bliv ved din ___", answer: "læst", explanation: "Gør det, du er god til." },
+        { sentence: "Skruen uden ___", answer: "ende", explanation: "Selvforstærkende uheldig situation." },
+        { sentence: "Skyde en hvid pil efter ___", answer: "noget", explanation: "Afskrive noget, lade noget være tabt." },
+        { sentence: "Skyde gråspurve med ___", answer: "kanoner", explanation: "Bruge alt for stærke midler i forhold til situationen." },
+        { sentence: "Skyde ___", answer: "papegøjen", explanation: "Være heldig." },
+        { sentence: "Skæg for sig og snot for ___", answer: "sig", explanation: "Gøre hver ting til sin tid." },
+        { sentence: "Skære det ud i ___", answer: "pap", explanation: "Forklare på en meget grundig måde." },
+        { sentence: "Skære ind til ___", answer: "benet", explanation: "Spare, holde udgifterne nede." },
+        { sentence: "Slag i ___", answer: "ansigtet", explanation: "Nederlag." },
+        { sentence: "Slikke sine ___ efter nogen", answer: "fingre", explanation: "Være meget ivrig efter at få nogen." },
+        { sentence: "Slikke sine ___", answer: "sår", explanation: "Prøve at få det bedre." },
+        { sentence: "Slikke ___", answer: "sol", explanation: "Nyde varmen og lyset fra solens stråler." },
+        { sentence: "Slippe katten ud af ___", answer: "sækken", explanation: "Afsløre noget der var holdt hemmeligt." },
+        { sentence: "Sluge en ___", answer: "kamel", explanation: "Acceptere noget, som man faktisk ikke synes om." },
+        { sentence: "Slå en streg over ___", answer: "noget", explanation: "Se bort fra noget, lade som om noget ikke er sket." },
+        { sentence: "Slå et slag i ___", answer: "boller", explanation: "Handling uden virkning." },
+        { sentence: "Slå hånden af en ___", answer: "person", explanation: "Ikke ville have noget at gøre med en person." },
+        { sentence: "Slå i ___", answer: "bordet", explanation: "Sige fra, gøre opmærksom på urimeligheder." },
+        { sentence: "Slå kløerne i ___", answer: "nogen", explanation: "Få fat i dem." },
+        { sentence: "Slå koldt vand i ___", answer: "blodet", explanation: "Tage det roligt, slappe af." },
+        { sentence: "Slå pjalterne ___", answer: "sammen", explanation: "Gå sammen om noget." },
+        { sentence: "Slå sig på ___", answer: "flasken", explanation: "Drikke alkohol." },
+        { sentence: "Slå to fluer med ét ___", answer: "smæk", explanation: "Komme to ting til gode med én handling." },
+        { sentence: "Smide barnet ud med bade___", answer: "vandet", explanation: "Afvise alt, inklusiv det gode, fordi noget er galt." },
+        { sentence: "Smide håndklædet i ___", answer: "ringen", explanation: "Give op." },
+        { sentence: "Smøre tykt ___", answer: "på", explanation: "Overdrive." },
+        { sentence: "Som vinden ___", answer: "blæser", explanation: "Skifte mening afhængigt af situationen." },
+        { sentence: "Spare på ___", answer: "krudtet", explanation: "Ikke bruge unødvendige ressourcer." },
+        { sentence: "Spille første___", answer: "violin", explanation: "Være leder eller den vigtigste person i en gruppe." },
+        { sentence: "Spille med ___", answer: "musklerne", explanation: "Prale eller vise styrke." },
+        { sentence: "___ nogen af med en lille smule", answer: "spise", explanation: "Gøre kun lidt for at tilfredsstille nogen." },
+        { sentence: "Springe i ___", answer: "øjnene", explanation: "Noget, der er meget tydeligt eller opsigtsvækkende." },
+        { sentence: "Springe på hovedet i ___", answer: "noget", explanation: "Kaste sig hovedkulds ud i noget." },
+        { sentence: "Springe over, hvor gærdet er ___", answer: "lavest", explanation: "Vælge den nemmeste løsning." },
+        { sentence: "Stille skarpt på ___", answer: "noget", explanation: "Fokusere på noget." },
+        { sentence: "Stille stolen for ___", answer: "døren", explanation: "Tvinge nogen til at tage en beslutning." },
+        { sentence: "Stikke en kæp i ___", answer: "hjulet", explanation: "Skabe problemer eller forhindre noget i at lykkes." },
+        { sentence: "Stikke hovedet i ___", answer: "busken", explanation: "Undgå at tage ansvar eller konfrontere en vanskelig situation." },
+        { sentence: "Stikke halen mellem ___", answer: "benene", explanation: "Trække sig tilbage, ofte skamfuldt." },
+        { sentence: "Stikke op for ___", answer: "en olding", explanation: "Gøre en bemærkning, som ikke passer ind eller er relevant." },
+        { sentence: "Stikke snuden i ___", answer: "noget", explanation: "Blande sig i noget, som ikke vedrører en." },
+        { sentence: "Stikke til ___", answer: "højre og venstre", explanation: "Dele ud eller kritisere." },
+        { sentence: "Stille nogen i et dårligt ___", answer: "lys", explanation: "Få nogen til at fremstå negativt." },
+        { sentence: "Svinge sig op til de store ___", answer: "højder", explanation: "Overdrive eller gøre noget stort ud af det." },
+        { sentence: "Sælge skindet, før bjørnen er ___", answer: "skudt", explanation: "Regne med noget, som ikke er sikkert endnu." },
+        { sentence: "Sætte en fod i ___", answer: "noget", explanation: "At blande sig eller tage del i noget." },
+        { sentence: "Sætte pris ___", answer: "på", explanation: "Værdsætte noget." },
+        { sentence: "Sætte sig på sine ___", answer: "hænder", explanation: "Ikke gøre noget, være passiv." },
+        { sentence: "Sætte sig mellem to ___", answer: "stole", explanation: "Gøre begge ting halvt og ikke opnå noget." },
+        { sentence: "Sætte sig selv i et dårligt ___", answer: "lys", explanation: "Få sig selv til at fremstå negativt." },
+        { sentence: "Sætte tænderne i ___", answer: "noget", explanation: "Gå i gang med noget." },
+        { sentence: "Tag benene på ___", answer: "nakken", explanation: "Skynde sig væk." },
+        { sentence: "Tag det for gode ___", answer: "varer", explanation: "Tro på noget, som det bliver sagt." },
+        { sentence: "Tag det med et gran ___", answer: "salt", explanation: "Ikke tage noget helt bogstaveligt." },
+        { sentence: "Tage bladet fra ___", answer: "munden", explanation: "Sige sin mening." },
+        { sentence: "Tage fat om nældens ___", answer: "rod", explanation: "Gøre noget grundigt, tage fat i det vigtigste problem." },
+        { sentence: "Tage hatten af for ___", answer: "nogen", explanation: "Beundre nogen." },
+        { sentence: "Tage i ed på ___", answer: "noget", explanation: "Sværge eller love noget." },
+        { sentence: "Tage noget for pålydende ___", answer: "værdi", explanation: "Tro på det, som det bliver præsenteret som." },
+        { sentence: "Tage sig selv i ___", answer: "nakken", explanation: "Tage sig sammen." },
+        { sentence: "Tale for sin syge ___", answer: "moster", explanation: "Argumentere ud fra personlige interesser." },
+        { sentence: "Tale i ___", answer: "tunger", explanation: "Tale på en uklar eller uforståelig måde." },
+        { sentence: "Tale nogen midt imod ___", answer: "noget", explanation: "Gå imod hvad nogen siger." },
+        { sentence: "Tale uden at have ___", answer: "dækning", explanation: "Sige noget, som man ikke har grundlag for." },
+        { sentence: "Trække i ___", answer: "trådene", explanation: "Styre noget i baggrunden." },
+        { sentence: "Trække sig i ___", answer: "langdrag", explanation: "Noget varer for længe." },
+        { sentence: "Trække vejret lettet ___", answer: "op", explanation: "Føle lettelse." },
+        { sentence: "Træde på en ___", answer: "tynd line", explanation: "Være i en usikker situation." },
+        { sentence: "Træde ___ i noget", answer: "vande", explanation: "Ikke gøre fremskridt." },
+        { sentence: "Tælle sine ___", answer: "velsignelser", explanation: "Være taknemmelig for det, man har." },
+        { sentence: "Tænke i nye ___", answer: "baner", explanation: "Prøve at tænke kreativt eller på nye måder." },
+        { sentence: "Tørre noget af på ___", answer: "nogen", explanation: "Lade nogen tage skylden for noget." },
+        { sentence: "Ud ad det ___", answer: "blå", explanation: "Noget uventet sker." },
+        { sentence: "Ud med ___", answer: "sproget", explanation: "Opfordring til at sige, hvad man har på hjerte." },
+        { sentence: "Ud og ___", answer: "vende", explanation: "Lige kort væk og tilbage igen." },
+        { sentence: "Under ___", answer: "opsejling", explanation: "Noget er ved at ske." },
+        { sentence: "Være på ___", answer: "glatis", explanation: "At være i en usikker eller farlig situation." },
+        { sentence: "Være ude på ___", answer: "glatis", explanation: "At bevæge sig ud i noget, man ikke har styr på." },
+        { sentence: "Være ude i tovene ___", answer: "på noget", explanation: "At være presset, tæt på at give op." },
+        { sentence: "Være ude med ___", answer: "riven", explanation: "At være kritisk eller på udkig efter noget at brokke sig over." },
+        { sentence: "Være ___ med snøren", answer: "ude", explanation: "Prøve at lokke nogen til noget." },
+        { sentence: "Være under ___", answer: "lup", explanation: "Blive undersøgt nøje." },
+        { sentence: "Være ude på dybt ___", answer: "vand", explanation: "At være i en vanskelig situation uden kontrol." },
+        { sentence: "Være på herrens ___", answer: "mark", explanation: "At være hjælpeløs, i en svær situation." },
+        { sentence: "Være på ___", answer: "skideren", explanation: "At være i problemer." },
+        { sentence: "Være på en ___", answer: "skråplan", explanation: "At være på vej i en uheldig eller farlig retning." },
+        { sentence: "Være i lommen på ___", answer: "nogen", explanation: "At være afhængig af nogen." },
+        { sentence: "Være i kridthuset hos ___", answer: "nogen", explanation: "At være godt set af nogen." },
+        { sentence: "Være helt ude i ___", answer: "hampen", explanation: "At tage meget fejl eller opføre sig forkert." },
+        { sentence: "Være helt oppe i det ___", answer: "røde felt", explanation: "At være meget vred." },
+        { sentence: "Være lige ud ad ___", answer: "landevejen", explanation: "At være nemt at forstå eller håndtere." },
+        { sentence: "Være med på ___", answer: "noderne", explanation: "At følge med i tidens tendenser." },
+        { sentence: "Være som en fisk i ___", answer: "vandet", explanation: "At være i sit rette element." },
+        { sentence: "Være som nat og ___", answer: "dag", explanation: "At være helt forskellige." },
+        { sentence: "Være i den syvende ___", answer: "himmel", explanation: "At være meget lykkelig." },
+        { sentence: "Være i sit es ___", answer: "til noget", explanation: "At være i sit rette element." },
+        { sentence: "Være uden for ___", answer: "pædagogisk rækkevidde", explanation: "At være helt umulig at få til at forstå noget." },
+        { sentence: "Yde sit til ___", answer: "fællesskabet", explanation: "At bidrage til noget større." },
+        { sentence: "Ydmyge sig i ___", answer: "støvet", explanation: "At undskylde eller gøre bod for noget." },
+        { sentence: "Æde en ___", answer: "hat", explanation: "At indrømme noget, hvis noget viser sig at være sandt." },
+        { sentence: "Æde nogen/andet råt for ___", answer: "usødet", explanation: "At acceptere eller tro på noget uden kritik." },
+        { sentence: "Ægte glæde kommer fra hjertet, ikke fra ___", answer: "lommen", explanation: "At understrege værdien af ægte følelser frem for materielle ting." },
+        { sentence: "Banke på ___", answer: "døren", explanation: "Nærme sig (ofte: truende)." },
+        { sentence: "Begynde på en ___", answer: "frisk", explanation: "Starte forfra på ny." },
+        { sentence: "Bide i det ___ æble", answer: "sure", explanation: "At gøre noget man ikke har lyst til." },
+        { sentence: "Bide i ___", answer: "græsset", explanation: "Lide nederlag." },
+        { sentence: "En bjørne___", answer: "tjeneste", explanation: "En velment tjeneste, som viser sig at have dårlige virkninger i det lange løb." },
+        { sentence: "Blive bidt af ___", answer: "det", explanation: "Opslugt af en interesse, passion." },
+        { sentence: "Blive varm om ___", answer: "hjertet", explanation: "Blive glad, rørt." },
+        { sentence: "Bringe nogen i ___", answer: "fedtefadet", explanation: "Få nogen i problemer." },
+        { sentence: "Bringe noget på et ___", answer: "fad", explanation: "Gøre det nemt at opnå noget." },
+        { sentence: "Bruge ___", answer: "albuerne", explanation: "At bruge hårde midler for at komme frem eller gøre karriere." },
+        { sentence: "Bygge ___", answer: "bro", explanation: "At skabe kontakt eller forståelse." },
+        { sentence: "Bære ___", answer: "frugt", explanation: "Give resultat." },
+        { sentence: "Del af ___", answer: "kagen", explanation: "Ville have sin del af udbyttet af noget." },
+        { sentence: "Dele sol og vind ___", answer: "lige", explanation: "Være retfærdig overfor alle." },
+        { sentence: "Der er ingen ko på ___", answer: "isen", explanation: "Ingen fare, ingen problemer." },
+        { sentence: "Der er løbet meget vand i ___", answer: "stranden", explanation: "Der er sket meget siden." },
+        { sentence: "Det kører på ___", answer: "skinner", explanation: "Alt er i orden." },
+        { sentence: "Det løber en koldt op og ned ad ___", answer: "ryggen", explanation: "Forfærdelse." },
+        { sentence: "Det regner (med) ___", answer: "skomagerdrenge", explanation: "Øsregnvejr." },
+        { sentence: "Djævelens ___", answer: "advokat", explanation: "At indtage det modsatte synspunkt i en diskussion for diskussionens skyld." },
+        { sentence: "En engel gik gennem ___", answer: "stuen", explanation: "Pludselig stilhed." },
+        { sentence: "En gang til for ___", answer: "prins Knud", explanation: "\"Det gentager jeg, fordi du var langsom til at fatte det i første omgang.\"" },
+        { sentence: "Fanden er løs i ___", answer: "Laksegade", explanation: "Et værre spektakel." },
+        { sentence: "Falde i ___", answer: "staver", explanation: "Falde sammen, falde i søvn." },
+        { sentence: "Fattig som en ___", answer: "kirkerotte", explanation: "Kommer fra det engelske, 'poor as a church rat'." },
+        { sentence: "Feje skidtet ind under ___", answer: "gulvtæppet", explanation: "At fortrænge problemer; ignorere noget ubehageligt." },
+        { sentence: "Feje for egen ___", answer: "dør", explanation: "Inden man brokker sig over andre mennesker, skal man sørge for at have egne sager i orden." },
+        { sentence: "Finde sine egne ___", answer: "ben", explanation: "Gøre sig klart hvad man vil, eller hvad man mener om noget." },
+        { sentence: "Flytte ___", answer: "bjerge", explanation: "Klare det utrolige." },
+        { sentence: "Forslå som en skrædder i ___", answer: "helvede", explanation: "Det rækker ikke ret langt." },
+        { sentence: "Få blod på ___", answer: "tanden", explanation: "Få lyst til at prøve, fortsætte eller gentage noget." },
+        { sentence: "Få dolken i ___", answer: "ryggen", explanation: "Blive forrådt." },
+        { sentence: "Få et par på ___", answer: "kassen", explanation: "Få tæv." },
+        { sentence: "Få fingrene i ___", answer: "klemme", explanation: "Komme galt af sted med noget." },
+        { sentence: "Få fluer i ___", answer: "hovedet", explanation: "Få nogle dumme ideer; blive forstyrret i hovedet." },
+        { sentence: "Få kolde ___", answer: "fødder", explanation: "Ombestemme sig, fortryde." },
+        { sentence: "Få/give tommelskruer ___", answer: "på", explanation: "Presse/blive presset hårdt til at gøre eller indrømme noget." },
+        { sentence: "Give nogen den kolde ___", answer: "skulder", explanation: "Ignorere nogen." },
+        { sentence: "Give den ___", answer: "gas", explanation: "Gå til den; slå sig løs; snakke." },
+        { sentence: "Give på ___", answer: "klods", explanation: "Sælge på kredit." },
+        { sentence: "Grave sin egen ___", answer: "grav", explanation: "Skabe alvorlige problemer for sig selv." },
+        { sentence: "Gribe ___", answer: "bolden", explanation: "Tage et ansvar." },
+        { sentence: "Gøre en god ___", answer: "figur", explanation: "Gøre et godt indtryk." },
+        { sentence: "Gøre rent ___", answer: "bord", explanation: "Få rene linjer; gøre det klart hvor man står." },
+        { sentence: "Gå ___", answer: "agurk", explanation: "Komme ud af kontrol; gå amok." },
+        { sentence: "Gå fra ___", answer: "snøvsen", explanation: "Blive tosset." },
+        { sentence: "Gå galt i ___", answer: "byen", explanation: "Tage fejl." },
+        { sentence: "Gå i ___", answer: "baglås", explanation: "En mekanisme sidder uhjælpeligt fast." },
+        { sentence: "Gå i ___", answer: "fisk", explanation: "Gå skævt; mislykkes; blive ødelagt." },
+        { sentence: "Gå i ___", answer: "hundene", explanation: "Gå i forfald/opløsning (om person)." },
+        { sentence: "Gå lige efter ___", answer: "bogen", explanation: "At gå som det skal, eller som ventet." },
+        { sentence: "Gå ned med ___", answer: "flaget", explanation: "Blive syg; gå ned; bryde sammen." },
+        { sentence: "Gå nedenom og ___", answer: "hjem", explanation: "Fallit, konkurs." },
+        { sentence: "Gå op ad ___", answer: "bakke", explanation: "Modgang, besværligt fremskridt." },
+        { sentence: "Gå over ___", answer: "stregen", explanation: "Overskride sine/andres grænser." },
+        { sentence: "Gå over åen efter ___", answer: "vand", explanation: "At gøre noget på en unødigt besværlig måde." },
+        { sentence: "Gå ___", answer: "rabundus", explanation: "Fallit, konkurs." },
+        { sentence: "Gå som katten om den varme ___", answer: "grød", explanation: "At undvige en ubehagelig situation eller et svært problem." },
+        { sentence: "Gå til sine ___", answer: "fædre", explanation: "Dø." },
+        { sentence: "Går ned ad ___", answer: "bakke", explanation: "At det går dårligt." },
+        { sentence: "Hale ___ i land", answer: "torsk", explanation: "At snorke." },
+        { sentence: "Have bukserne ___", answer: "på", explanation: "At være den der bestemmer; være den stærke i et forhold." },
+        { sentence: "Have fis i ___", answer: "kasketten", explanation: "Være lidt tosset." },
+        { sentence: "Have hjertet på rette ___", answer: "sted", explanation: "Føle med andre, empati." },
+        { sentence: "Have hovedet under ___", answer: "armen", explanation: "Ikke tænke sig om." },
+        { sentence: "Have hår på ___", answer: "brystet", explanation: "Vise mod til handling." },
+        { sentence: "Have lange ___", answer: "arme", explanation: "Have stor magt eller indflydelse." },
+        { sentence: "Have lange ___", answer: "fingre", explanation: "At være tyvagtig." },
+        { sentence: "Have næsen i ___", answer: "sky", explanation: "At være arrogant eller nedladende." },
+        { sentence: "Have sommerfugle i ___", answer: "maven", explanation: "At være nervøs." },
+        { sentence: "Have rent mel i ___", answer: "posen", explanation: "Være ærlig." },
+        { sentence: "Have rotter på ___", answer: "loftet", explanation: "Være skør/tosset." },
+        { sentence: "Have ti ___", answer: "tommelfingre", explanation: "At være klodset." },
+        { sentence: "Den hellige grav er vel ___", answer: "forvaret", explanation: "Alt er i orden." },
+        { sentence: "Her er/ligger hunden ___", answer: "begravet", explanation: "Årsagen." },
+        { sentence: "Hjertet sidder helt oppe i ___", answer: "halsen", explanation: "At være bange, angst." },
+        { sentence: "Holde fanen ___", answer: "højt", explanation: "Blive ved; stå ved sine idealer; ikke tabe modet." },
+        { sentence: "Holde en bagdør ___", answer: "åben", explanation: "At holde en mulighed åben." },
+        { sentence: "Holde skruen i ___", answer: "vandet", explanation: "Ikke give op." },
+        { sentence: "Holde tungen lige i ___", answer: "munden", explanation: "Være yderst forsigtig." },
+        { sentence: "Hulter til ___", answer: "bulter", explanation: "Beskrivelse af ting, der ligger i uorden." },
+        { sentence: "Høre englene ___", answer: "synge", explanation: "Være meget lykkelig." },
+        { sentence: "Hånden på ___", answer: "hjertet", explanation: "Vær oprigtig, ærlig." },
+        { sentence: "Hårene rejser sig på hovedet af ___", answer: "en", explanation: "Forfærdelse." },
+        { sentence: "Ikke eje en rød ___", answer: "reje", explanation: "Fattig." },
+        { sentence: "Ikke den skarpeste kniv i ___", answer: "skuffen", explanation: "Ikke særlig kvik." },
+        { sentence: "Ikke kunne få ___ ned", answer: "armene", explanation: "Meget begejstret." },
+        { sentence: "Ikke kunne gøre en kat ___", answer: "fortræd", explanation: "Være fredelig og harmløs." },
+        { sentence: "Ikke kunne se skoven for bare ___", answer: "træer", explanation: "At miste overblikket." },
+        { sentence: "Ikke løfte/røre en ___", answer: "finger", explanation: "Ikke gøre noget som helst." },
+        { sentence: "Ikke noget at skrive ___ om", answer: "hjem", explanation: "Dårlig." },
+        { sentence: "Ikke til at bide skeer ___", answer: "med", explanation: "Om en person, som er svær at diskutere med eller at overbevise om noget." },
+        { sentence: "Kaste ___ på gaden", answer: "guld", explanation: "Lade en chance gå til spilde; ikke udnytte en god mulighed." },
+        { sentence: "Kaste håndklædet i ___", answer: "ringen", explanation: "Give op." },
+        { sentence: "Kaste lys over ___", answer: "noget", explanation: "Fremføre fakta." },
+        { sentence: "Kaste perler for ___", answer: "svin", explanation: "Give noget værdifuldt til nogen som ikke sætter pris på det." },
+        { sentence: "Kende sine lus på ___", answer: "gangen", explanation: "At vide, hvem man har med at gøre." },
+        { sentence: "Kigge dybt i ___", answer: "flasken", explanation: "Drikke for meget." },
+        { sentence: "Klappe ___", answer: "hesten", explanation: "Give sig tid til en ekstra overvejelse." },
+        { sentence: "Komme fra asken i ___", answer: "ilden", explanation: "Komme fra en slem situation ud i noget der er værre." },
+        { sentence: "Komme ud af ___", answer: "fjerene", explanation: "Stå op af sengen." },
+        { sentence: "Leve på en stor ___", answer: "fod", explanation: "Være velhavende; at leve over evne." },
+        { sentence: "Liden tue vælter stort ___", answer: "læs", explanation: "At en tilsyneladende lille ting kan have en voldsom effekt." },
+        { sentence: "Lokummet ___", answer: "brænder", explanation: "Det går meget dårligt." },
+        { sentence: "Lukke ___", answer: "butikken", explanation: "Slutte af; holde op." },
+        { sentence: "Lægge hjernen i ___", answer: "blød", explanation: "Gennemtænke noget." },
+        { sentence: "Male fanden på ___", answer: "væggen", explanation: "Forestille sig det værste; fremstille noget værre end det er." },
+        { sentence: "Mange ___", answer: "gnisten", explanation: "Mangle interesse." },
+        { sentence: "Med det ___", answer: "vuns", explanation: "Gøre ting med det samme." },
+        { sentence: "Nissen flytter ___", answer: "med", explanation: "Situationen er den samme uanset omgivelser." },
+        { sentence: "Presse ___", answer: "citronen", explanation: "Få så meget som muligt ud af noget; udnytte situationen fuldt ud." },
+        { sentence: "Pudse ___", answer: "brillerne", explanation: "Få klarhed over sin situation." },
+        { sentence: "Rage kastanjerne ud af ___", answer: "ilden", explanation: "Tage sig af problemer." },
+        { sentence: "Sende aben ___", answer: "videre", explanation: "Give en problemstilling videre til andre." },
+        { sentence: "Skeletter i ___", answer: "skabet", explanation: "Der er ubehagelige hemmeligheder." },
+        { sentence: "Skyde en hvid pind efter ___", answer: "noget", explanation: "Afskrive noget, lade noget være tabt." },
+        { sentence: "Slå koldt vand i ___", answer: "blodet", explanation: "Tage det roligt, slappe af." },
+        { sentence: "Tage tyren ved ___", answer: "hornene", explanation: "Aktivt forsøge at løse en ubehagelig situation eller et problem." },
+        { sentence: "Vende et ___", answer: "blad", explanation: "Begynde på noget nyt." },
+        { sentence: "Vifte med det hvide ___", answer: "flag", explanation: "Give op; overgive sig." },
+        { sentence: "Være en dråbe i ___", answer: "havet", explanation: "Være en ubetydelighed i den store sammenhæng." },
+        { sentence: "Være fyr og ___", answer: "flamme", explanation: "Være meget opsat på noget." },
+        { sentence: "Være klædt på til ___", answer: "noget", explanation: "At være parat til en bestemt situation." },
+        { sentence: "Være på ___", answer: "glatis", explanation: "Ikke have styr på en situation, være i problemer." },
+        { sentence: "Ønske nogen hen hvor peberet ___", answer: "gror", explanation: "Slippe for en besværlig person." }
     ];
 
     let gameMode = '';
@@ -391,6 +786,8 @@
     let questions = [];
     let timerInterval;
     let countdown = 7;
+    let hintUsed = false;
+
 
     function startGame(mode) {
         gameMode = mode;
@@ -420,28 +817,49 @@
 
 
     function loadQuestion() {
-        clearInterval(timerInterval); // Clear any previous timer
+        clearInterval(timerInterval);
         countdown = 7;
 
         const question = questions[currentQuestion];
         document.getElementById("sentence").textContent = question.sentence.replace("___", "______");
-        document.getElementById("answer").value = '';  // Clear the answer input field
-        document.getElementById("answer").disabled = false; // Enable the input field
-        document.getElementById("feedback").textContent = ''; // Clear feedback
-        document.getElementById("explanation").textContent = ''; // Clear explanation
-        document.getElementById("timer").textContent = ''; // Hide the timer initially
-        document.getElementById("next").classList.add("d-none"); // Hide the "Next" button initially
-        document.getElementById("submit").classList.remove("d-none"); // Show the "Submit" button
+        document.getElementById("answer").value = '';
+        document.getElementById("answer").disabled = false;
+        document.getElementById("feedback").textContent = '';
+        document.getElementById("explanation").textContent = '';
+        document.getElementById("timer").textContent = '';
+        document.getElementById("next").classList.add("d-none");
+        document.getElementById("submit").classList.remove("d-none");
 
-        // Ensure the input box is visible again
-        document.getElementById("answer").classList.remove("d-none");  // Show the input box
+        // Reset the Hint button
+        const hintButton = document.getElementById("hint");
+        hintButton.classList.remove("d-none"); // Ensure the button is visible
+        hintButton.disabled = false;          // Enable the button
+        hintButton.classList.remove("disabled");
 
-        // Clear previous feedback styles
+        document.getElementById("answer").classList.remove("d-none");
         const feedback = document.getElementById("feedback");
         feedback.classList.remove("correct", "incorrect");
-
-        // Focus on the input field so you can start typing immediately
         document.getElementById("answer").focus();
+    }
+
+
+    function useHint() {
+        // Show the explanation
+        const explanation = document.getElementById("explanation");
+        explanation.innerHTML = `<strong>Forklaring:</strong> ${questions[currentQuestion].explanation}`;
+
+        // Set hintUsed to true
+        hintUsed = true;
+
+        // Remove the Hint button from the UI
+        const hintButton = document.getElementById("hint");
+        hintButton.classList.add("d-none");
+
+        // Update feedback to indicate hint was used
+        const feedback = document.getElementById("feedback");
+        feedback.textContent = "Hint brugt! Du kan maksimalt få 5 point for dette spørgsmål.";
+        feedback.classList.remove("correct", "incorrect");
+        feedback.classList.add("text-warning");
     }
 
 
@@ -453,32 +871,35 @@
         const explanation = document.getElementById("explanation");
         const sentenceElement = document.getElementById("sentence");
 
-        // Check if the user's answer is correct
-        if (userAnswer === correctAnswer) {
-            feedback.textContent = "Korrekt!";
-            feedback.classList.remove("incorrect");  // Remove red if previously added
-            feedback.classList.add("correct");  // Add green for correct answer
-            score += 10; // Add 10 points for correct answer
+        // Clear all previous feedback styles, including text-warning
+        feedback.classList.remove("correct", "incorrect", "text-warning");
 
-            // Replace the "___" in the sentence with the correct word in green
+        if (userAnswer === correctAnswer) {
+            if (hintUsed) {
+                score += 5; // Award 5 points if a hint was used
+            } else {
+                score += 10; // Award 10 points if no hint was used
+            }
+            feedback.textContent = "Korrekt!";
+            feedback.classList.add("correct"); // Add green for correct answer
             const sentenceWithCorrectAnswer = questions[currentQuestion].sentence.replace("___", `<span style="color: green;"><strong>${correctAnswer}</strong></span>`);
-            sentenceElement.innerHTML = sentenceWithCorrectAnswer; // Update the sentence with the correct word
+            sentenceElement.innerHTML = sentenceWithCorrectAnswer;
         } else {
             feedback.textContent = `Forkert! Det rigtige svar er "${correctAnswer}".`;
-            feedback.classList.remove("correct");  // Remove green if previously added
-            feedback.classList.add("incorrect");  // Add red for incorrect answer
-
-            // Show the correct answer inside the "___" but in red color
+            feedback.classList.add("incorrect"); // Add red for incorrect answer
             const sentenceWithCorrectAnswer = questions[currentQuestion].sentence.replace("___", `<span style="color: red;"><strong>${correctAnswer}</strong></span>`);
-            sentenceElement.innerHTML = sentenceWithCorrectAnswer; // Update the sentence with the correct word
+            sentenceElement.innerHTML = sentenceWithCorrectAnswer;
         }
 
         // Add "Betydning" label before the explanation
         explanation.innerHTML = `<strong>Forklaring:</strong> ${questions[currentQuestion].explanation}`;
 
+        // Hide the Hint button
+        document.getElementById("hint").classList.add("d-none");
+
         // Disable the input and hide the "Gæt" button after answering
-        document.getElementById("submit").classList.add("d-none"); // Hide "Gæt" button
-        document.getElementById("answer").disabled = true; // Disable input after submission
+        document.getElementById("submit").classList.add("d-none");
+        document.getElementById("answer").disabled = true;
 
         // Temporarily hide the input box after a correct answer
         document.getElementById("answer").classList.add("d-none");
@@ -486,8 +907,13 @@
         // Show "Næste" button to move to the next question
         document.getElementById("next").classList.remove("d-none");
 
-        startNextQuestionTimer(); // Start the countdown for the next question
+        // Reset hintUsed for the next question
+        hintUsed = false;
+
+        startNextQuestionTimer();
     }
+
+
 
 
     function startNextQuestionTimer() {

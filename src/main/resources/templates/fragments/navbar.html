@@ -128,13 +128,36 @@
             opacity: 1;
         }
     }
+    #opretTriviaModal {
+        display: none; /* Hidden by default */
+        position: fixed;
+        z-index: 1050;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
+    }
+    .btn-primary {
+        background-color: #ffc107;
+        border-color: #ffc107;
+        font-weight: 600;
+        transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+    }
+    .btn-primary:hover {
+        background-color: #e0a800;
+        transform: translateY(-2px);
+    }
+
+
 </style>
 
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
         <a class="navbar-brand" href="/">
-            <img src="/img/logo.png" class="navbar-logo" alt="Gussr Logo">
+            <img src="/img/logo.png" class="navbar-logo" alt="Guessr Logo">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -145,7 +168,9 @@
                 <li class="nav-item"><a class="nav-link" href="#">Leaderboard</a></li>
                 <li class="nav-item"><a class="nav-link" href="/about">Om os</a></li>
                 <li class="nav-item"><a id="login-link" class="btn btn-success" href="#">Log ind</a></li>
-                <li class="nav-item"><a id="admin-link" class="btn btn-success" href="/adminpanel" style="display: none;">Admin Panel</a></li>
+                <li class="nav-item"><a id="opret-trivia-link" class="btn btn-primary" href="#" style="display: none;">Opret Trivia</a></li>
+                <li class="nav-item"><a id="profile-link" class="btn btn-info" href="/profile" style="display: none;">Min Profil</a></li>
+                <li class="nav-item"><a id="admin-link" class="btn btn-success" href="/admin" style="display: none;">Admin Panel</a></li>
                 <li class="nav-item"><a id="logout-link" class="btn btn-danger" href="#" style="display: none;">Log ud</a></li>
             </ul>
 
@@ -174,6 +199,28 @@
     </div>
 </div>
 
+<!-- Opret Trivia Modal -->
+<div id="opretTriviaModal" style="display: none;">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Opret Trivia</h2>
+        <form id="opretTriviaForm">
+            <div>
+                <label for="email">Email:</label><br>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div>
+                <label for="password-opret">Adgangskode:</label><br>
+                <input type="password" id="password-opret" name="password" required>
+            </div>
+            <div style="margin-top: 15px;">
+                <button type="submit">Opret</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
 <script>
     $(document).ready(function () {
         function updateLoginStatus() {
@@ -183,6 +230,7 @@
             if (isLoggedIn === 'true') {
                 $('#login-link').hide();
                 $('#logout-link').show();
+                $('#profile-link').show();
                 if (role === 'ADMIN') {
                     $('#admin-link').show();
                 } else {
@@ -191,6 +239,7 @@
             } else {
                 $('#login-link').show();
                 $('#logout-link').hide();
+                $('#profile-link').hide();
                 $('#admin-link').hide();
             }
         }
@@ -223,6 +272,7 @@
                     $('#loginModal').css('display', 'none');
                     sessionStorage.setItem('role', response);
                     sessionStorage.setItem('isLoggedIn', 'true');
+                    sessionStorage.setItem('username', username);  // Add this line
                     updateLoginStatus();
                     if (response === 'ADMIN') {
                         window.location.href = '/admin';
@@ -243,12 +293,63 @@
             e.preventDefault();
             sessionStorage.removeItem('isLoggedIn');
             sessionStorage.removeItem('role');
+            sessionStorage.removeItem('username');
             updateLoginStatus();
             alert('Du er hermed logget ud.');
             window.location.href = '/';
         });
 
         updateLoginStatus();
+    });
+    $(document).ready(function () {
+        $('#opret-trivia-link').on('click', function (e) {
+            e.preventDefault();
+            $('#opretTriviaModal').css('display', 'block');
+        });
+
+        $('.close').on('click', function () {
+            $('#opretTriviaModal').css('display', 'none');
+        });
+
+        $(window).on('click', function (event) {
+            if ($(event.target).is('#opretTriviaModal')) {
+                $('#opretTriviaModal').css('display', 'none');
+            }
+        });
+
+        $('#opretTriviaForm').on('submit', function (e) {
+            e.preventDefault();
+            const formData = {
+                email: $('#email').val(),
+                password: $('#password-opret').val()
+            };
+
+            $.ajax({
+                url: '/api/register',
+                type: 'POST',
+                data: formData,
+                success: function (response) {
+                    alert('Bruger forhåndsregistreret! Fuldfør venligst din profil.');
+                    $('#opretTriviaModal').css('display', 'none');
+                    window.location.href = '/profile';
+                },
+                error: function (xhr) {
+                    alert('Kunne ikke oprette bruger: ' + xhr.responseText);
+                }
+            });
+        });
+
+
+        function updateButtonVisibility() {
+            const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+            if (!isLoggedIn) {
+                $('#opret-trivia-link').show();
+            } else {
+                $('#opret-trivia-link').hide();
+            }
+        }
+
+        updateButtonVisibility();
     });
 </script>
 

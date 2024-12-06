@@ -147,9 +147,12 @@
                 <thead>
                 <tr>
                     <th>ID</th>
+                    <th>Username</th>
                     <th>Name</th>
                     <th>Email</th>
                     <th>Status</th>
+                    <th>Role</th>
+                    <th>Registration Date</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
@@ -426,15 +429,18 @@
                     row.setAttribute('data-user-id', user.id);
 
                     row.innerHTML = `
-                        <td>${user.id}</td>
-                        <td>${user.name}</td>
-                        <td>${user.email}</td>
-                        <td>${user.status}</td>
-                        <td>
-                            <button class="btn btn-warning btn-sm" onclick="editUser(${user.id})">Edit</button>
-                            <button class="btn btn-danger btn-sm" onclick="deleteUser(${user.id})">Delete</button>
-                        </td>
-                    `;
+                    <td>${user.id}</td>
+                    <td>${user.username}</td>
+                    <td>${user.name}</td>
+                    <td>${user.email}</td>
+                    <td>${user.status}</td>
+                    <td>${user.role}</td>
+                    <td>${new Date(user.registrationDate).toLocaleString()}</td>
+                    <td>
+                        <button class="btn btn-warning btn-sm" onclick="editUser(${user.id})">Edit</button>
+                        <button class="btn btn-danger btn-sm" onclick="deleteUser(${user.id})">Delete</button>
+                    </td>
+                `;
 
                     userTableBody.appendChild(row);
                 });
@@ -442,8 +448,9 @@
             .catch(error => console.error('Error fetching user data:', error));
     }
 
+
     function editUser(userId) {
-        console.log('Editing user with ID:', userId); // Debug log
+        console.log('Editing user with ID:', userId);
         const row = document.querySelector(`#userTable tbody tr[data-user-id='${userId}']`);
 
         if (!row) {
@@ -453,20 +460,23 @@
 
         const cells = row.querySelectorAll('td');
 
-        cells[1].innerHTML = `<input type="text" class="form-control" value="${cells[1].innerText.trim()}" id="editName-${userId}">`;
-        cells[2].innerHTML = `<input type="email" class="form-control" value="${cells[2].innerText.trim()}" id="editEmail-${userId}">`;
+        // Name (editable)
+        cells[2].innerHTML = `<input type="text" class="form-control" value="${cells[2].innerText.trim()}" id="editName-${userId}">`;
 
-        // dropdown
-        const currentStatus = cells[3].innerText.trim(); // Get current status
-        cells[3].innerHTML = `
+        // Email (editable)
+        cells[3].innerHTML = `<input type="email" class="form-control" value="${cells[3].innerText.trim()}" id="editEmail-${userId}">`;
+
+        // Status (editable)
+        const currentStatus = cells[4].innerText.trim();
+        cells[4].innerHTML = `
         <select class="form-control" id="editStatus-${userId}">
             <option value="Active" ${currentStatus === 'Active' ? 'selected' : ''}>Active</option>
             <option value="Inactive" ${currentStatus === 'Inactive' ? 'selected' : ''}>Inactive</option>
         </select>
     `;
 
-        // Replace the 'Edit' button with a 'Save' button
-        cells[4].innerHTML = `<button class="btn btn-success btn-sm" onclick="saveUser(${userId})">Save</button>`;
+        // Replace Edit button with Save button
+        cells[7].innerHTML = `<button class="btn btn-success btn-sm" onclick="saveUser(${userId})">Save</button>`;
     }
 
 
@@ -498,12 +508,12 @@
                 if (!response.ok) {
                     throw new Error(`Server returned status ${response.status}`);
                 }
-                return response.text(); // Read the response as text for debugging
+                return response.text();
             })
             .then(responseText => {
                 console.log('Server response:', responseText);
                 alert('User updated successfully');
-                fetchUserData(); // Refresh the table to show the updated data
+                fetchUserData();
             })
             .catch(error => {
                 console.error('Error updating user:', error);

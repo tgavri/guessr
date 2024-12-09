@@ -1,0 +1,1550 @@
+[
+    {
+        "sentence": "Arbejde som en ___",
+        "answer": "hest",
+        "explanation": "Arbejde meget.",
+        "example": "Han var kendt for altid at arbejde som en ___, når der var deadlines."
+    },
+    {
+        "sentence": "Begynde på en ___",
+        "answer": "frisk",
+        "explanation": "Starte forfra/på ny.",
+        "example": "Efter flytningen besluttede de at begynde på en ___ i deres nye by."
+    },
+    {
+        "sentence": "Bide i det ___ æble",
+        "answer": "sure",
+        "explanation": "Gøre noget man ikke har lyst til.",
+        "example": "Hun måtte bide i det ___ æble og tage imod kritikken fra sin chef."
+    },
+    {
+        "sentence": "Bide i ___",
+        "answer": "græsset",
+        "explanation": "Lide nederlag.",
+        "example": "Holdet måtte desværre bide i ___ efter en hård kamp mod rivalerne."
+    },
+    {
+        "sentence": "Bide sig selv i ___",
+        "answer": "halen",
+        "explanation": "Være uden løsning, da der så vil komme et nyt problem.",
+        "example": "Forslaget viste sig at bide sig selv i ___, da det skabte flere problemer end det løste."
+    },
+    {
+        "sentence": "Binde nogen noget på ___",
+        "answer": "ærmet",
+        "explanation": "Bilde dem noget ind.",
+        "example": "Han forsøgte at binde dem noget på ___, men de var ikke så nemme at narre."
+    },
+    {
+        "sentence": "Blande ___",
+        "answer": "kortene",
+        "explanation": "Begynde forfra.",
+        "example": "Efter flere fejl var det nødvendigt at blande ___ og starte helt forfra."
+    },
+    {
+        "sentence": "Blive bidt af ___",
+        "answer": "noget",
+        "explanation": "Blive opslugt af en interesse, passion.",
+        "example": "Efter hendes første malekursus blev hun virkelig bidt af ___ og malede hver dag."
+    },
+    {
+        "sentence": "Blive dolket i ___",
+        "answer": "ryggen",
+        "explanation": "Blive forrådt.",
+        "example": "Han følte sig dolket i ___, da hans kollega stjal hans idé og præsenterede den som sin egen."
+    },
+    {
+        "sentence": "Blive lang i ___",
+        "answer": "ansigtet",
+        "explanation": "Blive skuffet.",
+        "example": "Hun blev meget lang i ___, da hun ikke blev udvalgt til konkurrencen."
+    },
+    {
+        "sentence": "Blive taget med fingrene i ___",
+        "answer": "kagedåsen",
+        "explanation": "Blive afsløret i at gøre noget ulovligt.",
+        "example": "Eleven blev taget med fingrene i ___, da han forsøgte at kigge i bogen under prøven."
+    },
+    {
+        "sentence": "Blive varm om ___",
+        "answer": "hjertet",
+        "explanation": "Blive glad, rørt.",
+        "example": "Hun blev varm om ___, da hun hørte de venlige ord fra sin gamle ven."
+    },
+    {
+        "sentence": "Bo i en ___",
+        "answer": "kuffert",
+        "explanation": "At man tit rejser eller flytter.",
+        "example": "Efter hendes job som stewardesse begyndte hun nærmest at bo i en ___ hele tiden."
+    },
+    {
+        "sentence": "Bringe nogen i ___",
+        "answer": "fedtefadet",
+        "explanation": "Få nogen i problemer.",
+        "example": "Hans bemærkning bragte chefen i ___, da det afslørede en fejl i rapporten."
+    },
+    {
+        "sentence": "Bringe noget på ___",
+        "answer": "banen",
+        "explanation": "Nævne noget.",
+        "example": "Hun bragte et nyt forslag på ___, som alle straks begyndte at diskutere."
+    },
+    {
+        "sentence": "Brodne ___",
+        "answer": "kar",
+        "explanation": "Personer der opfører sig moralsk forkert.",
+        "example": "Der var nogle brodne ___ i gruppen, der skabte problemer for resten."
+    },
+    {
+        "sentence": "Bruge ___",
+        "answer": "albuerne",
+        "explanation": "At bruge hårde midler for at komme frem eller gøre karriere.",
+        "example": "Han måtte bruge ___ for at få sin plads i en branche med hård konkurrence."
+    },
+    {
+        "sentence": "Brænde ___",
+        "answer": "fingrene",
+        "explanation": "Komme galt afsted.",
+        "example": "Han brændte ___ på en dårlig investering, som endte med at koste ham mange penge."
+    },
+    {
+        "sentence": "Brænde sit lys i begge ___",
+        "answer": "ender",
+        "explanation": "Arbejde med for mange ting samtidig, slide sig op.",
+        "example": "Hun brændte sit lys i begge ___ med både job, studie og familieforpligtelser."
+    },
+    {
+        "sentence": "Bump på ___",
+        "answer": "vejen",
+        "explanation": "Møde modstand - noget, der gør det svært at opnå noget bestemt.",
+        "example": "De stødte på nogle bump på ___, men kom til sidst i mål med projektet."
+    },
+    {
+        "sentence": "Binde nogen noget på ___",
+        "answer": "ærmet",
+        "explanation": "Bilde dem noget ind.",
+        "example": "Han forsøgte at binde hende noget på ___ ved at fortælle en mærkelig historie."
+    },
+    {
+        "sentence": "Blande ___",
+        "answer": "kortene",
+        "explanation": "Begynde forfra.",
+        "example": "Når tingene ikke går som planlagt, er det nogle gange nødvendigt at blande ___ og prøve igen."
+    },
+    {
+        "sentence": "Blive dolket i ___",
+        "answer": "ryggen",
+        "explanation": "Blive forrådt.",
+        "example": "Han troede, de var venner, men han blev dolket i ___, da hemmeligheden blev afsløret."
+    },
+    {
+        "sentence": "Blive lang i ___",
+        "answer": "ansigtet",
+        "explanation": "Blive skuffet.",
+        "example": "Hun blev lang i ___, da hun opdagede, at billetterne var udsolgt."
+    },
+    {
+        "sentence": "Blive taget med fingrene i ___",
+        "answer": "kagedåsen",
+        "explanation": "Blive afsløret i at gøre noget ulovligt.",
+        "example": "Han blev taget med fingrene i ___, da han forsøgte at snige sig væk med pengene."
+    },
+    {
+        "sentence": "Blive varm om ___",
+        "answer": "hjertet",
+        "explanation": "Blive glad, rørt.",
+        "example": "Hun blev varm om ___, da hun så børnene lege og grine sammen."
+    },
+    {
+        "sentence": "Bo i en ___",
+        "answer": "kuffert",
+        "explanation": "At man tit rejser eller flytter.",
+        "example": "Med hans job som pilot føles det som om, han bor i en ___."
+    },
+    {
+        "sentence": "Bringe nogen i ___",
+        "answer": "fedtefadet",
+        "explanation": "Få nogen i problemer.",
+        "example": "Hans bemærkning til chefen bragte hele teamet i ___."
+    },
+    {
+        "sentence": "Bringe noget på ___",
+        "answer": "banen",
+        "explanation": "Nævne noget.",
+        "example": "Under mødet bragte hun emnet på ___, og diskussionen begyndte."
+    },
+    {
+        "sentence": "Brodne ___",
+        "answer": "kar",
+        "explanation": "Personer der opfører sig moralsk forkert.",
+        "example": "Der er altid nogle brodne ___ i enhver organisation, som kan skabe problemer."
+    },
+    {
+        "sentence": "Bygge ___",
+        "answer": "bro",
+        "explanation": "At skabe kontakt eller forståelse.",
+        "example": "De forsøgte at bygge ___ mellem de to grupper for at fremme samarbejdet."
+    },
+    {
+        "sentence": "Bygge ___",
+        "answer": "rede",
+        "explanation": "Indrette sit hjem.",
+        "example": "Efter de flyttede sammen, begyndte de hurtigt at bygge ___ i deres nye lejlighed."
+    },
+    {
+        "sentence": "Bære ___",
+        "answer": "frugt",
+        "explanation": "Give resultat.",
+        "example": "Deres hårde arbejde begyndte endelig at bære ___, da projektet blev en succes."
+    },
+    {
+        "sentence": "Del af ___",
+        "answer": "kagen",
+        "explanation": "Få sin del af udbyttet af noget.",
+        "example": "Alle i teamet ønskede en del af ___, da resultaterne blev præsenteret."
+    },
+    {
+        "sentence": "Dele sol og vind ___",
+        "answer": "lige",
+        "explanation": "Være retfærdig overfor alle.",
+        "example": "Læreren forsøgte at dele sol og vind ___, så alle fik lige meget opmærksomhed."
+    },
+    {
+        "sentence": "Den hellige grav er vel ___",
+        "answer": "forvaret",
+        "explanation": "Alt er i orden.",
+        "example": "Efter at have gennemgået alle dokumenter, kunne han med sikkerhed sige, at den hellige grav var vel ___."
+    },
+    {
+        "sentence": "Den må du længere ud på ___ med",
+        "answer": "landet",
+        "explanation": "Svar på en påstand, som man ikke tror er sand.",
+        "example": "Hvis du tror, jeg køber den historie, må du længere ud på ___ med det."
+    },
+    {
+        "sentence": "Den, der gemmer til ___, gemmer til katten",
+        "answer": "natten",
+        "explanation": "Hvis man gemmer på sine værdier til fremtiden, risikerer man at miste dem.",
+        "example": "De besluttede at bruge pengene nu, for som man siger: Den, der gemmer til ___, gemmer til katten."
+    },
+    {
+        "sentence": "Der er ingen ko på ___",
+        "answer": "isen",
+        "explanation": "Ingen fare, ingen problemer.",
+        "example": "Slap af, der er ingen ko på ___; alt er under kontrol."
+    },
+    {
+        "sentence": "Der er løbet meget vand i ___",
+        "answer": "åen",
+        "explanation": "Der er sket meget siden.",
+        "example": "Vi taler ikke længere om det gamle skænderi; der er løbet meget vand i ___ siden da."
+    },
+    {
+        "sentence": "Der er ugler i ___",
+        "answer": "mosen",
+        "explanation": "Der er noget galt, som ikke er åbenlyst.",
+        "example": "Jeg tror ikke helt på deres forklaring; der er ugler i ___."
+    },
+    {
+        "sentence": "Der ligger en hund ___",
+        "answer": "begravet",
+        "explanation": "Der er et problem.",
+        "example": "Noget virker mistænkeligt ved den aftale; jeg tror, der ligger en hund ___."
+    },
+    {
+        "sentence": "Der skal andre boller på ___",
+        "answer": "suppen",
+        "explanation": "Det skal være helt anderledes.",
+        "example": "Hvis vi skal nå vores mål, skal der helt andre boller på ___."
+    },
+    {
+        "sentence": "Det er der ingen ben ___",
+        "answer": "i",
+        "explanation": "Nemt.",
+        "example": "Han fik hurtigt opgaven løst; der var ingen ben ___."
+    },
+    {
+        "sentence": "Det er op ad ___",
+        "answer": "bakke",
+        "explanation": "En svær eller udfordrende situation.",
+        "example": "Projektet har været op ad ___ lige fra starten på grund af manglende ressourcer."
+    },
+    {
+        "sentence": "Det kører på ___",
+        "answer": "skinner",
+        "explanation": "Fungerer tilfredsstillende, uden problemer.",
+        "example": "Efter den nye plan blev implementeret, kører det hele på ___."
+    },
+    {
+        "sentence": "Det løber en koldt ned ad ___",
+        "answer": "ryggen",
+        "explanation": "Nogen får kuldegysninger pga. stærkt ubehag.",
+        "example": "Historien om den forladte bygning fik det til at løbe koldt ned ad ___ på os alle."
+    },
+    {
+        "sentence": "Det regner (med) ___",
+        "answer": "skomagerdrenge",
+        "explanation": "Øsregnvejr.",
+        "example": "De blev fanget i en byge, hvor det regnede med ___."
+    },
+    {
+        "sentence": "Det skriger til ___",
+        "answer": "himlen",
+        "explanation": "Dybt rystende og kræver øjeblikkelig indgriben.",
+        "example": "Uretfærdigheden i den sag skriger til ___; noget må gøres."
+    },
+    {
+        "sentence": "Djævelens ___",
+        "answer": "advokat",
+        "explanation": "At indtage det modsatte synspunkt i en diskussion.",
+        "example": "Han spillede djævelens ___ for at sikre, at alle aspekter blev diskuteret."
+    },
+    {
+        "sentence": "Dreje ___ om",
+        "answer": "nøglen",
+        "explanation": "Hvis man lukker en forretning.",
+        "example": "Efter mange år måtte butikken dreje ___ om og sige farvel til kunderne."
+    },
+    {
+        "sentence": "Dø som ___",
+        "answer": "fluer",
+        "explanation": "Dø (hurtigt og) i stor mængde.",
+        "example": "Under den hårde vinter døde dyrene som ___."
+    },
+    {
+        "sentence": "En bjørne___",
+        "answer": "tjeneste",
+        "explanation": "En velment tjeneste, der har dårlige virkninger.",
+        "example": "Hans forsøg på at hjælpe viste sig at være en bjørne___, der kun gjorde tingene værre."
+    },
+    {
+        "sentence": "En by i ___",
+        "answer": "Rusland",
+        "explanation": "Noget der er helt ukendt eller fremmed.",
+        "example": "For mig er det emne som en by i ___; jeg har aldrig hørt om det før."
+    },
+    {
+        "sentence": "En engel gik gennem ___",
+        "answer": "stuen",
+        "explanation": "Der bliver pludselig stille i en ellers livlig forsamling.",
+        "example": "Da det akavede spørgsmål blev stillet, føltes det som om en engel gik gennem ___."
+    },
+    {
+        "sentence": "En fjer i ___",
+        "answer": "hatten",
+        "explanation": "Noget, man kan være stolt af.",
+        "example": "Hans præstation i finalen var virkelig en fjer i ___ for ham."
+    },
+    {
+        "sentence": "En gang til for ___",
+        "answer": "prins Knud",
+        "explanation": "Gentage noget, fordi det ikke blev forstået første gang.",
+        "example": "Efter det forvirrede svar sagde læreren: 'En gang til for ___, så vi alle forstår.'"
+    },
+    {
+        "sentence": "En streg i ___",
+        "answer": "regningen",
+        "explanation": "En uventet og uønsket hændelse.",
+        "example": "Den forsinkede levering var en streg i ___ for det ellers perfekte arrangement."
+    },
+    {
+        "sentence": "En underlig ___",
+        "answer": "fisk",
+        "explanation": "En mærkelig person.",
+        "example": "Han er kendt for sine sære vaner; han er virkelig en underlig ___."
+    },
+    {
+        "sentence": "En varm ___",
+        "answer": "kartoffel",
+        "explanation": "En sag eller et emne, som ingen ønsker at behandle.",
+        "example": "Den politiske debat om skatter er blevet en varm ___, ingen vil røre ved."
+    },
+    {
+        "sentence": "Ende i hat og ___",
+        "answer": "briller",
+        "explanation": "Udvikle sig utilsigtet, ofte løssluppent eller komisk.",
+        "example": "Planen om en stille aften hjemme endte i hat og ___, da alle kom forbi."
+    },
+    {
+        "sentence": "Enlig ___",
+        "answer": "svale",
+        "explanation": "Enkelt tilfælde.",
+        "example": "Det tidlige sommervejr var en enlig ___, før kulden vendte tilbage."
+    },
+    {
+        "sentence": "Falde i god ___",
+        "answer": "jord",
+        "explanation": "Blive modtaget med velvilje.",
+        "example": "Hans forslag faldt i god ___ hos ledelsen."
+    },
+    {
+        "sentence": "Falde i ___",
+        "answer": "staver",
+        "explanation": "At gå i stå i egne tanker og miste forbindelse til omverdenen.",
+        "example": "Under mødet faldt hun i ___ og gik glip af den vigtigste beslutning."
+    },
+    {
+        "sentence": "Falde på ___",
+        "answer": "halen",
+        "explanation": "Blive meget imponeret over noget.",
+        "example": "Publikum faldt på ___ over hans utrolige tryllenumre."
+    },
+    {
+        "sentence": "Fanden er løs i ___",
+        "answer": "Laksegade",
+        "explanation": "Et værre spektakel.",
+        "example": "Efter den store afsløring var fanden løs i ___ blandt journalisterne."
+    },
+    {
+        "sentence": "Fattig som en ___",
+        "answer": "kirkerotte",
+        "explanation": "Meget fattig.",
+        "example": "Efter at have brugt alle deres penge på rejsen følte de sig fattige som en ___."
+    },
+    {
+        "sentence": "Feje for egen ___",
+        "answer": "dør",
+        "explanation": "Sørge for sine egne sager, før man brokker sig over andre.",
+        "example": "Han blev mindet om at feje for egen ___, inden han kritiserede naboen."
+    },
+    {
+        "sentence": "Feje ind under ___",
+        "answer": "gulvtæppet",
+        "explanation": "Skjule, hemmeligholde, ignorere, fortrænge.",
+        "example": "Problemerne blev blot fejet ind under ___ og ikke løst."
+    },
+    {
+        "sentence": "Finde sine egne ___",
+        "answer": "ben",
+        "explanation": "Gøre sig klart, hvad man vil eller mener om noget.",
+        "example": "Efter nogle uger i det nye job begyndte han at finde sine egne ___."
+    },
+    {
+        "sentence": "Flytte ___",
+        "answer": "bjerge",
+        "explanation": "Klare det umulige.",
+        "example": "Hvis vi samarbejder, kan vi flytte ___ og nå vores mål."
+    },
+    {
+        "sentence": "For fuld ___",
+        "answer": "skrue",
+        "explanation": "Masser af fart på.",
+        "example": "De arbejdede for fuld ___ for at blive færdige til tiden."
+    },
+    {
+        "sentence": "Forslå som en skrædder i ___",
+        "answer": "helvede",
+        "explanation": "Det rækker ikke ret langt.",
+        "example": "Forslaget ville forslå som en skrædder i ___ i den store økonomiske krise."
+    },
+    {
+        "sentence": "Forsvinde som dug for ___",
+        "answer": "solen",
+        "explanation": "Forsvinde hurtigt og sporløst.",
+        "example": "Mistanken forsvandt som dug for ___, da alibi'et blev præsenteret."
+    },
+    {
+        "sentence": "Frisk som en ___",
+        "answer": "fisk",
+        "explanation": "Sund og rask.",
+        "example": "Efter en god nats søvn følte han sig frisk som en ___."
+    },
+    {
+        "sentence": "Fræk som en ___",
+        "answer": "slagterhund",
+        "explanation": "Meget fræk.",
+        "example": "Barnet var fræk som en ___ og trodsede konstant sine forældre."
+    },
+    {
+        "sentence": "Føre nogen bag ___",
+        "answer": "lyset",
+        "explanation": "Snyde eller lyve for nogen.",
+        "example": "Han forsøgte at føre dem bag ___, men blev hurtigt afsløret."
+    },
+    {
+        "sentence": "Få alarmklokkerne til at ___",
+        "answer": "ringe",
+        "explanation": "Advare om en fare.",
+        "example": "Den pludselige ændring i regnskabet fik alarmklokkerne til at ___."
+    },
+    {
+        "sentence": "Få blod på ___",
+        "answer": "tanden",
+        "explanation": "Få lyst til at prøve, fortsætte eller gentage noget.",
+        "example": "Efter succesen med det første projekt fik hun blod på ___ og gik i gang med flere."
+    },
+    {
+        "sentence": "Få det forkerte ben ud af ___",
+        "answer": "sengen",
+        "explanation": "Være i dårligt humør.",
+        "example": "Han må have fået det forkerte ben ud af ___, for han var gnaven hele dagen."
+    },
+    {
+        "sentence": "Få en appelsin i ___",
+        "answer": "turbanen",
+        "explanation": "At have heldet med sig.",
+        "example": "Han fik en appelsin i ___, da han vandt præmien uden at have gjort meget for det."
+    },
+    {
+        "sentence": "Få en over ___",
+        "answer": "snuden",
+        "explanation": "Få kritik.",
+        "example": "Han fik en over ___ for sin uheldige kommentar under mødet."
+    },
+    {
+        "sentence": "Få en spand koldt vand i ___",
+        "answer": "hovedet",
+        "explanation": "Uventet blive afvist, stor skuffelse.",
+        "example": "Han fik en spand koldt vand i ___, da han blev afvist på jobbet."
+    },
+    {
+        "sentence": "Få kolde ___",
+        "answer": "fødder",
+        "explanation": "Ombestemme sig, fortryde.",
+        "example": "Han fik kolde ___ lige før brylluppet og aflyste det hele."
+    },
+    {
+        "sentence": "Få luft under ___",
+        "answer": "vingerne",
+        "explanation": "Kunne gøre som man vil.",
+        "example": "Efter eksamen følte hun, at hun endelig fik luft under ___."
+    },
+    {
+        "sentence": "Få nogen på ___",
+        "answer": "frakken",
+        "explanation": "Få tæv.",
+        "example": "Han fik nogen på ___ efter at have provokeret den forkerte person."
+    },
+    {
+        "sentence": "Få noget galt i ___",
+        "answer": "halsen",
+        "explanation": "Misforstå noget.",
+        "example": "Han fik noget galt i ___ og troede, hun var sur på ham."
+    },
+    {
+        "sentence": "Få noget ind med ___",
+        "answer": "skeer",
+        "explanation": "Få forklaret noget meget grundigt.",
+        "example": "Han fik det hele ind med ___, så han var helt sikker på, hvad han skulle gøre."
+    },
+    {
+        "sentence": "Få pistolen for ___",
+        "answer": "brystet",
+        "explanation": "Blive presset til noget.",
+        "example": "Han følte, at han fik pistolen for ___, da chefen krævede et hurtigt svar."
+    },
+    {
+        "sentence": "Få slebet kanterne ___",
+        "answer": "af",
+        "explanation": "Tilpasse sig.",
+        "example": "Efterhånden fik han slebet kanterne ___ og blev bedre til at arbejde med teamet."
+    },
+    {
+        "sentence": "Få sved på ___",
+        "answer": "panden",
+        "explanation": "Træne hårdt eller være bange, nervøs.",
+        "example": "Han fik sved på ___, da han skulle præsentere foran hele firmaet."
+    },
+    {
+        "sentence": "Få så hatten ___",
+        "answer": "passer",
+        "explanation": "Få tilstrækkeligt.",
+        "example": "Han fik så hatten ___, da han brokkede sig over chefen."
+    },
+    {
+        "sentence": "Få tilbage af samme ___",
+        "answer": "mønt",
+        "explanation": "Blive behandlet, som man selv har behandlet.",
+        "example": "Efter at have været uforskammet fik han tilbage af samme ___."
+    },
+    {
+        "sentence": "Få/give tommelskruer ___",
+        "answer": "på",
+        "explanation": "Blive presset hårdt til at gøre eller indrømme noget.",
+        "example": "Han følte, at han fik tommelskruer ___, da de spurgte ham om sagen."
+    },
+    {
+        "sentence": "Gammel ___",
+        "answer": "rotte",
+        "explanation": "Erfaren person.",
+        "example": "Som en gammel ___ vidste han præcis, hvordan han skulle løse problemet."
+    },
+    {
+        "sentence": "Gammel vin på nye ___",
+        "answer": "flasker",
+        "explanation": "Samme indhold sælges som noget nyt.",
+        "example": "Hans idé virkede som gammel vin på nye ___ og imponerede ikke nogen."
+    },
+    {
+        "sentence": "Gennem ild og ___",
+        "answer": "vand",
+        "explanation": "Gøre alt hvad der står i ens magt.",
+        "example": "De var villige til at gå gennem ild og ___ for at opnå deres drøm."
+    },
+    {
+        "sentence": "Give den en ___",
+        "answer": "skalle",
+        "explanation": "Gøre et stort stykke arbejde.",
+        "example": "Vi bliver nødt til at give den en ___, hvis vi skal nå det inden deadline."
+    },
+    {
+        "sentence": "Give den ___",
+        "answer": "gas",
+        "explanation": "Gå til den, slå sig løs, snakke.",
+        "example": "Han gav den ___ til festen og var midtpunkt hele aftenen."
+    },
+    {
+        "sentence": "Give den hele ___",
+        "answer": "armen",
+        "explanation": "Anstrenge sig meget.",
+        "example": "Under finalen gav hun den hele ___ for at sikre sejren."
+    },
+    {
+        "sentence": "Give nogen den kolde ___",
+        "answer": "skulder",
+        "explanation": "Ignorere dem.",
+        "example": "Efter skænderiet gav hun ham den kolde ___."
+    },
+    {
+        "sentence": "Give ___",
+        "answer": "pote",
+        "explanation": "Give et godt udbytte.",
+        "example": "Deres hårde arbejde begyndte endelig at give ___."
+    },
+    {
+        "sentence": "Give på ___",
+        "answer": "klods",
+        "explanation": "Sælge på kredit.",
+        "example": "Butikken gik med til at give på ___, da kunden ikke havde penge lige nu."
+    },
+    {
+        "sentence": "Give slag på ___",
+        "answer": "tasken",
+        "explanation": "Komme med en cirkapris.",
+        "example": "Mekanikeren gav et slag på ___ for reparationen, men det var ikke præcist."
+    },
+    {
+        "sentence": "Goddag mand ___",
+        "answer": "økseskaft",
+        "explanation": "At tale forbi hinanden eller noget, der ikke giver mening.",
+        "example": "Diskussionen var som goddag mand ___, og ingen forstod hinanden."
+    },
+    {
+        "sentence": "Gode miner til slet ___",
+        "answer": "spil",
+        "explanation": "Lade som om man er enig i noget.",
+        "example": "Hun lavede gode miner til slet ___, selvom hun ikke var tilfreds med resultatet."
+    },
+    {
+        "sentence": "Grave sin egen ___",
+        "answer": "grav",
+        "explanation": "Skabe alvorlige problemer for sig selv.",
+        "example": "Ved at lyve om projektet gravede han sin egen ___."
+    },
+    {
+        "sentence": "Gribe ___",
+        "answer": "bolden",
+        "explanation": "Tage et ansvar.",
+        "example": "Han var hurtig til at gribe ___ og tage føringen i projektet."
+    },
+    {
+        "sentence": "Grine som en flækket ___",
+        "answer": "træsko",
+        "explanation": "Grine højt.",
+        "example": "Hun grinede som en flækket ___, da hun hørte vittigheden."
+    },
+    {
+        "sentence": "Gøre en god ___",
+        "answer": "figur",
+        "explanation": "Gøre et godt indtryk.",
+        "example": "Han gjorde en god ___ til jobsamtalen og fik straks jobbet."
+    },
+    {
+        "sentence": "Gøre rent ___",
+        "answer": "bord",
+        "explanation": "At skære igennem, få rene linjer.",
+        "example": "Efter konflikten var det nødvendigt at gøre rent ___ og starte på en frisk."
+    },
+    {
+        "sentence": "Gå ___",
+        "answer": "agurk",
+        "explanation": "Komme ud af kontrol, gå amok.",
+        "example": "Han gik ___, da han fandt ud af, at de havde glemt hans fødselsdag."
+    },
+    {
+        "sentence": "Gå fra ___",
+        "answer": "snøvsen",
+        "explanation": "Blive tosset.",
+        "example": "Han gik helt fra ___, da han opdagede fejlen i budgettet."
+    },
+    {
+        "sentence": "Gå galt i ___",
+        "answer": "byen",
+        "explanation": "At tage fejl.",
+        "example": "Deres plan gik helt galt i ___, fordi de misforstod instruktionerne."
+    },
+    {
+        "sentence": "Gå i ___",
+        "answer": "baglås",
+        "explanation": "En mekanisme sidder uhjælpeligt fast.",
+        "example": "Døren gik i ___, og de kunne ikke komme ud uden hjælp."
+    },
+    {
+        "sentence": "Gå i ___",
+        "answer": "fisk",
+        "explanation": "Gå skævt, mislykkes, blive ødelagt.",
+        "example": "Planerne gik i ___, da leverancerne ikke dukkede op i tide."
+    },
+    {
+        "sentence": "Gå i ___",
+        "answer": "hundene",
+        "explanation": "Gå i forfald/opløsning (om person).",
+        "example": "Efter virksomhedens konkurs gik det hele i ___ for ham."
+    },
+    {
+        "sentence": "Gå lige efter ___",
+        "answer": "bogen",
+        "explanation": "At gøre noget som det skal, eller som ventet.",
+        "example": "Hun gik lige efter ___ for at undgå fejl i ansøgningen."
+    },
+    {
+        "sentence": "Gå ned med ___",
+        "answer": "flaget",
+        "explanation": "Blive syg, gå ned, bryde sammen.",
+        "example": "Efter måneder med stress gik han ned med ___ og måtte tage fri."
+    },
+    {
+        "sentence": "Gå nedenom og ___",
+        "answer": "hjem",
+        "explanation": "Gå fallit, konkurs.",
+        "example": "Firmaet gik nedenom og ___ efter en række dårlige investeringer."
+    },
+    {
+        "sentence": "Gå nye ___",
+        "answer": "veje",
+        "explanation": "Prøve noget nyt.",
+        "example": "De besluttede at gå nye ___ for at nå deres mål."
+    },
+    {
+        "sentence": "Gå op ad ___",
+        "answer": "bakke",
+        "explanation": "Modgang, besværligt fremskridt.",
+        "example": "Det var op ad ___ hele vejen, men de nåede til sidst toppen."
+    },
+    {
+        "sentence": "Gå op i ___",
+        "answer": "røg",
+        "explanation": "Når noget mislykkes.",
+        "example": "Hele projektet gik op i ___, da finansieringen faldt igennem."
+    },
+    {
+        "sentence": "Gå over ___",
+        "answer": "stregen",
+        "explanation": "Overskride sine/andres grænser.",
+        "example": "Han gik over ___ med sine grove kommentarer under mødet."
+    },
+    {
+        "sentence": "Gå over åen efter ___",
+        "answer": "vand",
+        "explanation": "At gøre noget på en unødigt besværlig måde.",
+        "example": "Han gik over åen efter ___ i stedet for at finde en nemmere løsning."
+    },
+    {
+        "sentence": "Gå som katten om den varme ___",
+        "answer": "grød",
+        "explanation": "Undvige en ubehagelig situation eller et svært problem.",
+        "example": "De gik som katten om den varme ___ og turde ikke tage konfrontationen."
+    },
+    {
+        "sentence": "Gå stille med ___",
+        "answer": "dørene",
+        "explanation": "Være forsigtig eller diskret.",
+        "example": "De valgte at gå stille med ___, indtil de var helt sikre på beslutningen."
+    },
+    {
+        "sentence": "Have begge ben på ___",
+        "answer": "jorden",
+        "explanation": "Være nøgtern og realistisk.",
+        "example": "Hun har altid begge ben på ___ og lader sig ikke rive med af følelser."
+    },
+    {
+        "sentence": "Have det som blommen i et ___",
+        "answer": "æg",
+        "explanation": "Have det rigtig godt.",
+        "example": "Efter flytningen til sommerhuset havde de det som blommen i et ___."
+    },
+    {
+        "sentence": "Have en finger med i ___",
+        "answer": "spillet",
+        "explanation": "Spille en ofte betydningsfuld rolle i en bestemt sammenhæng.",
+        "example": "Hun havde en finger med i ___, da beslutningen blev truffet."
+    },
+    {
+        "sentence": "Have en ræv bag ___",
+        "answer": "øret",
+        "explanation": "Være snu.",
+        "example": "Han havde en ræv bag ___ og vidste præcis, hvad han skulle gøre."
+    },
+    {
+        "sentence": "Have et horn i siden på ___",
+        "answer": "nogen",
+        "explanation": "Være vred på dem.",
+        "example": "Han havde et horn i siden på ___, efter at de havde kritiseret hans forslag."
+    },
+    {
+        "sentence": "Have rent mel i ___",
+        "answer": "posen",
+        "explanation": "Være ærlig.",
+        "example": "Hun sørgede for at have rent mel i ___, så der ikke var tvivl om hendes intentioner."
+    },
+    {
+        "sentence": "Have rotter på ___",
+        "answer": "loftet",
+        "explanation": "Være skør/tosset.",
+        "example": "Han opførte sig som om, han havde rotter på ___, med sine skøre påfund."
+    },
+    {
+        "sentence": "Have ti ___",
+        "answer": "tommelfingre",
+        "explanation": "At være klodset.",
+        "example": "Når det kom til håndarbejde, virkede det som om, han havde ti ___."
+    },
+    {
+        "sentence": "Holde fanen ___",
+        "answer": "højt",
+        "explanation": "Blive ved, stå ved sine idealer, ikke tabe modet.",
+        "example": "Selvom det så sort ud, sørgede de for at holde fanen ___."
+    },
+    {
+        "sentence": "Holde skruen i ___",
+        "answer": "vandet",
+        "explanation": "Ikke give op.",
+        "example": "Trods de mange udfordringer holdt han skruen i ___."
+    },
+    {
+        "sentence": "Holde tungen lige i ___",
+        "answer": "munden",
+        "explanation": "Være yderst forsigtig.",
+        "example": "Du bliver nødt til at holde tungen lige i ___ under eksamenen."
+    },
+    {
+        "sentence": "Hoppe på ___",
+        "answer": "limpinden",
+        "explanation": "Lade sig narre til at gøre noget dumt.",
+        "example": "De forsøgte at snyde hende, men hun hoppede ikke på ___."
+    },
+    {
+        "sentence": "Hulter til ___",
+        "answer": "bulter",
+        "explanation": "Beskrivelse af ting, der ligger i uorden.",
+        "example": "Hele værelset lå hulter til ___, efter børnene havde leget der."
+    },
+    {
+        "sentence": "Ikke den skarpeste kniv i ___",
+        "answer": "skuffen",
+        "explanation": "Ikke særlig kvik.",
+        "example": "Han var måske ikke den skarpeste kniv i ___, men han arbejdede hårdt."
+    },
+    {
+        "sentence": "Ikke kunne få armene ___",
+        "answer": "ned",
+        "explanation": "Være meget begejstret.",
+        "example": "Da hun vandt prisen, kunne hun ikke få armene ___ af glæde."
+    },
+    {
+        "sentence": "Ikke kunne se skoven for bare ___",
+        "answer": "træer",
+        "explanation": "Være så optaget af detaljer, at man ikke kan se helheden.",
+        "example": "Han kunne ikke se skoven for bare ___ og overså den enkle løsning."
+    },
+    {
+        "sentence": "Ikke lægge fingrene ___",
+        "answer": "imellem",
+        "explanation": "Ikke være skånsom og tilbageholdende.",
+        "example": "Kritikeren lagde ikke fingrene ___ i sin anmeldelse af forestillingen."
+    },
+    {
+        "sentence": "Ikke løfte/røre en ___",
+        "answer": "finger",
+        "explanation": "Ikke gøre noget som helst.",
+        "example": "Han løftede ikke en ___ for at hjælpe med oprydningen efter festen."
+    },
+    {
+        "sentence": "Ikke noget at skrive hjem ___",
+        "answer": "om",
+        "explanation": "Dårligt eller uinteressant.",
+        "example": "Maden på restauranten var ikke noget at skrive hjem ___."
+    },
+    {
+        "sentence": "Ikke nå nogen til ___",
+        "answer": "sokkeholderne",
+        "explanation": "Ikke kunne måle sig med andre.",
+        "example": "Selv med al sin træning kunne han ikke nå hende til ___ på banen."
+    },
+    {
+        "sentence": "Ikke til at bide skeer ___",
+        "answer": "med",
+        "explanation": "Om en person, som er svær at diskutere med eller overbevise.",
+        "example": "Hun var ikke til at bide skeer ___, når først hun havde besluttet sig."
+    },
+    {
+        "sentence": "Julen står for ___",
+        "answer": "døren",
+        "explanation": "Det er snart jul.",
+        "example": "Julen står for ___, og alle er i fuld gang med forberedelserne."
+    },
+    {
+        "sentence": "Kaste benzin på ___",
+        "answer": "bålet",
+        "explanation": "Gøre noget værre.",
+        "example": "Hans kommentar kastede kun benzin på ___ i den ophedede debat."
+    },
+    {
+        "sentence": "Kaste grus i ___",
+        "answer": "maskineriet",
+        "explanation": "Ødelægge noget.",
+        "example": "Den pludselige strømnedbrud kastede grus i ___ på fabrikken."
+    },
+    {
+        "sentence": "Kaste håndklædet i ___",
+        "answer": "ringen",
+        "explanation": "Give op.",
+        "example": "Efter flere mislykkede forsøg kastede han håndklædet i ___."
+    },
+    {
+        "sentence": "Kaste lys over ___",
+        "answer": "noget",
+        "explanation": "Fremføre fakta.",
+        "example": "Undersøgelsen kaster lys over ___ og forklarer de mange misforståelser."
+    },
+    {
+        "sentence": "Kaste perler for ___",
+        "answer": "svin",
+        "explanation": "Give noget værdifuldt til nogen, der ikke sætter pris på det.",
+        "example": "At tale om kunst i det forum føltes som at kaste perler for ___."
+    },
+    {
+        "sentence": "Kende sine lus på ___",
+        "answer": "gangen",
+        "explanation": "Vide, hvem man har med at gøre.",
+        "example": "Man kunne kende sine lus på ___ og vidste, hvad de planlagde."
+    },
+    {
+        "sentence": "Kigge dybt i ___",
+        "answer": "flasken",
+        "explanation": "Drikke for meget.",
+        "example": "Han kiggede lidt for dybt i ___ til festen i fredags."
+    },
+    {
+        "sentence": "Klappe ___",
+        "answer": "hesten",
+        "explanation": "Give sig tid til en ekstra overvejelse.",
+        "example": "De besluttede at klappe ___, inden de tog den endelige beslutning."
+    },
+    {
+        "sentence": "Komme fra asken i ___",
+        "answer": "ilden",
+        "explanation": "Komme fra en slem situation ud i noget, der er værre.",
+        "example": "De troede, de havde løst problemet, men endte bare fra asken i ___."
+    },
+    {
+        "sentence": "Komme ud af ___",
+        "answer": "fjerene",
+        "explanation": "Stå op af sengen.",
+        "example": "Han havde svært ved at komme ud af ___ på de kolde vintermorgener."
+    },
+    {
+        "sentence": "Leve på en stor ___",
+        "answer": "fod",
+        "explanation": "Være velhavende, leve over evne.",
+        "example": "Efter sin store gevinst begyndte han at leve på en stor ___."
+    },
+    {
+        "sentence": "Liden tue vælter stort ___",
+        "answer": "læs",
+        "explanation": "En lille ting kan have en voldsom effekt.",
+        "example": "Den lille fejl i systemet blev en liden tue, der væltede stort ___."
+    },
+    {
+        "sentence": "Lokummet ___",
+        "answer": "brænder",
+        "explanation": "Det går meget dårligt.",
+        "example": "Lokummet ___, og de måtte finde en løsning hurtigt."
+    },
+    {
+        "sentence": "Lukke ___",
+        "answer": "butikken",
+        "explanation": "Slutte af, holde op.",
+        "example": "Efter 20 års drift besluttede de at lukke ___."
+    },
+    {
+        "sentence": "Lægge hjernen i ___",
+        "answer": "blød",
+        "explanation": "Gennemtænke noget.",
+        "example": "De blev nødt til at lægge hjernen i ___ for at finde en løsning på problemet."
+    },
+    {
+        "sentence": "Male fanden på ___",
+        "answer": "væggen",
+        "explanation": "Forestille sig det værste.",
+        "example": "De malede fanden på ___ og troede, alt ville gå galt."
+    },
+    {
+        "sentence": "Nissen flytter ___",
+        "answer": "med",
+        "explanation": "Situationen er den samme uanset omgivelser.",
+        "example": "Selvom de flyttede firmaet til en ny by, flyttede nissen ___, og problemerne fortsatte."
+    },
+    {
+        "sentence": "Presse ___",
+        "answer": "citronen",
+        "explanation": "Udnytte situationen fuldt ud.",
+        "example": "De pressede ___ for at få mest muligt ud af forhandlingerne."
+    },
+    {
+        "sentence": "Rage kastanjerne ud af ___",
+        "answer": "ilden",
+        "explanation": "Tage sig af problemer.",
+        "example": "Hun måtte rage kastanjerne ud af ___ og rydde op efter fejlen."
+    },
+    {
+        "sentence": "Sende aben ___",
+        "answer": "videre",
+        "explanation": "Give en ubehagelig problemstilling videre til andre.",
+        "example": "De forsøgte at sende aben ___ og lade andre tage skylden."
+    },
+    {
+        "sentence": "Skeletter i ___",
+        "answer": "skabet",
+        "explanation": "Ubehagelige hemmeligheder.",
+        "example": "Familien havde mange skeletter i ___, som ingen talte om."
+    },
+    {
+        "sentence": "Skyde en hvid pil efter ___",
+        "answer": "noget",
+        "explanation": "Afskrive noget, lade noget være tabt.",
+        "example": "Han måtte skyde en hvid pil efter ___, da deadline blev overskredet."
+    },
+    {
+        "sentence": "Slå koldt vand i ___",
+        "answer": "blodet",
+        "explanation": "Tage det roligt, slappe af.",
+        "example": "De måtte slå koldt vand i ___ og tænke klart, før de reagerede."
+    },
+    {
+        "sentence": "Tage tyren ved ___",
+        "answer": "hornene",
+        "explanation": "Aktivt forsøge at løse en ubehagelig situation eller et problem.",
+        "example": "De besluttede at tage tyren ved ___ og håndtere konflikten direkte."
+    },
+    {
+        "sentence": "Vende et ___",
+        "answer": "blad",
+        "explanation": "Begynde på noget nyt.",
+        "example": "Efter en svær periode var det tid til at vende et ___ og starte forfra."
+    },
+    {
+        "sentence": "Vifte med det hvide ___",
+        "answer": "flag",
+        "explanation": "Give op; overgive sig.",
+        "example": "Efter timer uden succes viftede de med det hvide ___ og bad om hjælp."
+    },
+    {
+        "sentence": "Være en dråbe i ___",
+        "answer": "havet",
+        "explanation": "Være en ubetydelighed i den store sammenhæng.",
+        "example": "Donationen var en dråbe i ___ i forhold til de samlede behov."
+    },
+    {
+        "sentence": "Være fyr og ___",
+        "answer": "flamme",
+        "explanation": "Være meget opsat på noget.",
+        "example": "Hun var fyr og ___ over det nye projekt og arbejdede hele natten."
+    },
+    {
+        "sentence": "Være klædt på til ___",
+        "answer": "noget",
+        "explanation": "At være parat til en bestemt situation.",
+        "example": "Efter mange ugers træning følte han sig klædt på til ___."
+    },
+    {
+        "sentence": "Være på ___",
+        "answer": "glatis",
+        "explanation": "Ikke have styr på en situation, være i problemer.",
+        "example": "Han følte sig på ___, da han blev stillet et spørgsmål, han ikke kunne svare på."
+    },
+    {
+        "sentence": "Ønske nogen hen hvor peberet ___",
+        "answer": "gror",
+        "explanation": "Slippe for en besværlig person.",
+        "example": "Efter hendes evige klager ønskede de hende hen, hvor peberet ___."
+    },
+    {
+        "sentence": "Holde tungen lige i ___",
+        "answer": "munden",
+        "explanation": "Være yderst forsigtig.",
+        "example": "De skulle holde tungen lige i ___ for at få alle detaljerne på plads."
+    },
+    {
+        "sentence": "Hverken fugl eller ___",
+        "answer": "fisk",
+        "explanation": "Hverken det ene eller det andet.",
+        "example": "Forslaget blev kritiseret for at være hverken fugl eller ___."
+    },
+    {
+        "sentence": "Have hjertet på rette ___",
+        "answer": "sted",
+        "explanation": "Føle med andre, empati.",
+        "example": "Hun havde hjertet på rette ___ og hjalp altid dem i nød."
+    },
+    {
+        "sentence": "Male fanden på ___",
+        "answer": "væggen",
+        "explanation": "Forestille sig det værste.",
+        "example": "Han malede fanden på ___ og frygtede det værste, før han overhovedet havde prøvet."
+    },
+    {
+        "sentence": "Skeletter i ___",
+        "answer": "skabet",
+        "explanation": "Ubehagelige hemmeligheder.",
+        "example": "Virksomheden forsøgte at skjule sine skeletter i ___ for offentligheden."
+    },
+    {
+        "sentence": "Lokummet ___",
+        "answer": "brænder",
+        "explanation": "Det går meget dårligt.",
+        "example": "Lokummet ___, og de måtte handle hurtigt for at redde situationen."
+    },
+    {
+        "sentence": "Ikke kunne få armene ___",
+        "answer": "ned",
+        "explanation": "Være meget begejstret.",
+        "example": "Da han endelig bestod eksamen, kunne han ikke få armene ___."
+    },
+    {
+        "sentence": "Blive taget med fingrene i ___",
+        "answer": "kagedåsen",
+        "explanation": "Blive afsløret i at gøre noget ulovligt.",
+        "example": "Han blev taget med fingrene i ___, da han forsøgte at stjæle fra lageret."
+    },
+    {
+        "sentence": "Bide sig selv i ___",
+        "answer": "halen",
+        "explanation": "Være uden løsning, da der så vil komme et nyt problem.",
+        "example": "Det økonomiske system syntes at bide sig selv i ___ og skabte nye gældsproblemer."
+    },
+    {
+        "sentence": "Få en appelsin i ___",
+        "answer": "turbanen",
+        "explanation": "At have heldet med sig.",
+        "example": "Han fik en appelsin i ___, da jobbet blev tilbudt uden ansøgning."
+    },
+    {
+        "sentence": "Holde fanen ___",
+        "answer": "højt",
+        "explanation": "Blive ved, stå ved sine idealer, ikke tabe modet.",
+        "example": "Selvom tiderne var svære, forsøgte de at holde fanen ___."
+    },
+    {
+        "sentence": "Få kniven for ___",
+        "answer": "struben",
+        "explanation": "Blive presset til noget.",
+        "example": "Virksomheden fik kniven for ___ og måtte tage drastiske beslutninger."
+    },
+    {
+        "sentence": "Sende ___ videre",
+        "answer": "aben",
+        "explanation": "Give en ubehagelig problemstilling videre til andre.",
+        "example": "Politikerne forsøgte at sende ___ videre og undgå ansvar for beslutningen."
+    },
+    {
+        "sentence": "Have fis i ___",
+        "answer": "kasketten",
+        "explanation": "Være lidt tosset.",
+        "example": "De syntes, han havde fis i ___, da han præsenterede sin skøre idé."
+    },
+    {
+        "sentence": "Falde på ___",
+        "answer": "halen",
+        "explanation": "Blive meget imponeret over noget.",
+        "example": "Publikum faldt på ___ over den imponerende optræden."
+    },
+    {
+        "sentence": "Gå i ___",
+        "answer": "hundene",
+        "explanation": "Gå i forfald/opløsning.",
+        "example": "Han lod sit arbejde gå i ___ efter skilsmissen."
+    },
+    {
+        "sentence": "Finde sine egne ___",
+        "answer": "ben",
+        "explanation": "Gøre sig klart, hvad man vil eller mener om noget.",
+        "example": "Efter noget tid på den nye arbejdsplads fandt han sine egne ___."
+    },
+    {
+        "sentence": "Feje for egen ___",
+        "answer": "dør",
+        "explanation": "Sørge for sine egne sager, før man brokker sig over andre.",
+        "example": "Før du kritiserer andres opførsel, burde du feje for egen ___."
+    },
+    {
+        "sentence": "Slå koldt vand i ___",
+        "answer": "blodet",
+        "explanation": "Tage det roligt, slappe af.",
+        "example": "Han slog koldt vand i ___ og ventede på, at situationen løste sig."
+    },
+    {
+        "sentence": "Få det forkerte ben ud af ___",
+        "answer": "sengen",
+        "explanation": "Være i dårligt humør.",
+        "example": "Han må have fået det forkerte ben ud af ___ i morges, for han er gnaven hele dagen."
+    },
+    {
+        "sentence": "Komme ind i ___",
+        "answer": "kampen",
+        "explanation": "At gøre noget, deltage.",
+        "example": "Det er på tide, at du kommer ind i ___ og hjælper med projektet."
+    },
+    {
+        "sentence": "Grave sin egen ___",
+        "answer": "grav",
+        "explanation": "Skabe alvorlige problemer for sig selv.",
+        "example": "Hvis han bliver ved med at ignorere problemerne, graver han sin egen ___."
+    },
+    {
+        "sentence": "Sende ___ videre",
+        "answer": "aben",
+        "explanation": "Give en ubehagelig problemstilling videre til andre.",
+        "example": "Han prøvede at sende ___ videre og lade andre tage ansvar."
+    },
+    {
+        "sentence": "Kaste perler for ___",
+        "answer": "svin",
+        "explanation": "Give noget værdifuldt til nogen, der ikke sætter pris på det.",
+        "example": "Han følte, at han kastede perler for ___, da hans gode råd blev ignoreret."
+    },
+    {
+        "sentence": "Løbe hornene ___",
+        "answer": "af sig",
+        "explanation": "Lære mens man er ung.",
+        "example": "Det tog lidt tid for ham at løbe hornene ___ og finde ro."
+    },
+    {
+        "sentence": "Have næsen i ___",
+        "answer": "sky",
+        "explanation": "At være arrogant eller nedladende.",
+        "example": "Hun gik rundt med næsen i ___, som om hun var bedre end os andre."
+    },
+    {
+        "sentence": "Holde gryden i ___",
+        "answer": "kog",
+        "explanation": "Holde interessen for noget.",
+        "example": "Han forsøgte at holde gryden i ___ ved at stille spændende spørgsmål."
+    },
+    {
+        "sentence": "Tage hatten af for ___",
+        "answer": "nogen",
+        "explanation": "Beundre nogen.",
+        "example": "Jeg må tage hatten af for ___, der klarede opgaven på rekordtid."
+    },
+    {
+        "sentence": "Trække vejret lettet ___",
+        "answer": "op",
+        "explanation": "Føle lettelse.",
+        "example": "Efter de fik gode nyheder, trak de vejret lettet ___."
+    },
+    {
+        "sentence": "Få blod på ___",
+        "answer": "tanden",
+        "explanation": "Få lyst til at prøve, fortsætte eller gentage noget.",
+        "example": "Efter sin første succes fik han blod på ___ til at starte flere projekter."
+    },
+    {
+        "sentence": "Have is i ___",
+        "answer": "maven",
+        "explanation": "Være rolig og tålmodig i pressede situationer.",
+        "example": "Han havde is i ___ og tog den rigtige beslutning under pres."
+    },
+    {
+        "sentence": "Være på dybt ___",
+        "answer": "vand",
+        "explanation": "At være i en vanskelig situation uden kontrol.",
+        "example": "De var på dybt ___, da de tog opgaven uden at have erfaring."
+    },
+    {
+        "sentence": "Have mange bolde i ___",
+        "answer": "luften",
+        "explanation": "Have gang i mange ting på én gang.",
+        "example": "Med både studier, arbejde og frivilligt arbejde havde hun mange bolde i ___."
+    },
+    {
+        "sentence": "Køre på ___",
+        "answer": "skinner",
+        "explanation": "Fungere tilfredsstillende, uden problemer.",
+        "example": "Projektet kørte på ___, og de var foran tidsplanen."
+    },
+    {
+        "sentence": "Bide i det ___ æble",
+        "answer": "sure",
+        "explanation": "Gøre noget man ikke har lyst til.",
+        "example": "Han måtte bide i det ___ æble og betale bøden."
+    },
+    {
+        "sentence": "Hånden på ___",
+        "answer": "hjertet",
+        "explanation": "Vær oprigtig, ærlig.",
+        "example": "Hånden på ___, jeg tror ikke, vi kan klare det uden hjælp."
+    },
+    {
+        "sentence": "Lægge hovedet på ___",
+        "answer": "blokken",
+        "explanation": "Garantere eller love noget.",
+        "example": "Han var villig til at lægge hovedet på ___ for at forsvare sin holdning."
+    },
+    {
+        "sentence": "Se dagens ___",
+        "answer": "lys",
+        "explanation": "Blive født, skabt, eller til.",
+        "example": "Deres nye produkt så dagens ___ og blev straks en succes."
+    },
+    {
+        "sentence": "Save den gren over man selv sidder ___",
+        "answer": "på",
+        "explanation": "Skade sig selv.",
+        "example": "Ved at sabotere samarbejdet saver du den gren over, du selv sidder ___."
+    },
+    {
+        "sentence": "Råbe vagt i ___",
+        "answer": "gevær",
+        "explanation": "Gøre kraftigt opmærksom på noget.",
+        "example": "Miljøorganisationen råbte vagt i ___ over den nye lovgivning."
+    },
+    {
+        "sentence": "Slå hovedet på ___",
+        "answer": "sømmet",
+        "explanation": "Ram spot on; udtrykke noget præcist.",
+        "example": "Han slog hovedet på ___ med sin kommentar om situationens kompleksitet."
+    },
+    {
+        "sentence": "Sætte tænderne i ___",
+        "answer": "noget",
+        "explanation": "Gå i gang med noget.",
+        "example": "De satte tænderne i ___ straks efter mødet og begyndte at arbejde på projektet."
+    },
+    {
+        "sentence": "Lugte ___",
+        "answer": "lunten",
+        "explanation": "Have på fornemmelsen.",
+        "example": "Hun begyndte at lugte ___, da han undgik hendes spørgsmål om emnet."
+    },
+    {
+        "sentence": "Spille med ___",
+        "answer": "musklerne",
+        "explanation": "Prale eller vise styrke.",
+        "example": "Virksomheden spillede med ___ ved at lancere deres nye produkt først."
+    },
+    {
+        "sentence": "Finde sine egne ___",
+        "answer": "ben",
+        "explanation": "Gøre sig klart, hvad man vil eller mener om noget.",
+        "example": "Han brugte det første år på universitetet til at finde sine egne ___."
+    },
+    {
+        "sentence": "Bruge ___",
+        "answer": "albuerne",
+        "explanation": "At bruge hårde midler for at komme frem eller gøre karriere.",
+        "example": "Hun var nødt til at bruge ___ for at sikre sig pladsen i toppen af virksomheden."
+    },
+    {
+        "sentence": "Være på herrens ___",
+        "answer": "mark",
+        "explanation": "At være hjælpeløs, i en svær situation.",
+        "example": "Efter fejlen i planen stod de pludselig på herrens ___ uden nogen løsning."
+    },
+    {
+        "sentence": "Være ude på ___",
+        "answer": "glatis",
+        "explanation": "At bevæge sig ud i noget, man ikke har styr på.",
+        "example": "Han var ude på ___, da han lovede noget, han ikke kunne holde."
+    },
+    {
+        "sentence": "Trække i ___",
+        "answer": "trådene",
+        "explanation": "Styre noget i baggrunden.",
+        "example": "Det var hende, der trak i ___ for at sikre, at projektet blev en succes."
+    },
+    {
+        "sentence": "Holde hovedet ___",
+        "answer": "koldt",
+        "explanation": "Bevare overblikket.",
+        "example": "Under pres fra medierne formåede han at holde hovedet ___."
+    },
+    {
+        "sentence": "Tage tyren ved ___",
+        "answer": "hornene",
+        "explanation": "Aktivt forsøge at løse en ubehagelig situation eller et problem.",
+        "example": "Det var på tide at tage tyren ved ___ og finde en løsning på konflikten."
+    },
+    {
+        "sentence": "Spille første ___",
+        "answer": "violin",
+        "explanation": "Være leder eller den vigtigste person i en gruppe.",
+        "example": "Hun spillede første ___ i hele projektet og sørgede for, at det blev en succes."
+    },
+    {
+        "sentence": "Slå to fluer med ét ___",
+        "answer": "smæk",
+        "explanation": "Komme to ting til gode med én handling.",
+        "example": "Med denne ændring slog vi to fluer med ét ___ og sparede både tid og penge."
+    },
+    {
+        "sentence": "Stikke en kæp i ___",
+        "answer": "hjulet",
+        "explanation": "Skabe problemer eller forhindre noget i at lykkes.",
+        "example": "De forsøgte at stikke en kæp i ___ for at bremse vores fremskridt."
+    },
+    {
+        "sentence": "Hænge i en ___",
+        "answer": "klokkestreng",
+        "explanation": "Være forpligtet til at overholde aftaler på bestemte tidspunkter.",
+        "example": "Som ny direktør hang han i en ___ for at holde alle deadlines."
+    },
+    {
+        "sentence": "Trække vejret lettet ___",
+        "answer": "op",
+        "explanation": "Føle lettelse.",
+        "example": "Efter eksamen trak hun vejret lettet ___ og fejrede med vennerne."
+    },
+    {
+        "sentence": "Være som nat og ___",
+        "answer": "dag",
+        "explanation": "At være helt forskellige.",
+        "example": "Selvom de var søskende, var de som nat og ___ i personlighed."
+    },
+    {
+        "sentence": "Få luft under ___",
+        "answer": "vingerne",
+        "explanation": "Kunne gøre som man vil.",
+        "example": "Efter mange års hårdt arbejde fik han endelig luft under ___ med sit nye firma."
+    },
+    {
+        "sentence": "Få det som blommen i et ___",
+        "answer": "æg",
+        "explanation": "Have det rigtig godt.",
+        "example": "Efter hun flyttede ind i sin nye lejlighed, havde hun det som blommen i et ___."
+    },
+    {
+        "sentence": "Bruge fis i en ___",
+        "answer": "hornlygte",
+        "explanation": "Opblæst bagatel, flop, fiasko, vrøvl.",
+        "example": "Han forsøgte at forklare det komplicerede emne, men det hele lød som fis i en ___."
+    },
+    {
+        "sentence": "Trække i ___",
+        "answer": "trådene",
+        "explanation": "Styre noget i baggrunden.",
+        "example": "Selvom han ikke var synlig, vidste alle, at han trak i ___."
+    },
+    {
+        "sentence": "Hænge med ___",
+        "answer": "næbbet",
+        "explanation": "Være ked af det.",
+        "example": "Efter det dårlige møde gik han hjem og hang med ___."
+    },
+    {
+        "sentence": "Gå ned med ___",
+        "answer": "flaget",
+        "explanation": "Blive syg, gå ned, bryde sammen.",
+        "example": "Efter så meget stress gik hun til sidst ned med ___."
+    },
+    {
+        "sentence": "Skyde gråspurve med ___",
+        "answer": "kanoner",
+        "explanation": "Bruge alt for stærke midler i forhold til situationen.",
+        "example": "At indkalde et stort møde for en lille fejl er som at skyde gråspurve med ___."
+    },
+    {
+        "sentence": "Ryste noget ud af ___",
+        "answer": "ærmet",
+        "explanation": "Hurtigt og nemt vise noget, man kan.",
+        "example": "Hun kunne ryste en genial løsning ud af ___ på ingen tid."
+    },
+    {
+        "sentence": "Slå pjalterne ___",
+        "answer": "sammen",
+        "explanation": "Gå sammen om noget.",
+        "example": "De besluttede at slå pjalterne ___ og starte en forretning sammen."
+    },
+    {
+        "sentence": "Tage tyren ved ___",
+        "answer": "hornene",
+        "explanation": "Aktivt forsøge at løse en ubehagelig situation eller et problem.",
+        "example": "Han besluttede at tage tyren ved ___ og konfrontere problemet direkte."
+    },
+    {
+        "sentence": "Have mange bolde i ___",
+        "answer": "luften",
+        "explanation": "Have gang i mange ting på én gang.",
+        "example": "Hun havde så mange bolde i ___, at hun næsten glemte sin egen fødselsdag."
+    },
+    {
+        "sentence": "Sælge skindet, før bjørnen er ___",
+        "answer": "skudt",
+        "explanation": "Regne med noget, som ikke er sikkert endnu.",
+        "example": "Han begyndte at fejre sejren og solgte skindet, før bjørnen var ___."
+    },
+    {
+        "sentence": "Gå op i ___",
+        "answer": "røg",
+        "explanation": "Når noget mislykkes.",
+        "example": "Hele projektet gik op i ___ efter budgetnedskæringerne."
+    },
+    {
+        "sentence": "Holde tungen lige i ___",
+        "answer": "munden",
+        "explanation": "Være yderst forsigtig.",
+        "example": "Han måtte holde tungen lige i ___, da han arbejdede med de komplekse detaljer."
+    },
+    {
+        "sentence": "Tage benene på ___",
+        "answer": "nakken",
+        "explanation": "Skynde sig væk.",
+        "example": "Da de så regnskyerne, tog de benene på ___ og løb hjem."
+    },
+    {
+        "sentence": "Grave sin egen ___",
+        "answer": "grav",
+        "explanation": "Skabe alvorlige problemer for sig selv.",
+        "example": "Han gravede sin egen ___ ved at ignorere advarslerne fra kollegerne."
+    },
+    {
+        "sentence": "Få kolde ___",
+        "answer": "fødder",
+        "explanation": "Ombestemme sig, fortryde.",
+        "example": "Lige før kontrakten skulle underskrives, fik han kolde ___."
+    },
+    {
+        "sentence": "Gå i små ___",
+        "answer": "sko",
+        "explanation": "Være nøjeregnende.",
+        "example": "Hun gik i små ___ og kritiserede hver eneste detalje."
+    },
+    {
+        "sentence": "Sende ___ videre",
+        "answer": "aben",
+        "explanation": "Give en ubehagelig problemstilling videre til andre.",
+        "example": "I stedet for at tage ansvar sendte han ___ videre til sin kollega."
+    },
+    {
+        "sentence": "Opfinde den dybe ___",
+        "answer": "tallerken",
+        "explanation": "Finde på en genial løsning eller ny opdagelse.",
+        "example": "Der var ingen grund til at opfinde den dybe ___, når løsningen allerede fandtes."
+    },
+    {
+        "sentence": "Pege ___",
+        "answer": "fingre",
+        "explanation": "Gøre nar.",
+        "example": "De begyndte straks at pege ___, da han foreslog noget nyt og anderledes."
+    }
+]

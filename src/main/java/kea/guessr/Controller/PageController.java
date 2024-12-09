@@ -33,6 +33,10 @@ public class PageController {
     public String showOrdsprogPage() {
         return "ordsprog";
     }
+    @GetMapping("/fakta")
+    public String showFaktaspilPage() {
+        return "faktaspillet";
+    }
 
     @GetMapping("/profile")
     public String showProfilePage(Model model, HttpSession session) {

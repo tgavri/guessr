@@ -3,25 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <title>Quiz Game</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        body {
+        #body {
             font-family: Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 1080px;
-            width: 1920px;
-            margin: 10px;
+            width: 100vw;
+            height: 100vh;
             background-color: #f0f0f0;
             background-image: url("/img/BaggrundbilledeQuest.jpeg");
-
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: fixed;
-
-
         }
+
         .quiz-container {
             background-color: white;
             border-radius: 10px;
@@ -82,6 +82,8 @@
     </style>
 </head>
 <body>
+<div id="header-placeholder"></div>
+<div id="body">
 <div class="quiz-container">
     <div id="create-question-section">
         <h2>Stil et spørgsmål</h2>
@@ -121,9 +123,16 @@
         <div id="final-score"></div>
     </div>
 </div>
+</div>
+<div id="footer-placeholder"></div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+    $(document).ready(function () {
+        $('#header-placeholder').load('/fragments/navbar');
+        $('#footer-placeholder').load('/fragments/footer');
+    });
+
     $(document).ready(function() {
         const MAX_QUESTIONS = 10;
         const POINTS_PER_CORRECT_ANSWER = 100;

@@ -17,7 +17,7 @@ public class User {
     private String name;
     private String email;
     private String status;
-
+    private int mmr = 0;
     @Enumerated(EnumType.STRING)
     private Role role;
 
@@ -63,7 +63,13 @@ public class User {
     public String getName() {
         return name;
     }
+    public int getMmr() {
+        return mmr;
+    }
 
+    public void setMmr(int mmr) {
+        this.mmr = mmr;
+    }
     public void setName(String name) {
         this.name = name;
     }

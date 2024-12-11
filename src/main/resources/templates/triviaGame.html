@@ -124,17 +124,34 @@
 </div>
 <div id="footer-placeholder"></div>
 <script>
+  let currentUsername = null;
+
+  function loadUserData() {
+    $.get('/api/user-data')
+            .done(function(userData) {
+              currentUsername = userData.username;
+              console.log("Current username:", currentUsername);
+            })
+            .fail(function(xhr) {
+              console.error("Failed to load user data:", xhr.responseText);
+              alert('Kunne ikke hente brugerdata. Prøv at logge ind igen.');
+              window.location.href = '/login';
+            });
+  }
+
+  $(document).ready(function () {
+    loadUserData(); // Fetch username on page load
+  });
+
   $(document).ready(function () {
     const baseUrl = "http://localhost:8080/api/trivia";
     let triviaData = [];
     let currentIndex = 0;
     let score = 0;
+
     $(document).ready(function () {
-
       $('#header-placeholder').load('/fragments/navbar');
-
       $('#footer-placeholder').load('/fragments/footer');
-
     });
 
     // Fetch questions from the backend by difficulty
@@ -162,13 +179,13 @@
     function restartGame() {
       $('#question-container').empty();
       $('#question-container').html(`
-        <p id="question-number"></p>
-        <p id="category"></p>
-        <p id="question"></p>
-        <div id="answers"></div>
-        <p id="score">Score: 0</p>
-        <button id="next-question" style="display: none;">Næste Spørgsmål</button>
-      `);
+            <p id="question-number"></p>
+            <p id="category"></p>
+            <p id="question"></p>
+            <div id="answers"></div>
+            <p id="score">Score: 0</p>
+            <button id="next-question" style="display: none;">Næste Spørgsmål</button>
+        `);
       $('#difficulty-selection').show();
       $('#question-container').hide();
       triviaData = [];
@@ -195,13 +212,9 @@
         const answers = [...question.incorrectAnswers, question.correctAnswer];
         answers.sort(() => Math.random() - 0.5);
 
-        // Display the category
         $('#category').text(`Category: ${question.category}`);
-
-        // Display the question
         $('#question').html(question.question);
 
-        // Populate the answers
         $('#answers').empty();
         answers.forEach(answer => {
           $('#answers').append(`<button>${answer}</button>`);
@@ -218,21 +231,16 @@
       }
     }
 
-
-
     function handleAnswerSelection(selectedElement) {
-      const selectedAnswer = selectedElement.text().trim(); // Ensure no extra spaces
-      const correctAnswer = triviaData[currentIndex].correctAnswer.trim(); // Ensure no extra spaces
+      const selectedAnswer = selectedElement.text().trim();
+      const correctAnswer = triviaData[currentIndex].correctAnswer.trim();
 
       if (selectedAnswer === correctAnswer) {
-        // If the selected answer is correct, highlight it in green
         selectedElement.css('background', '#28a745');
         score += 10;
       } else {
-        // If the selected answer is incorrect, highlight it in red
         selectedElement.css('background', '#dc3545');
 
-        // Highlight the correct answer in green
         $('#answers button').each(function () {
           if ($(this).text().trim() === correctAnswer) {
             $(this).css('background', '#28a745');
@@ -241,10 +249,9 @@
       }
 
       updateScore();
-      $('#answers button').attr('disabled', true); // Disable further clicks
+      $('#answers button').attr('disabled', true);
       $('#next-question').show();
     }
-
 
     function updateScore() {
       $('#score').text(`Score: ${score}`);
@@ -260,13 +267,42 @@
         method: 'POST',
         data: { score: score },
         success: function () {
-          $('#question-container').html(`
-            <h2>Game Over!</h2>
-            <p>You scored ${score} points out of ${triviaData.length * 10}!</p>
-            <button id="restart-game">Restart Game</button>
-          `);
-          $('#restart-game').on('click', function () {
-            restartGame();
+          if (!currentUsername) {
+            alert("User not loaded. Please refresh the page.");
+            return;
+          }
+          // Then attempt to update MMR
+          $.ajax({
+            url: `${baseUrl}/update-mmr`,
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({
+              score: score,
+              username: currentUsername
+            }),
+            success: function (response) {
+              $('#question-container').html(`
+                        <h2>Game Over!</h2>
+                        <p>Du fik ${score} point ud af: ${triviaData.length * 10}!</p>
+                        <p>Din nye rating er: ${response}</p>
+                        <button id="restart-game">Restart Game</button>
+                    `);
+              $('#restart-game').on('click', function () {
+                restartGame();
+              });
+            },
+            error: function (xhr, status, error) {
+              console.error("MMR Update Error:", xhr.responseText);
+              $('#question-container').html(`
+                        <h2>Game Over!</h2>
+                        <p>Du fik ${score} point ud af: ${triviaData.length * 10}!</p>
+                        <p>Fej i opdatering af MMR: ${xhr.responseText}</p>
+                        <button id="restart-game">Restart Game</button>
+                    `);
+              $('#restart-game').on('click', function () {
+                restartGame();
+              });
+            }
           });
         },
         error: function () {
@@ -274,6 +310,8 @@
         }
       });
     }
+
+
 
     bindEventListeners();
   });

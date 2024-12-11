@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Image Guessr</title>
+    <style>
+        #game {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 75vh;
+            margin: 0;
+            padding: 20px 0;
+            background: linear-gradient(to top right, #d3d3d3, #333333);
+        }
+        .outer-container {
+            background: #ffffff;
+            width: 80%;
+            max-width: 800px;
+            padding: 20px 20px 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            margin: 0 auto;
+            min-height: 65vh;
+        }
+        .image-container {
+            width: 100%;
+            height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .image-container img {
+            max-width: 100%;
+            max-height: 100%;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .slider-container {
+            margin-top: 0;
+        }
+        .current-year {
+            margin-bottom: 10px;
+            font-size: 1.8em;
+            font-weight: bold;
+            color: #0d47a1;
+            background: #f0f0f0;
+            padding: 5px 10px;
+            border-radius: 5px;
+            display: inline-block;
+        }
+        .slider {
+            width: 96%;
+            margin: 0 auto;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 10px;
+            border-radius: 5px;
+            background: linear-gradient(90deg, #0d47a1, #64b5f6);
+            outline: none;
+            opacity: 0.9;
+            transition: opacity 0.2s;
+        }
+        .slider:hover {
+            opacity: 1;
+        }
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #ff5722;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        .slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #ff5722;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        .slider-milestones {
+            width: 96%;
+            margin: 10px auto 0;
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+        }
+        .slider-milestones span {
+            position: absolute;
+            transform: translateX(-50%);
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #0d47a1;
+        }
+        .slider-milestones span:nth-child(1) { left: 1%; }
+        .slider-milestones span:nth-child(2) { left: 17.5%; }
+        .slider-milestones span:nth-child(3) { left: 32.5%; }
+        .slider-milestones span:nth-child(4) { left: 48%; }
+        .slider-milestones span:nth-child(5) { left: 64%; }
+        .slider-milestones span:nth-child(6) { left: 98.5%; }
+        .btn {
+            margin-top: 30px;
+            font-size: 1em;
+            padding: 10px 20px;
+        }
+    </style>
+</head>
+<body>
+<div id="header-placeholder"></div>
+<div id="game">
+    <div class="outer-container">
+        <div id="content-container">
+            <button id="play-button" class="btn btn-primary">Play</button>
+
+            <div id="game-content" style="display: none;">
+                <div class="image-container" id="image-section">
+                    <p id="image-desc" style="font-size: 1.2em; color: #555; margin-bottom: 10px;"></p>
+                    <img id="main-image" src="" alt="Game Image">
+                </div>
+                <div class="slider-container" id="slider-section">
+                    <div class="current-year" id="current-year">1900</div>
+                    <input
+                            type="range"
+                            id="year-slider"
+                            class="slider"
+                            min="1900"
+                            max="2024"
+                            value="1900"
+                            step="1"
+                    >
+                    <div class="slider-milestones">
+                        <span>1900</span>
+                        <span>1920</span>
+                        <span>1940</span>
+                        <span>1960</span>
+                        <span>1980</span>
+                        <span>2024</span>
+                    </div>
+                    <button id="check-button" class="btn btn-primary">Vælg</button>
+                </div>
+                <div id="total-section" style="display: none;">
+                    <h1>TOTAL</h1>
+                    <p id="total-points"></p>
+                    <p id="countdown-timer"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="footer-placeholder"></div>
+
+<script>
+    $(document).ready(function () {
+        $('#header-placeholder').load('/fragments/navbar');
+        $('#footer-placeholder').load('/fragments/footer');
+    });
+
+    let buttonPressCount = 0;
+    let totalPoints = 0;
+    let modelYear = 0;
+    let currentDesc = "";
+
+    const yearSlider = document.getElementById('year-slider');
+    const currentYearDisplay = document.getElementById('current-year');
+    const checkButton = document.getElementById('check-button');
+    const totalSection = document.getElementById('total-section');
+    const imageSection = document.getElementById('image-section');
+    const sliderSection = document.getElementById('slider-section');
+    const totalPointsDisplay = document.getElementById('total-points');
+    const countdownTimerDisplay = document.getElementById('countdown-timer');
+    const descElement = document.getElementById('image-desc');
+
+    yearSlider.addEventListener('input', () => {
+        const selectedYear = parseInt(yearSlider.value);
+        currentYearDisplay.textContent = selectedYear;
+    });
+
+    checkButton.addEventListener('click', () => {
+        if (checkButton.textContent === "Vælg") {
+            const selectedYear = parseInt(yearSlider.value);
+            const difference = Math.abs(modelYear - selectedYear);
+            let resultValue = 0;
+
+            if (difference === 0) {
+                currentYearDisplay.style.backgroundColor = 'green';
+                resultValue = 5;
+            } else if (difference <= 2) {
+                currentYearDisplay.style.backgroundColor = 'yellow';
+                resultValue = 4;
+            } else if (difference <= 5) {
+                currentYearDisplay.style.backgroundColor = '#ffeb3b';
+                resultValue = 3;
+            } else if (difference <= 7) {
+                currentYearDisplay.style.backgroundColor = '#ffc107';
+                resultValue = 2;
+            } else if (difference <= 10) {
+                currentYearDisplay.style.backgroundColor = '#ff9800';
+                resultValue = 1;
+            } else {
+                currentYearDisplay.style.backgroundColor = 'red';
+                resultValue = 0;
+            }
+
+            yearSlider.disabled = true;
+            checkButton.textContent = "Næste";
+            checkButton.dataset.resultValue = resultValue;
+
+            descElement.textContent = currentDesc;
+        } else if (checkButton.textContent === "Næste") {
+            const resultValue = parseInt(checkButton.dataset.resultValue || 0);
+            totalPoints += resultValue;
+            buttonPressCount++;
+            currentYearDisplay.style.backgroundColor = '#f0f0f0';
+
+            fetch('/imageguessr', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ result: resultValue })
+            }).then(response => {
+                if (!response.ok) {
+                    console.error('Failed to submit result');
+                }
+            });
+
+            if (buttonPressCount >= 5) {
+                displayTotalPoints();
+            } else {
+                fetchNewImage();
+            }
+
+            // Hide the description
+            descElement.textContent = "";
+        }
+    });
+
+    function fetchNewImage() {
+        fetch('/imageguessr/data')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('main-image').src = data.url;
+                yearSlider.disabled = false;
+                yearSlider.value = 1900;
+                currentYearDisplay.textContent = "1900";
+                checkButton.textContent = "Vælg";
+                modelYear = data.year;
+                currentDesc = data.desc;
+                descElement.textContent = "";
+            })
+            .catch(error => console.error('Error fetching new image:', error));
+    }
+
+    function displayTotalPoints() {
+        imageSection.style.display = 'none';
+        sliderSection.style.display = 'none';
+        totalSection.style.display = 'block';
+        totalPointsDisplay.textContent = `Du Scorede: ${totalPoints} / 25 points`;
+
+        startCountdownToMidnight();
+    }
+
+    function startCountdownToMidnight() {
+        function updateCountdown() {
+            const now = new Date();
+            const midnight = new Date();
+            midnight.setHours(24, 0, 0, 0);
+            const diff = midnight - now;
+
+            const hours = Math.floor(diff / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            countdownTimerDisplay.textContent = `Næste Daily om: ${hours}h ${minutes}m ${seconds}s`;
+
+            if (diff <= 0) {
+                clearInterval(timerInterval);
+            }
+        }
+
+        const timerInterval = setInterval(updateCountdown, 1000);
+        updateCountdown();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const playButton = document.getElementById('play-button');
+        const gameContent = document.getElementById('game-content');
+
+        gameContent.style.display = 'none';
+        playButton.addEventListener('click', () => {
+            gameContent.style.display = 'block';
+            playButton.style.display = 'none';
+
+            fetchNewImage();
+        });
+    });
+</script>
+
+</body>
+</html>

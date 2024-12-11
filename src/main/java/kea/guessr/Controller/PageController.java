@@ -1,8 +1,10 @@
 package kea.guessr.Controller;
 
 import jakarta.servlet.http.HttpSession;
+import kea.guessr.Model.ImageGuessrDTO;
 import kea.guessr.Model.User;
 import kea.guessr.Repository.UserRepository;
+import kea.guessr.Service.ImageGuessrService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,11 +12,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.io.IOException;
+
 @Controller
 public class PageController {
   
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private ImageGuessrService imageGuessrService;
   
     @GetMapping("/")
     public String showIndexPage() {

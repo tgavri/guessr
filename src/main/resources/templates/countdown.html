@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Countdown Timer</title>
+    <style>
+        #timer {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 75vh;
+            margin: 0;
+            background: linear-gradient(to top right, #d3d3d3, #333333);
+            color: #ffffff;
+            text-align: center;
+        }
+        .countdown-container {
+            background: #333;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+        }
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 1.5em;
+        }
+    </style>
+</head>
+<body>
+<div id="header-placeholder"></div>
+<div id="timer">
+<div class="countdown-container">
+    <h1>Du har allerede spillet i dag</h1>
+    <p id="countdown-timer">Beregn tid...</p>
+</div>
+</div>
+<div id="footer-placeholder"></div>
+
+<script>
+
+    $(document).ready(function () {
+        $('#header-placeholder').load('/fragments/navbar');
+        $('#footer-placeholder').load('/fragments/footer');
+    });
+    function startCountdownToMidnight() {
+        function updateCountdown() {
+            const now = new Date();
+            const midnight = new Date();
+            midnight.setHours(24, 0, 0, 0);
+            const diff = midnight - now;
+
+            const hours = Math.floor(diff / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById('countdown-timer').textContent =
+                `Tid til midnat: ${hours}t ${minutes}m ${seconds}s`;
+
+            if (diff <= 0) {
+                clearInterval(timerInterval);
+                document.getElementById('countdown-timer').textContent = "Det er nu midnat!";
+            }
+        }
+
+        const timerInterval = setInterval(updateCountdown, 1000);
+        updateCountdown();
+    }
+
+    document.addEventListener('DOMContentLoaded', startCountdownToMidnight);
+</script>
+</body>
+</html>

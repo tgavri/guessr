@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #header-placeholder {
+            flex-shrink: 0;
+        }
+
+        #leader {
+            flex-grow: 1;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #ff7e5f, #feb47b); /* Fra en varm orange til en lys koral */
+            color: white;
+            text-align: center;
+            padding: 20px;
+            border-bottom: 4px solid rgba(255, 255, 255, 0.3); /* Tilføjer en subtil bundramme */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Giver et løftet look */
+        }
+
+        #footer-placeholder {
+            flex-shrink: 0;
+            background-color: #f8f9fa;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .leaderboard-container {
+            max-width: 800px;
+            margin: auto;
+            background: #e4e1e1;
+            color: black;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+<div id="header-placeholder"></div>
+<div id="leader">
+    <div class="leaderboard-container">
+        <h1>Leaderboard</h1>
+        <table id="leaderboard-table" class="table table-striped table-bordered">
+            <thead>
+            <tr>
+                <th>Rank</th>
+                <th>Username</th>
+                <th>Name</th>
+                <th>MMR</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Data vil blive indsat her -->
+            </tbody>
+        </table>
+    </div>
+</div>
+<div id="footer-placeholder"></div>
+<script>
+    $(document).ready(function () {
+        $('#header-placeholder').load('/fragments/navbar');
+        $('#footer-placeholder').load('/fragments/footer');
+
+        fetch('/api/leaderboard')
+            .then(response => response.json())
+            .then(data => {
+                const tableBody = $('#leaderboard-table tbody');
+                tableBody.empty();
+
+                data.forEach((user, index) => {
+                    tableBody.append(`
+                        <tr>
+                            <td>${index + 1}</td>
+                            <td>${user.username}</td>
+                            <td>${user.name}</td>
+                            <td>${user.mmr}</td>
+                        </tr>
+                    `);
+                });
+            })
+            .catch(error => {
+                const tableBody = $('#leaderboard-table tbody');
+                tableBody.empty().append(`
+                    <tr>
+                        <td colspan="4" class="text-center text-danger">Kunne ikke hente leaderboard data.</td>
+                    </tr>
+                `);
+            });
+    });
+</script>
+</body>
+</html>

@@ -4,16 +4,50 @@
 
 We are a team of 4, all of us currently studying Computer Science at KEA on the 3rd semester.
 
-**Guessr** is an interactive web game platform that challenges players to guess countries based on flags from around the world. Players are shown a flag and asked to choose the correct country from multiple-choice options. The game is designed to be fun and educational, helping players learn about different countries and their flags.
-
-The games includes a simple yet engaging design with a variety of game modes, with the current focus on the **Flags** game mode.
+Welcome to Guessr – a web-based gaming platform offering an exciting mix of trivia, strategy, and fun! Whether you're a fan of geography, proverbs, or fast-paced action, Guessr has something for everyone. Our platform features seven distinct games that challenge your knowledge, reflexes, and creativity. Built with HTML, JavaScript, and Java, Guessr ensures a smooth and engaging gaming experience
 
 ## Features
 
-- **Flag Guessing Game:** Players are shown a flag image and have to select the correct country from four options.
-- **Multiple Answer Choices:** The answers are randomized for each question, so the player has to think and guess the correct country.
-- **Feedback System:** After each answer, players are given feedback (correct/incorrect) and shown the correct answer if they are wrong.
-- **Next Question:** After an answer, players can move on to the next question to keep playing.
+1. Kahoot
+
+A quiz game where players answer questions in real time to earn points.
+
+Compete with others to reach the top.
+
+2. Trivia
+
+Test your general knowledge with a wide range of questions from various categories.
+
+
+3. Pokemon
+
+Guess the name of the Pokemon based on its silhouette or description.
+
+A must-play for Pokemon enthusiasts!
+
+4. Flag Guessr
+
+Identify the country based on its flag.
+
+A fun way to improve your geography skills.
+
+5. Proverb Game
+
+Complete famous proverbs or identify their meanings.
+
+A game for language lovers and wisdom seekers.
+
+6. Running Game
+
+An action-packed game where players control a character to avoid obstacles and collect points.
+
+Test your reflexes and coordination.
+
+7. Fact Game
+
+Learn amazing facts while answering questions based on them.
+
+Educational and entertaining at the same time.
 
 ## Technologies Used
 
@@ -35,11 +69,11 @@ To run this project locally, follow these steps:
 1. **Clone the Repository:**
 
    ```bash
-   git clone https://github.com/yourusername/world-guessr.git
+   git clone https://github.com/tgavri/guessr.git
    
 2. **Navigate to the Project Directory:**
    ```bash
-   cd world-guessr
+   cd guessr
 
 3. **Open the index.html file:**
    ```bash

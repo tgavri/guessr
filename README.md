@@ -87,7 +87,7 @@ The game should be up and running, and you can start playing.
 
 ## Contributing
 
-Contributions to World Guessr are welcome! If you'd like to contribute, follow these steps:
+Contributions to Guessr are welcome! If you'd like to contribute, follow these steps:
 
 Fork the repository to your GitHub account.
 Create a new branch for your changes.

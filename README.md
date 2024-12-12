@@ -57,10 +57,12 @@ Educational and entertaining at the same time.
 
 ## How to Play
 
-1. **Choose a Game Mode:** On the home page, select the "Flags" game mode.
+1. **Choose a Game Mode:** On the home page, select the game mode.
 2. **Guess the Flag:** A random flag will be displayed. You will have to guess which country it belongs to by selecting one of the four answer choices.
 3. **Feedback:** After selecting an answer, you will be told if you were correct or incorrect.
 4. **Move to Next Question:** Once you’ve answered, you can move on to the next question and continue playing.
+
+ Otherwise try any of the other games on the home page!
 
 ## Installation
 

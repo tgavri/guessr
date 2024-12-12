@@ -38,14 +38,23 @@
         }
         .admin-header {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            justify-content: center; /* Center the items horizontally */
+            align-items: center; /* Center the items vertically */
             background-color: #ffffff;
             padding: 15px 20px;
             border-bottom: 1px solid #dee2e6;
+            flex-wrap: wrap; /* Allow wrapping for smaller screens */
+            gap: 10px; /* Add spacing between logo, title, and button */
         }
+
         .admin-header h1 {
+            flex-grow: 1; /* Allow the h1 to take available space */
             margin: 0;
+            text-align: center;
+            font-size: 1.5rem; /* Adjust for smaller screens */
+            font-weight: 600;
+            transform: translateX(-50px); /* Push the title 50px to the left */
+
         }
         .card {
             margin-bottom: 20px;
@@ -55,6 +64,30 @@
         }
         #editStatus {
             width: 120px;
+        }
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            margin-right: 10px;
+        }
+        .navbar-logo {
+            height: 60px; /* Adjust this value as needed */
+            width: auto;  /* Keep the aspect ratio */
+        }
+        @media (max-width: 768px) {
+            .admin-header {
+                flex-direction: column; /* Stack items vertically */
+                align-items: center;
+            }
+
+            .admin-header h1 {
+                font-size: 1.25rem; /* Smaller font size for smaller screens */
+                margin: 10px 0;
+            }
+
+            #logout-button {
+                margin-left: 0; /* Center the button */
+            }
         }
     </style>
 </head>
@@ -77,9 +110,13 @@
     <!-- Main Content -->
     <div class="admin-content">
         <div class="admin-header">
-            <h1>Admin Dashboard</h1>
+            <a class="navbar-brand" href="/">
+                <img src="/img/logo.png" class="navbar-logo" alt="Guessr Logo">
+            </a>
+            <h1 id="page-title">Dashboard</h1>
             <button class="btn btn-danger" id="logout-button">Logout</button>
         </div>
+
 
         <!-- Overview Section -->
         <!-- Dashboard Section -->
@@ -402,11 +439,16 @@
     }
 
 
+
     // Fetch data when the page loads
     document.addEventListener('DOMContentLoaded', fetchDashboardData);
     function showContent(sectionId) {
         $('.content-section').addClass('hidden');
         $('#' + sectionId).removeClass('hidden');
+
+        // Update the h1 title dynamically
+        document.getElementById('page-title').textContent = sectionTitles[sectionId] || 'Dashboard';
+
 
         if (sectionId === 'user-management') {
             fetchUserData();

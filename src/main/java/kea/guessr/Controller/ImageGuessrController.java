@@ -24,9 +24,9 @@ public class ImageGuessrController {
     public String getImageGuessrPage(@CookieValue(name = "hasPlayed", defaultValue = "false") String hasPlayed,
                                      HttpServletResponse response,
                                      Model model) {
-        if (hasPlayed.equals("true")) {
+        /*if (hasPlayed.equals("true")) {
             return "redirect:/countdown";
-        }
+        }*/
 
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime midnight = now.toLocalDate().atStartOfDay().plusDays(1);

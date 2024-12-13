@@ -105,13 +105,6 @@
         "category": "Geografi"
     },
     {
-        "sentence": "Den højeste bjergtop i verden hedder ___",
-        "answer": "Mount Everest",
-        "explanation": "Denne bjergtop ligger i Himalaya og er over 8.800 meter høj.",
-        "example": "Mange bjergbestigere drømmer om at bestige ___, verdens højeste punkt.",
-        "category": "Geografi"
-    },
-    {
         "sentence": "Hovedstaden i Japan er ___",
         "answer": "Tokyo",
         "explanation": "Denne by er kendt for sin moderne teknologi og traditionelle kultur.",
@@ -245,13 +238,6 @@
         "category": "Videnskab"
     },
     {
-        "sentence": "Den største ørken i verden er ___",
-        "answer": "Sahara",
-        "explanation": "Denne ørken strækker sig over flere nordafrikanske lande og er kendt for sine ekstreme temperaturer.",
-        "example": "Mange nomadestammer har tilpasset sig livet i ___ trods de barske forhold.",
-        "category": "Geografi"
-    },
-    {
         "sentence": "Den videnskabelige metode blev grundlagt af ___",
         "answer": "Galileo Galilei",
         "explanation": "Han er kendt som en af fysikkens fædre og udviklede teknikker til systematisk observation.",
@@ -334,13 +320,6 @@
         "explanation": "Hun fløj på Vostok 6 i 1963 som en del af Sovjetunionens rumprogram.",
         "example": "___ blev en international heltinde for sin historiske rumrejse.",
         "category": "Historie"
-    },
-    {
-        "sentence": "Den største ø i verden er ___",
-        "answer": "Grønland",
-        "explanation": "Denne ø ligger i Arktis og er kendt for sin massive iskappe.",
-        "example": "På trods af sit navn er ___ dækket af is og ikke grønne skove.",
-        "category": "Geografi"
     },
     {
         "sentence": "Det største pattedyr i verden er ___",
@@ -525,6 +504,216 @@
         "category": "Geografi"
     },
     {
+        "sentence": "Danmark er kendt for desserten ___, som ofte serveres ved juletid.",
+        "answer": "risalamande",
+        "explanation": "Denne dessert består af risengrød, fløde, og mandler og serveres traditionelt med kirsebærsauce.",
+        "example": "Ved julemiddagen serveres ___ som dessert, ofte med en skjult hel mandel.",
+        "category": "Madkultur"
+    },
+    {
+        "sentence": "Den menneskelige krop består af omkring ___% vand.",
+        "answer": "60",
+        "explanation": "Vand er en vital komponent for kroppens funktioner, herunder blodcirkulation og temperaturregulering.",
+        "example": "At drikke rigeligt med vand hjælper med at opretholde kroppens ___% væskeindhold.",
+        "category": "Videnskab"
+    },
+    {
+        "sentence": "Den danske konge, der blev kendt som 'Valdemar den Store', regerede fra år ___.",
+        "answer": "1157",
+        "explanation": "Valdemar den Store er kendt for at have genopbygget Danmark efter en periode med borgerkrig.",
+        "example": "Under Valdemar den Stores regeringstid fra ___ blev mange reformer gennemført.",
+        "category": "Historie"
+    },
+    {
+        "sentence": "Verdens første e-mail blev sendt i året ___",
+        "answer": "1971",
+        "explanation": "Ray Tomlinson sendte den første e-mail, hvor han introducerede @-symbolet til adresser.",
+        "example": "Kommunikationen ændrede sig radikalt med opfindelsen af e-mail i ___.",
+        "category": "Teknologi"
+    },
+    {
+        "sentence": "Hovedstaden i Sydkorea er ___",
+        "answer": "Seoul",
+        "explanation": "Denne by er en af de største metropoler i verden og kendt for sin teknologi og kultur.",
+        "example": "Under et besøg i ___ kan man opleve både historiske paladser og moderne skyskrabere.",
+        "category": "Geografi"
+    },
+    {
+        "sentence": "Den første kvindelige præsident i Island var ___",
+        "answer": "Vigdís Finnbogadóttir",
+        "explanation": "Hun blev valgt i 1980 og var verdens første demokratisk valgte kvindelige præsident.",
+        "example": "___ regerede Island i 16 år og blev et symbol på ligestilling.",
+        "category": "Politik"
+    },
+    {
+        "sentence": "Den nærmeste stjerne til Jorden, udover solen, er ___",
+        "answer": "Proxima Centauri",
+        "explanation": "Denne stjerne ligger cirka 4,24 lysår væk fra Jorden.",
+        "example": "Astronomer undersøger exoplaneter i kredsløb omkring ___.",
+        "category": "Astronomi"
+    },
+    {
+        "sentence": "Den danske nationalret er ___",
+        "answer": "stegt flæsk",
+        "explanation": "Denne ret består af sprødstegt flæsk serveret med persillesovs og kartofler.",
+        "example": "På mange restauranter i Danmark kan man nyde ___ som en klassisk dansk specialitet.",
+        "category": "Kultur"
+    },
+    {
+        "sentence": "Den videnskabelige enhed for kraft er ___",
+        "answer": "Newton",
+        "explanation": "Enheden er opkaldt efter Isaac Newton og bruges til at måle kraft.",
+        "example": "Når man skubber en genstand, udøver man en kraft målt i ___.",
+        "category": "Videnskab"
+    },
+    {
+        "sentence": "Den første trykte bog i Europa var ___",
+        "answer": "Gutenberg-bibelen",
+        "explanation": "Johannes Gutenberg trykte denne bibel i 1455 ved hjælp af en ny trykpresse.",
+        "example": "Med ___ startede en revolution inden for massekommunikation.",
+        "category": "Historie"
+    },
+    {
+        "sentence": "Det højeste bjerg i Europa er ___",
+        "answer": "Mont Blanc",
+        "explanation": "Dette bjerg ligger i Alperne på grænsen mellem Frankrig og Italien.",
+        "example": "Mange bjergbestigere drømmer om at nå toppen af ___.",
+        "category": "Geografi"
+    },
+    {
+        "sentence": "Den hollandske maler ___ er kendt for 'Stjernenatten'.",
+        "answer": "Vincent van Gogh",
+        "explanation": "Han var en post-impressionistisk maler, der skabte nogle af de mest ikoniske værker i kunsthistorien.",
+        "example": "Maleriet ___ afspejler kunstnerens kamp med mentale helbredsproblemer.",
+        "category": "Kunst"
+    },
+    {
+        "sentence": "Det største organ i menneskekroppen er ___",
+        "answer": "huden",
+        "explanation": "Huden beskytter kroppen mod ydre påvirkninger og hjælper med temperaturregulering.",
+        "example": "Med en vægt på flere kilo er ___ det største organ.",
+        "category": "Videnskab"
+    },
+    {
+        "sentence": "Danmark vandt sin første europamesterskabstitel i fodbold i året ___",
+        "answer": "1992",
+        "explanation": "Holdet besejrede Tyskland i finalen med en overraskende sejr.",
+        "example": "___ er et ikonisk år for dansk fodbold.",
+        "category": "Sport"
+    },
+    {
+        "sentence": "Den første smartphone, der blev bredt populær, var ___",
+        "answer": "iPhone",
+        "explanation": "Apple lancerede den i 2007 og revolutionerede mobilteknologi med touchskærm og apps.",
+        "example": "Efter lanceringen af ___ ændrede smartphone-markedet sig dramatisk.",
+        "category": "Teknologi"
+    },
+    {
+        "sentence": "Den største havstrøm i verden kaldes ___",
+        "answer": "Golfstrømmen",
+        "explanation": "Denne strøm transporterer varmt vand fra Mexicogolfen til Nordatlanten.",
+        "example": "Golfstrømmen har stor indflydelse på klimaet i Europa og Nordamerika.",
+        "category": "Geografi"
+    },
+    {
+        "sentence": "Den første kvinde til at modtage Nobelprisen i litteratur var ___",
+        "answer": "Selma Lagerlöf",
+        "explanation": "Hun var en svensk forfatter, der blev anerkendt for sine bidrag til litteratur i 1909.",
+        "example": "___ skrev det berømte værk 'Niels Holgersens vidunderlige rejse'.",
+        "category": "Kunst"
+    },
+    {
+        "sentence": "Den længste mur i verden er ___",
+        "answer": "Den Kinesiske Mur",
+        "explanation": "Denne mur blev bygget over mange århundreder for at beskytte Kina mod invasioner.",
+        "example": "___ strækker sig over mere end 20.000 kilometer.",
+        "category": "Geografi"
+    },
+    {
+        "sentence": "Den første mand til at flyve solo nonstop over Atlanten var ___",
+        "answer": "Charles Lindbergh",
+        "explanation": "Han fløj fra New York til Paris i 1927 i sit fly, Spirit of St. Louis.",
+        "example": "___'s flyvning var en banebrydende bedrift inden for luftfart.",
+        "category": "Historie"
+    },
+    {
+        "sentence": "Schweiz har ___ officielle sprog",
+        "answer": "4",
+        "explanation": "Schweiz har ___ officielle sprog: tysk, fransk, ...",
+        "example": "I Genève taler mange ___, som viser landets kulturelle mangfoldighed.",
+        "category": "Geografi"
+    },
+    {
+        "sentence": "Den første kunstige satellit sendt i kredsløb var ___",
+        "answer": "Sputnik",
+        "explanation": "Denne sovjetiske satellit blev sendt i rummet i 1957 og markerede starten på rumalderen.",
+        "example": "Opsendelsen af ___ skabte en rivalisering mellem USA og Sovjetunionen under rumkapløbet.",
+        "category": "Teknologi"
+    },
+    {
+        "sentence": "Den danske videnskabsmand, der opdagede elektromagnetisme, var ___",
+        "answer": "Hans Christian Ørsted",
+        "explanation": "Han opdagede, at elektrisk strøm kan skabe et magnetfelt i 1820.",
+        "example": "___'s opdagelse banede vejen for moderne teknologi som elektromotorer.",
+        "category": "Videnskab"
+    },
+    {
+        "sentence": "Det største koralrev i verden er ___",
+        "answer": "Great Barrier Reef",
+        "explanation": "Dette koralrev ligger ud for Australiens kyst og er hjem for tusindvis af marine arter.",
+        "example": "Dykning ved ___ giver mulighed for at opleve unik biodiversitet.",
+        "category": "Geografi"
+    },
+    {
+        "sentence": "Den første danskproducerede film var ___",
+        "answer": "Løvejagten",
+        "explanation": "Denne stumfilm blev produceret i 1907 og var en af de første danske biografoplevelser.",
+        "example": "___ blev en milepæl i dansk filmhistorie.",
+        "category": "Kultur"
+    },
+    {
+        "sentence": "Den største ø i Middelhavet er ___",
+        "answer": "Sicilien",
+        "explanation": "Denne italienske ø er kendt for sin rige historie og vulkanen Etna.",
+        "example": "___ har været et kulturelt knudepunkt siden antikken.",
+        "category": "Geografi"
+    },
+    {
+        "sentence": "Den første kendte civilisation opstod i ___",
+        "answer": "Mesopotamien",
+        "explanation": "Dette område, også kaldet 'Civilisationens vugge', ligger mellem floderne Eufrat og Tigris.",
+        "example": "De første skriftlige kilder stammer fra ___ omkring 3000 f.Kr.",
+        "category": "Historie"
+    },
+    {
+        "sentence": "Det kemiske symbol for jern er ___",
+        "answer": "Fe",
+        "explanation": "Jern er et af de mest anvendte metaller og en vigtig komponent i stål.",
+        "example": "I kemi bruger man symbolet ___ for jern.",
+        "category": "Videnskab"
+    },
+    {
+        "sentence": "Den største skov i verden er ___",
+        "answer": "Amazonas",
+        "explanation": "Denne regnskov dækker store dele af Sydamerika og er kendt for sin biodiversitet.",
+        "example": "Forskere undersøger konstant ___ for at opdage nye arter.",
+        "category": "Geografi"
+    },
+    {
+        "sentence": "Den første dansker i rummet var ___",
+        "answer": "Andreas Mogensen",
+        "explanation": "Han blev den første danske astronaut i 2015 under en mission til Den Internationale Rumstation.",
+        "example": "___s mission inspirerede mange danskere til at interessere sig for rumforskning.",
+        "category": "Astronomi"
+    },
+    {
+        "sentence": "Den største indsø i Afrika er ___",
+        "answer": "Victoriasøen",
+        "explanation": "Denne sø ligger i Østafrika og er en vigtig ressource for landene omkring den.",
+        "example": "Fiskeriet i ___ understøtter millioner af mennesker i regionen.",
+        "category": "Geografi"
+    },
+    {
         "sentence": "___ er den længste flod i verden.",
         "answer": "Nilen",
         "explanation": "Denne flod strækker sig over mere end 6.650 kilometer og løber gennem flere afrikanske lande.",
@@ -537,13 +726,6 @@
         "explanation": "En enhed, der revolutionerede kommunikation, og som i dag bruges af milliarder verden over.",
         "example": "De første ord, der blev talt over ___, var en simpel besked til Bells assistent.",
         "category": "Teknologi"
-    },
-    {
-        "sentence": "___ er det højeste bjerg i verden målt fra havniveau.",
-        "answer": "Mount Everest",
-        "explanation": "Dette bjerg ligger i Himalaya og har en højde på 8.848 meter.",
-        "example": "Mange eventyrere har forsøgt at bestige ___, men ikke alle når toppen.",
-        "category": "Geografi"
     },
     {
         "sentence": "Den største planet i vores solsystem er ___.",
@@ -565,13 +747,6 @@
         "explanation": "Denne vulkan hedder Olympus Mons og er næsten tre gange højere end Mount Everest.",
         "example": "Hvis man nogensinde skulle besøge ___, ville Olympus Mons være et fantastisk syn.",
         "category": "Astronomi"
-    },
-    {
-        "sentence": "___ var den første mand på månen.",
-        "answer": "Neil Armstrong",
-        "explanation": "Han blev kendt for ordene: 'That's one small step for man, one giant leap for mankind.'",
-        "example": "Under Apollo 11-missionen landede ___ på månen og skrev historie.",
-        "category": "Historie"
     },
     {
         "sentence": "___ er kendt som opfinderen af pæren.",
@@ -777,20 +952,6 @@
         "category": "Geografi"
     },
     {
-        "sentence": "___ er kendt som den første mand på månen.",
-        "answer": "Neil Armstrong",
-        "explanation": "Han blev berømt for at sige de ikoniske ord: 'Et lille skridt for et menneske, et kæmpe spring for menneskeheden.'",
-        "example": "Apollo 11-missionen bragte ___ og hans holdkammerater til månen i 1969.",
-        "category": "Astronomi"
-    },
-    {
-        "sentence": "___ er den længste flod i verden.",
-        "answer": "Nilen",
-        "explanation": "Denne flod strækker sig gennem flere afrikanske lande og er en vigtig kilde til liv og handel.",
-        "example": "Civilisationer som det gamle Egypten opstod langs ___.",
-        "category": "Geografi"
-    },
-    {
         "sentence": "Den berømte maler ___ skabte 'Mona Lisa'.",
         "answer": "Leonardo da Vinci",
         "explanation": "Han var en renæssancens universalgeni og også kendt for sine teknologiske skitser.",
@@ -875,25 +1036,11 @@
         "category": "Historie"
     },
     {
-        "sentence": "___ er kendt som verdens højeste bjerg.",
-        "answer": "Mount Everest",
-        "explanation": "Det ligger i Himalaya og har en højde på 8.848 meter over havets overflade.",
-        "example": "Mange klatrere drømmer om at bestige ___.",
-        "category": "Geografi"
-    },
-    {
         "sentence": "___ opdagede tyngdeloven ved at observere et faldende æble.",
         "answer": "Isaac Newton",
         "explanation": "Han udviklede teorier om mekanik, gravitation og matematik, der stadig bruges i dag.",
         "example": "___'s arbejde lagde grundlaget for klassisk fysik.",
         "category": "Videnskab"
-    },
-    {
-        "sentence": "___ er den største ørken i verden.",
-        "answer": "Sahara",
-        "explanation": "Denne ørken strækker sig over det nordlige Afrika og er kendt for sit ekstreme klima.",
-        "example": "Karavaner har krydset ___ i århundreder på jagt efter handel og vand.",
-        "category": "Geografi"
     },
     {
         "sentence": "___ er den kendte danske opfinder, der grundlagde LEGO.",

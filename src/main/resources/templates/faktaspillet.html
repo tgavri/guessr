@@ -186,12 +186,12 @@
             </div>
             <div class="d-flex justify-content-center">
                 <div class="tooltip-container">
-                    <button id="hint" class="btn btn-warning" onclick="useHint()">Forklaring</button>
-                    <div class="tooltip-content">Vis en forklaring. Koster 50% af dine point.</div>
+                    <button id="hint" class="btn btn-warning" onclick="useHint()">Ledetråd 1</button>
+                    <div class="tooltip-content">Vis en ledetråd. Koster 50% af dine point.</div>
                 </div>
                 <div class="tooltip-container ms-2">
-                    <button id="example-hint" class="btn btn-info" onclick="useExampleHint()">Eksempel</button>
-                    <div class="tooltip-content">Vis et eksempel. Koster 25% af dine point.</div>
+                    <button id="example-hint" class="btn btn-info" onclick="useExampleHint()">Ledetråd 2</button>
+                    <div class="tooltip-content">Vis en anden ledetråd. Koster 25% af dine point.</div>
                 </div>
             </div>
             <p id="feedback" class="mt-3"></p>
@@ -284,8 +284,8 @@
 
         const explanation = document.getElementById('explanation');
         explanation.innerHTML = `
-            <p><strong>Forklaring:</strong> ${questions[currentQuestion].explanation}</p>
-            <p><strong>Eksempel:</strong> ${questions[currentQuestion].example}</p>
+            <p><strong>Ledetråd 1:</strong> ${questions[currentQuestion].explanation}</p>
+            <p><strong>Ledetråd 2:</strong> ${questions[currentQuestion].example}</p>
         `;
 
         document.getElementById('hint').classList.add('d-none');
@@ -296,13 +296,13 @@
     }
 
     function useHint() {
-        document.getElementById('explanation').innerHTML += `<p><strong>Forklaring:</strong> ${questions[currentQuestion].explanation}</p>`;
+        document.getElementById('explanation').innerHTML += `<p><strong>Ledetråd 1:</strong> ${questions[currentQuestion].explanation}</p>`;
         hintUsed = true;
         document.getElementById('hint').classList.add('d-none');
     }
 
     function useExampleHint() {
-        document.getElementById('explanation').innerHTML += `<p><strong>Eksempel:</strong> ${questions[currentQuestion].example}</p>`;
+        document.getElementById('explanation').innerHTML += `<p><strong>Ledetråd 2:</strong> ${questions[currentQuestion].example}</p>`;
         exampleHintUsed = true;
         document.getElementById('example-hint').classList.add('d-none');
     }
